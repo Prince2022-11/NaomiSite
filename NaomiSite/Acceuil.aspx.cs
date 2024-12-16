@@ -7,9 +7,9 @@ using System.Web.UI.WebControls;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace PrototypeGestionRecettesETD
+namespace NaomiSite
 {
-    public partial class Accueil : System.Web.UI.Page
+    public partial class Acceuil : System.Web.UI.Page
     {
         MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
         protected void Page_Load(object sender, EventArgs e)
@@ -23,6 +23,7 @@ namespace PrototypeGestionRecettesETD
 
             if (!Page.IsPostBack)
             {
+                
                 txtMessage.Visible = false;
                 txtLogin.Text = "";
                 txtPassword.Text = "";
@@ -38,14 +39,14 @@ namespace PrototypeGestionRecettesETD
             //con.Open();
             MySqlCommand cmde = con.CreateCommand();
             cmde.CommandType = CommandType.Text;
-            cmd.CommandText = ("select *from agent where login='ADMIN' and password='" + txtPassword.Text + "' ");
+            cmd.CommandText = ("select *from utilisateur where service='Admin' and login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' ");
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
                 if (dr["login"].ToString() == txtLogin.Text && dr["password"].ToString() == txtPassword.Text)
                 {
                     Session["login"] = dr["login"].ToString();
-                    Response.Redirect("AdminEspace.aspx");
+                    Response.Redirect("EspaceAdmin.aspx");
                 }
                 else
                 {
@@ -137,9 +138,9 @@ namespace PrototypeGestionRecettesETD
         protected void btnConnexion_Click(object sender, EventArgs e)
         {
             ConnexionAdmin();
-            ConnexionAgentTerrain();
-            ConnexionAgentComptable();
-            ConnexionAgentGestionnaire();
+            //ConnexionAgentTerrain();
+            //ConnexionAgentComptable();
+            //ConnexionAgentGestionnaire();
         }
     }
 }

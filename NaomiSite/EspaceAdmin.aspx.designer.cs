@@ -10,25 +10,7 @@
 namespace NaomiSite {
     
     
-    public partial class Acceuil {
-        
-        /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
-        /// <summary>
-        /// UpdatePanel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+    public partial class EspaceAdmin {
         
         /// <summary>
         /// txtLogin control.
@@ -37,33 +19,51 @@ namespace NaomiSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLogin;
+        protected global::System.Web.UI.WebControls.Label txtLogin;
         
         /// <summary>
-        /// txtPassword control.
+        /// txtRole control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword;
+        protected global::System.Web.UI.WebControls.Label txtRole;
         
         /// <summary>
-        /// txtMessage control.
+        /// txtTotalETD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtMessage;
+        protected global::System.Web.UI.WebControls.Label txtTotalETD;
         
         /// <summary>
-        /// btnConnexion control.
+        /// txtTotalGestionnaireETD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConnexion;
+        protected global::System.Web.UI.WebControls.Label txtTotalGestionnaireETD;
+        
+        /// <summary>
+        /// txtTotalAgentTerrain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtTotalAgentTerrain;
+        
+        /// <summary>
+        /// txtTotalComptable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtTotalComptable;
     }
 }

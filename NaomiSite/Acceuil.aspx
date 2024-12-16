@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Accueil.aspx.cs" Inherits="PrototypeGestionRecettesETD.Accueil" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Acceuil.aspx.cs" Inherits="NaomiSite.Acceuil" %>
 
 <!DOCTYPE html>
 <html class="no-js">
@@ -54,9 +54,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="carousel-content centered">
-                                    <center><h2 class="animation animated-item-1">PROTOTYPE D'APPLICATION DE GESTION DES RECETTES DES ENTITES TERRITORIALES DECENTRALISEES</h2></center>
+                                    <center><h2 class="animation animated-item-1">GESTION SCOLAIRE DU CS NAOMI</h2></center>
 									<br>
-                                    <center><p class="animation animated-item-2">Par KEDI OKAPI Freddy, L2 Informatique de Gestion UNP 2022-2023</p></center>
+                                    <center><p class="animation animated-item-2">Un outil spécialisé pour l'école Maternelle, Primaire et Secondaire</p></center>
 									<br>
 									<center><a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Commencer</h4></a></center>
                                 </div>
@@ -69,9 +69,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="carousel-content center centered">
-                                    <center><h2 class="animation animated-item-1">PLATEFORME WEB DE COLLECTE DE TOUTES LES RECETTES ISSUES DES ETD</h2></center>
+                                    <center><h2 class="animation animated-item-1">PLATEFORME WEB DE GESTION DES INSCRIPTIONS, LES FRAIS SCOLAIRES ET LE PAYEMENT DU PERSONNEL</h2></center>
 									<br>
-                                    <center><p class="animation animated-item-2">FAITES VOUS PLAISIR EN COLLECTANTS LES RECETTES Où QUE VOUS SOYEZ</p></center>
+                                    <center><p class="animation animated-item-2">FAITES VOUS PLAISIR EN GERANT LE CS NAOMI Où QUE VOUS SOYEZ</p></center>
                                     <br>
                                     <center><a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Commencer</h4></a></center>
                                 </div>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div><!--/.item-->
-                <div class="item" style="background-image: url(img/slides/3.jpg)">
+                <div class="item" style="background-image: url(img/slides/3.png)">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12">
@@ -131,7 +131,6 @@
 					                              </div><br>
                                                   <CENTER><asp:Label runat="server" ID="txtMessage" Text="Vos informations ne sont pas correctes" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label></CENTER>
 					                              <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnConnexion" Text="Connexion" type="submit" style="background: #085ecf ;" OnClick="btnConnexion_Click"/><span class="fa fa-key" AutoPostBack="True"></span></CENTER><br>
-                                            <CENTER><a data-scroll href="#myModal2" data-toggle="modal"><i class="glyphicon glyphicon-user"></i> <strong> CREEZ UN NOUVEAU COMPTE CLIENT</strong> </a></CENTER>
                               </ContentTemplate>
                 </asp:UpdatePanel>
               </form>
@@ -141,39 +140,6 @@
       </div>
       <!-- Fin Login Modal -->
 
-      <!-- Formulaire Création Compte Modal -->
-  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade">
-      <br></br><br></br>
-      <div class="modal-dialog">
-        <div class="modal-content" style="width: 100%;">
-            <div class="modal-header">
-              <button aria-hidden="true" data-dismiss="modal" class="close" type="button">x</button>
-                <h5 class="modal-title"><center><b>CREER UN COMPTE UTILISATEUR</b></center></h5>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="include/creerCompte.php" class="login-page form">
-                    <label>Votre nom complet </label>
-					<div class="form-group input-group" >
-					    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
-	                    <input  type="text" name="nomUser" class="form-control" placeholder="Votre nom complet " >
-	                 </div>
-                    <label>Votre Login</label>
-                    <div class="form-group input-group" >
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
-                        <input  type="text" name="login" class="form-control" placeholder="Votre login " >
-	                </div>
-			        <label>Votre Mot de passe</label>
-	                <div class="form-group input-group ">
-					      <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span> 
-					      <input  type="password" name="motpass" class="form-control" placeholder="Votre Mot de passe " >
-					</div>
-					<CENTER><button class="btn btn-md"  name="creer" value=" " style="background: #085ecf ;"><span class="glyphicon glyphicon-user "></span>   Créer Compte</button></CENTER><br>
-                </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Fin Création Compte Modal -->
 	</div><!--  Fin Contenaire -->
 	    <!-- Footer -->
 
