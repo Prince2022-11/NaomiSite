@@ -1,0 +1,83 @@
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\csc.exe
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Collections.Immutable.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Reflection.Metadata.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\vbc.exe
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe.config
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll.config
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.pdb
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\itextsharp.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\MySql.Data.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\MySql.Web.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.csprojResolveAssemblyReference.cache
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.dll
+F:\Travaux Scientifiques\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.pdb
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\csc.exe
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Collections.Immutable.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Reflection.Metadata.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\vbc.exe
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe.config
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll.config
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.pdb
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.csprojResolveAssemblyReference.cache
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.dll
+E:\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.pdb
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\csc.exe
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Collections.Immutable.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Reflection.Metadata.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\vbc.exe
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe.config
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll.config
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.pdb
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.csprojResolveAssemblyReference.cache
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.dll
+F:\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.pdb
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\csc.exe
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Collections.Immutable.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\System.Reflection.Metadata.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\vbc.exe
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\roslyn\VBCSCompiler.exe.config
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll.config
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\PrototypeGestionRecettesETD.pdb
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.csprojResolveAssemblyReference.cache
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.dll
+E:\DISK1\Memoire et TFC 2022-2023\Mémoires\Freddy UNP\Prototype\PrototypeGestionRecettesETD\PrototypeGestionRecettesETD\obj\Debug\PrototypeGestionRecettesETD.pdb
