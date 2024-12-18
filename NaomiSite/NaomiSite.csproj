@@ -78,6 +78,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminAnneeScolaire.aspx" />
+    <Content Include="AdminInscription.aspx" />
+    <Content Include="AdminUpdateAnnee.aspx" />
     <Content Include="packages.config" />
     <Content Include="bin\PrototypeGestionRecettesETD.dll.config" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
@@ -112,6 +115,27 @@
     </Compile>
     <Compile Include="Acceuil.aspx.designer.cs">
       <DependentUpon>Acceuil.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminAnneeScolaire.aspx.cs">
+      <DependentUpon>AdminAnneeScolaire.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAnneeScolaire.aspx.designer.cs">
+      <DependentUpon>AdminAnneeScolaire.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminInscription.aspx.cs">
+      <DependentUpon>AdminInscription.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminInscription.aspx.designer.cs">
+      <DependentUpon>AdminInscription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminUpdateAnnee.aspx.cs">
+      <DependentUpon>AdminUpdateAnnee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminUpdateAnnee.aspx.designer.cs">
+      <DependentUpon>AdminUpdateAnnee.aspx</DependentUpon>
     </Compile>
     <Compile Include="EspaceAdmin.aspx.cs">
       <DependentUpon>EspaceAdmin.aspx</DependentUpon>

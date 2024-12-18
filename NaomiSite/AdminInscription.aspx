@@ -1,6 +1,4 @@
-﻿
-<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EspaceAdmin.aspx.cs" Inherits="NaomiSite.EspaceAdmin" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminInscription.aspx.cs" Inherits="NaomiSite.AdminInscription" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +48,7 @@
 			<a href="#" class="avatar"><img src="../img/face1.jpg" alt=""><span class="status online"></span></a>
 			<h5 class="name"><asp:Label ID="txtLogin" runat="server" Text="Label" class="centered" ForeColor="Red"></asp:Label></h5>
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
-            <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="annee" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
+            <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
@@ -87,17 +85,48 @@
 	</div>
 	<!-- /.content -->
 </div>
+    <!-- Formulaire Modal -->
+	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+      <br></br><br></br>
+      <div class="modal-dialog">
+        <div class="modal-content" style="width: 100%;">
+            <div class="modal-header">
+              <button aria-hidden="true" data-dismiss="modal" class="close" type="button">x</button>
+                <h5 class="modal-title"><center><b>FORMULAIRE D'INSCRIPTION </b></center></h5>
+            </div>
+            <div class="modal-body">
+              <form class="login-page form" runat="server">
+            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                    <ContentTemplate>
+                                        <label>Libellé de l'année Scolaire</label>
+								          <div class="form-group input-group" >
+					                                <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                                <asp:TextBox runat="server" ID="txtNewAnnee" class="form-control" placeholder="Saisir l'année Scolaire ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div> <br>
+                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Un de vos champs est vide" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
+                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER><br>
+                                           
+                              </ContentTemplate>
+                </asp:UpdatePanel>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Login Modal -->
+
 <!-- /.main-menu -->
 
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h1 class="page-title">ESPACE DE L'ADMINISTRATEUR</h1>
+		<h1 class="page-title">ESPACE ADMIN --- GESTION DES INSCRIPTIONS</h1>
 		<!-- /.page-title -->
 	</div>
 
 	<div class="pull-right">
-		<a href="Acceuil.aspx" style="color: #ffffff;" class="ico-item mdi mdi-logout"></a>
+		<a href="acceuil.aspx" style="color: #ffffff;" class="ico-item mdi mdi-logout"></a>
 	</div>
 	<!-- /.pull-right -->
 	</div>
@@ -111,56 +140,38 @@
 		<div class="isotope-filter js__filter_isotope">
 			<br>
         <div class="row">
-            <div class="col-md-3">
-                <div class="card-box-a">
-                    <div class="card card-primary">
-                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
-                            <strong>TOTAL DES INSCRITS</strong>
-                        </div>
-                        <div class="card-body" style="margin-top: -60px;">
-                            <h1 style="text-align:center; font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotalInscrit" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card-box-a">
-                    <div class="card card-primary">
-                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
-							<strong>TOTAL DES AGENTS</strong>
-                        </div>
-                        <div class="card-body" style="margin-top: -60px;">
-                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotalAgent" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card-box-a">
-                    <div class="card card-primary">
-                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
-							<strong>DISPONIBLE USD</strong>
-                        </div>
-                        <div class="card-body" style="margin-top: -60px;">
-                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotalUSD" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card-box-a">
-                    <div class="card card-primary">
-                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
-							<strong>DISPONIBLE CDF</strong>
-                        </div>
-                        <div class="card-body" style="margin-top: -60px;">
-                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"><asp:Label ID="txtTotalCDF" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Inscrire un élèves </h4></a>
+            <%--Affichage des etd--%>
+            <asp:Repeater ID="Data1" runat="server" OnItemCommand="Data1_ItemCommand">
+                       <HeaderTemplate>
+                     <table class="table table-condansed table-striped" border="2" style="border:medium ridge black;" >
+                      <thead>
+                        <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
+                          <th> # </th>
+                          <th> Designation</th>
+                          <th> Etat </th>
+                          <th> Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        </HeaderTemplate>
 
-			</div>
+                       <ItemTemplate>
+                        <tr>
+                          <td style="border:1px solid black;"> <%#Eval("id") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("designation ") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("etat") %></td>
+                          <td style="border:1px solid black;"><a  id="btnUpdate" class="fa fa-edit" style="color:red;font-size: large;font-style: normal;border-color:black;font-weight: bold;" href="AdminUpdateAnnee.aspx?id=<%#Eval("id") %>">Changer Etat</a></td>
+                        </tr>
+                       </ItemTemplate>
+
+                       <FooterTemplate>
+                        </tbody>
+                        </table>
+                       </FooterTemplate>
+                    </asp:Repeater>
+            
+	    </div>
 		<!-- /.isotope-filter js__filter_isotope -->		
 		<?php require_once("../include/footer.php");?>
 	</div>
@@ -187,3 +198,4 @@
 	<script src="../assets/scripts/main.min.js"></script>
 </body>
 </html>
+

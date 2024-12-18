@@ -6,10 +6,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using MySql.Data.MySqlClient;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 
 namespace NaomiSite
 {
-    public partial class EspaceAdmin : System.Web.UI.Page
+    public partial class AdminAnneeScolaire : System.Web.UI.Page
     {
         MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
         protected void Page_Load(object sender, EventArgs e)
@@ -45,72 +48,40 @@ namespace NaomiSite
                     txtDesignationAnnee.Text = dr1["designation"].ToString();
                 }
                 con.Close();
-                try
-                {
-                    TotalInscrit();
-                    TotalAgent();
-                    TotalUSD();
-                    TotalCDF();
-                }
-                catch
-                {
+                AfficherAnneeScolaire();
 
-                }
             }
             else
             {
                 Response.Redirect("Acceuil.aspx");
             }
         }
-        public void TotalInscrit()
+        public void AfficherAnneeScolaire()
         {
-            //Les inscrits sur base de l'année actif
             con.Open();
-            MySqlCommand cmdA = new MySqlCommand("select count(*) from t_eleve,anneescol WHERE t_eleve.anneescol=anneescol.anneeScolaire and t_eleve.anneescol='" + txtIdAnnee.Text + "'", con);
-            MySqlDataReader drA = cmdA.ExecuteReader();
-            if (drA.Read())
-            {
-                int nombre = drA.GetInt32(0);
-                txtTotalInscrit.Text = nombre.ToString();
-            }
+            MySqlCommand cmdB1 = new MySqlCommand("SELECT anneeScolaire as id, designation as designation, etat as etat from anneescol ORDER BY designation ASC", con);
+            cmdB1.ExecuteNonQuery();
+            DataTable dt = new DataTable();
+            MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+            da.Fill(dt);
+            Data1.DataSource = dt;
+            Data1.DataBind();
+            con.Close();
             con.Close();
         }
-        public void TotalAgent()
+        protected void btnAddStructure_Click(object sender, EventArgs e)
         {
             con.Open();
-            MySqlCommand cmdA = new MySqlCommand("select count(*) from t_agent", con);
-            MySqlDataReader drA = cmdA.ExecuteReader();
-
-            if (drA.Read())
-            {
-                int nombre = drA.GetInt32(0);
-                txtTotalAgent.Text = nombre.ToString();
-            }
+            MySqlCommand cmd1a = con.CreateCommand();
+            cmd1a.CommandType = CommandType.Text;
+            cmd1a.CommandText = "insert into anneescol values(default,'" + txtNewAnnee.Text + "','Inactif')";
+            cmd1a.ExecuteNonQuery();
             con.Close();
+            Response.Redirect("AdminAnneeScolaire.aspx");
         }
-        public void TotalUSD()
+        protected void Data1_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            con.Open();
-            MySqlCommand cmdA = new MySqlCommand("select SUM(Solde) as soldeUSD from t_caisse WHERE libelle='USD'", con);
-            MySqlDataReader drA = cmdA.ExecuteReader();
 
-            if (drA.Read())
-            {
-                txtTotalUSD.Text = drA["soldeUSD"].ToString();
-            }
-            con.Close();
-        }
-        public void TotalCDF()
-        {
-            con.Open();
-            MySqlCommand cmdA = new MySqlCommand("select SUM(Solde) as soldeCDF from t_caisse WHERE libelle='CDF'", con);
-            MySqlDataReader drA = cmdA.ExecuteReader();
-
-            if (drA.Read())
-            {
-                txtTotalCDF.Text = drA["soldeCDF"].ToString();
-            }
-            con.Close();
         }
     }
 }
