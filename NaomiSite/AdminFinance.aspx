@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminAnneeScolaire.aspx.cs" Inherits="NaomiSite.AdminAnneeScolaire" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminFinance.aspx.cs" Inherits="NaomiSite.AdminFinance" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,43 +86,14 @@
 	</div>
 	<!-- /.content -->
 </div>
-    <!-- Formulaire Modal -->
-	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-      <br></br><br></br>
-      <div class="modal-dialog">
-        <div class="modal-content" style="width: 100%;">
-            <div class="modal-header">
-              <button aria-hidden="true" data-dismiss="modal" class="close" type="button">x</button>
-                <h5 class="modal-title"><center><b>AJOUT DE L'ANNEE SCOLAIRE</b></center></h5>
-            </div>
-            <div class="modal-body">
-              <form class="login-page form" runat="server">
-            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                    <ContentTemplate>
-                                        <label>Libellé de l'année Scolaire</label>
-								          <div class="form-group input-group" >
-					                                <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                                <asp:TextBox runat="server" ID="txtNewAnnee" class="form-control" placeholder="Saisir l'année Scolaire ici" required AutoPostBack="True"></asp:TextBox>
-	                                      </div> <br>
-                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Un de vos champs est vide" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
-                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER><br>
-                                           
-                              </ContentTemplate>
-                </asp:UpdatePanel>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Fin Login Modal -->
+   
 
 <!-- /.main-menu -->
 
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h1 class="page-title">ESPACE ADMIN --- GESTION ANNEEE SCOLAIRE  </h1>
+		<h2 class="page-title">ESPACE ADMIN --- GESTION DES FINANCES</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -140,45 +111,33 @@
 	<div class="main-content">
 		<div class="isotope-filter js__filter_isotope">
 			<br>
-        <div class="row" style="overflow:auto">
-            <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">+ Ajout d'année Scolaire </h4></a>
-            <%--Affichage des etd--%>
-            <asp:Repeater ID="Data1" runat="server" OnItemCommand="Data1_ItemCommand">
-                       <HeaderTemplate>
-                     <table class="table table-condansed table-striped" border="2" style="border:medium ridge black;" >
-                      <thead>
-                        <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
-                          <th> # </th>
-                          <th> Designation</th>
-                          <th> Etat </th>
-                          <th> Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        </HeaderTemplate>
-
-                       <ItemTemplate>
-                        <tr>
-                          <td style="border:1px solid black;"> <%#Eval("id") %></td>
-                          <td style="border:1px solid black;"> <%#Eval("designation ") %></td>
-                          <td style="border:1px solid black;"> <%#Eval("etat") %></td>
-                          <td style="border:1px solid black;"><a  id="btnUpdate" class="fa fa-edit" style="color:red;font-size: large;font-style: normal;border-color:black;font-weight: bold;" href="AdminUpdateAnnee.aspx?id=<%#Eval("id") %>">Changer Etat</a></td>
-                        </tr>
-                       </ItemTemplate>
-
-                       <FooterTemplate>
-                        </tbody>
-                        </table>
-                       </FooterTemplate>
-                    </asp:Repeater>
-            
+        <div class="modal-body row" style="overflow:auto">
+             <form class="login-page form" runat="server">
+            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                    <ContentTemplate>
+                                        <div class="col-lg-6 col-md-6">
+                                             <label>ENTREES FINANCIERES</label> <br />
+                                             <a href="AdminFinStructurerFrais.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Structurer les Frais scolaires....... </h4></a><br /><br />
+                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des payements des frais</h4></a><br /><br />
+                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Evaluer le Niveau de Payement..</h4></a><br /><br />
+                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherche dans les payements..</h4></a><br /><br />
+                                         </div>
+                                         <div class="col-lg-6 col-md-6">
+                                             <label>SORTIES FINANCIERES</label> <br />
+                                             <a href="#"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
+                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
+                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
+                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Situation de la caisse Scolaire...</h4></a><br /><br />
+                                         </div>
+                              </ContentTemplate>
+                </asp:UpdatePanel>
+              </form>
+                 
 	    </div>
-		<!-- /.isotope-filter js__filter_isotope -->		
-		<?php require_once("../include/footer.php");?>
 	</div>
 	<!-- /.main-content -->
 </div><!--/#wrapper -->
-
 <!-- Fin -->
 	<!-- Plugin JavaScript -->
 	<script src="../assets/scripts/jquery.min.js"></script>
@@ -197,5 +156,6 @@
 	<script src="../assets/plugin/lightview/js/lightview/lightview.js"></script>
 
 	<script src="../assets/scripts/main.min.js"></script>
+
 </body>
 </html>

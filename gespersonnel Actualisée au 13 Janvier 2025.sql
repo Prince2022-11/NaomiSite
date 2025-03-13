@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 18 déc. 2024 à 15:06
+-- Généré le :  lun. 13 jan. 2025 à 19:03
 -- Version du serveur :  10.1.38-MariaDB
 -- Version de PHP :  7.3.2
 
@@ -41,7 +41,8 @@ CREATE TABLE `anneescol` (
 INSERT INTO `anneescol` (`anneeScolaire`, `designation`, `etat`) VALUES
 (1, '2022-2023', 'Inactif'),
 (2, '2023-2024', 'Inactif'),
-(3, '2024-2025', 'Actif');
+(3, '2024-2025', 'Inactif'),
+(4, '2025-2026', 'Actif');
 
 -- --------------------------------------------------------
 
@@ -89,6 +90,15 @@ CREATE TABLE `change_classe` (
   `idEcole` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `change_classe`
+--
+
+INSERT INTO `change_classe` (`idClasse`, `matricule`, `nomEleve`, `prenom`, `sexe`, `classe`, `optionEtude`, `anneeScolaire`, `idEcole`) VALUES
+(1, '0001/24-25', 'BAHATI CINIAGA', 'ALEXANDRE', 'Masculin', '12', '4', '3', '3'),
+(2, '0002/24-25', 'NTAMUNTU NSHOBOLE', 'FRANCINE', 'Féminin', '24', '7', '3', '3'),
+(3, '0003/24-25', 'ELIAS NAMUJIMBO', 'MARDOCHE', 'Masculin', '4', '2', '4', '2');
+
 -- --------------------------------------------------------
 
 --
@@ -133,6 +143,15 @@ CREATE TABLE `compte_eleve` (
   `anneeScolaire` varchar(30) NOT NULL,
   `idEcole` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `compte_eleve`
+--
+
+INSERT INTO `compte_eleve` (`idCompte`, `Matricule`, `septembre`, `octobre`, `novembre`, `decembre`, `janvier`, `fevrier`, `mars`, `avril`, `mai`, `juin`, `anneeScolaire`, `idEcole`) VALUES
+(1, '0001/24-25', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '3', '3'),
+(2, '0002/24-25', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '3', '3'),
+(3, '0003/24-25', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '4', '2');
 
 -- --------------------------------------------------------
 
@@ -230,6 +249,23 @@ CREATE TABLE `section` (
   `description` varchar(50) NOT NULL,
   `idEcole` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `section`
+--
+
+INSERT INTO `section` (`idSection`, `nomSection`, `description`, `idEcole`) VALUES
+(1, 'Maternelle', 'Elèves de l\'école maternelle', '1'),
+(2, 'Primaire', 'Elèves de l\'école Primaire', '2'),
+(3, 'Education de base', 'Elève de l\'éducation de base', '3'),
+(4, 'Pédagogie Générale', 'Elèves de la Péda. Générale', '3'),
+(5, 'Latin-Philo', 'Elèves du Latin-Philo', '3'),
+(6, 'Secrétariat Informatique', 'Elèves du Secrétariat Inform', '3'),
+(7, 'Commercial et Gestion', 'Elèves du Commercial et Gestion', '3'),
+(8, 'Biologie-Chimie', 'Elèves de la Biologie-Chimie', '3'),
+(9, 'Nutrition', 'Elèves de la Nutrition', '3'),
+(10, 'Construction', 'Elève de la Construction', '3'),
+(11, 'Technique Sociale', 'Elèves du sociale', '3');
 
 -- --------------------------------------------------------
 
@@ -353,6 +389,55 @@ CREATE TABLE `t_classe` (
   `idSection` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `t_classe`
+--
+
+INSERT INTO `t_classe` (`id`, `classe`, `idSection`) VALUES
+(1, '1ère', '1'),
+(2, '2ème', '1'),
+(3, '3ème', '1'),
+(4, '1ère', '2'),
+(5, '2ème', '2'),
+(6, '3ème', '2'),
+(7, '4ème', '2'),
+(8, '5ème', '2'),
+(9, '6ème', '2'),
+(10, '7ème', '3'),
+(11, '8ème', '3'),
+(12, '1ère', '4'),
+(13, '2ème', '4'),
+(14, '3ème', '4'),
+(15, '4ème', '4'),
+(16, '1ère', '5'),
+(17, '2ème', '5'),
+(18, '3ème', '5'),
+(19, '4ème', '5'),
+(20, '1ère', '6'),
+(21, '2ème', '6'),
+(22, '3ème', '6'),
+(23, '4ème', '6'),
+(24, '1ère', '7'),
+(25, '2ème', '7'),
+(26, '3ème', '7'),
+(27, '4ème', '7'),
+(28, '1ère', '8'),
+(29, '2ème', '8'),
+(30, '3ème', '8'),
+(31, '4ème', '8'),
+(32, '1ère', '9'),
+(33, '2ème', '9'),
+(34, '3ème', '9'),
+(35, '4ème', '9'),
+(36, '1ère', '10'),
+(37, '2ème', '10'),
+(38, '3ème', '10'),
+(39, '4ème', '10'),
+(40, '1ère', '11'),
+(41, '2ème', '11'),
+(42, '3ème', '11'),
+(43, '4ème', '11');
+
 -- --------------------------------------------------------
 
 --
@@ -398,7 +483,9 @@ CREATE TABLE `t_eleve` (
 --
 
 INSERT INTO `t_eleve` (`matricule`, `nom`, `prenom`, `sexe`, `classe`, `nationalite`, `nom_du_pere`, `nom_de_la_mere`, `adresse`, `anneescol`, `dateInscription`, `lieuNaiss`, `dateNaiss`, `ecoleProv`, `option`, `pourcReussite`, `idEcole`) VALUES
-('33634', 'BAHATI', 'MPESHE', 'M', '1', 'CONGOLAISE', 'BAHATI ISHARA', 'YVETTE LWAKASI', 'BUKAVU', '2', '18/12/2024', 'BUKAVU', '18/12/2010', 'INSTITUT BAKITA', '1', '80', '1');
+('0001/24-25', 'BAHATI CINIAGA', 'ALEXANDRE', 'Masculin', '12', 'CONGOLAISE', 'CINIAGA WAMPAGA', 'KAPINGA WABIWA', 'BUKAVU', '3', '12/01/2025', 'Lugendo', '2006-06-15', 'Institut Rwabika', '4', '57', '3'),
+('0002/24-25', 'NTAMUNTU NSHOBOLE', 'FRANCINE', 'Féminin', '24', 'CONGOLAISE', 'BAHATI MEME', 'IRENE BAGUNDA', 'BUKAVU', '3', '12/01/2025', 'BUKAVU', '2007-11-21', 'Institut Olimba', '7', '69', '3'),
+('0003/24-25', 'ELIAS NAMUJIMBO', 'MARDOCHE', 'Masculin', '4', 'CONGOLAISE', 'NAMUJIMBO', 'ESTHER', 'BUKAVU', '4', '13/01/2025', 'BUKAVU', '2013-01-23', 'SANS', '2', '0', '2');
 
 -- --------------------------------------------------------
 
@@ -504,7 +591,9 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id`, `login`, `password`, `service`, `idEcole`) VALUES
-(1, 'ELIAS', '2022', 'Admin', '');
+(1, 'ELIAS', '2022', 'Admin', ''),
+(2, 'Primar', '2025', 'Prefecture', '3'),
+(3, 'Furaha', '2025', 'Caisse', '3');
 
 --
 -- Index pour les tables déchargées
@@ -674,7 +763,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `anneescol`
 --
 ALTER TABLE `anneescol`
-  MODIFY `anneeScolaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `anneeScolaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `attribution_horaire`
@@ -692,7 +781,7 @@ ALTER TABLE `avance`
 -- AUTO_INCREMENT pour la table `change_classe`
 --
 ALTER TABLE `change_classe`
-  MODIFY `idClasse` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idClasse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `compte_agent`
@@ -704,7 +793,7 @@ ALTER TABLE `compte_agent`
 -- AUTO_INCREMENT pour la table `compte_eleve`
 --
 ALTER TABLE `compte_eleve`
-  MODIFY `idCompte` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCompte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `depense`
@@ -734,7 +823,7 @@ ALTER TABLE `recupayement`
 -- AUTO_INCREMENT pour la table `section`
 --
 ALTER TABLE `section`
-  MODIFY `idSection` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSection` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `situation_paye`
@@ -770,7 +859,7 @@ ALTER TABLE `t_carte_service`
 -- AUTO_INCREMENT pour la table `t_classe`
 --
 ALTER TABLE `t_classe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `t_conge`
@@ -812,7 +901,7 @@ ALTER TABLE `t_salaire_avance`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -67,7 +67,7 @@
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
 				<li>
-					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION INSCRIPTIONS</span></a>
+					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
 				<li>
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
@@ -86,30 +86,132 @@
 	<!-- /.content -->
 </div>
     <!-- Formulaire Modal -->
+<form class="login-page form" runat="server" id="Form1">
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
       <br></br><br></br>
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content" style="width: 100%;">
             <div class="modal-header">
-              <button aria-hidden="true" data-dismiss="modal" class="close" type="button">x</button>
+              <button aria-hidden="true" data-dismiss="modal" class="close" type="button" onclick="redirectToAdminInscription()">X</button>
                 <h5 class="modal-title"><center><b>FORMULAIRE D'INSCRIPTION </b></center></h5>
             </div>
             <div class="modal-body">
-              <form class="login-page form" runat="server">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                    <ContentTemplate>
-                                        <label>Libellé de l'année Scolaire</label>
+                                 <ContentTemplate>
+                                          <asp:TextBox runat="server" ID="txtIdEcole" ForeColor="Red" Text="" AutoPostBack="True" OnTextChanged="txtIdEcole_TextChanged" Visible="false"></asp:TextBox>
+                                          <asp:TextBox runat="server" ID="txtIdOption" ForeColor="blue" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                          <asp:TextBox runat="server" ID="txtIdClasse" ForeColor="black" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                          <asp:label runat="server" ID="Label1" ForeColor="Red" Text="Inscription N° " AutoPostBack="True"></asp:label>
+                                          <asp:label runat="server" ID="txtmat" ForeColor="Red" Text="matr" AutoPostBack="True" Font-Size="Medium" Font-Bold="True"></asp:label>
+                                      <asp:TextBox runat="server" ID="txtMatricule" ForeColor="black" Text="" AutoPostBack="true" Visible="true" Font-Bold="True" Font-Size="Medium" BackColor="Transparent" BorderColor="Transparent" OnTextChanged="txtMatricule_TextChanged"></asp:TextBox>
+                                       <asp:label runat="server" ID="txtDernierMat" ForeColor="Red" Text="matr" AutoPostBack="True" Visible="false"></asp:label> <br />
+                                        
+                                     <div class="col-lg-6 col-md-6">
+                                         <label>Nom et Post-nom de l'élève</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                          <asp:TextBox runat="server" ID="txtNom" class="form-control" placeholder="Saisir le nom et le post-nom ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div> 
+                                         <label>Prénom de l'élève</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                          <asp:TextBox runat="server" ID="txtPrenom" class="form-control" placeholder="Saisir le prénom ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div> 
+                                         <label>Sexe de l'élève</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtSexe" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True">
+                                                        <asp:ListItem>Masculin</asp:ListItem>
+                                                        <asp:ListItem>Féminin</asp:ListItem>
+                                                   </asp:DropDownList>
+	                                      </div>
+                                         <label>Ecole-Niveau</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtEcole" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True" OnSelectedIndexChanged="txtEcole_SelectedIndexChanged">
+                                                        <asp:ListItem>MATERNELLE</asp:ListItem>
+                                                        <asp:ListItem>PRIMAIRE</asp:ListItem>
+                                                        <asp:ListItem>SECONDAIRE</asp:ListItem>
+                                                   </asp:DropDownList>
+	                                      </div>
+                                         <label>Option solicitée</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtOption" runat="server"  class="form-control" placeholder="Sélectionnez" required AutoPostBack="True" OnSelectedIndexChanged="txtOption_SelectedIndexChanged">
+                                              </asp:DropDownList>
+	                                      </div>
+                                         <label>Classe solicitée</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtClasse" runat="server"  class="form-control" placeholder="Sélectionnez" required AutoPostBack="True" OnSelectedIndexChanged="txtClasse_SelectedIndexChanged">
+                                              </asp:DropDownList>
+	                                      </div>
+                                         <label>Nationalité</label>
 								          <div class="form-group input-group" >
-					                                <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                                <asp:TextBox runat="server" ID="txtNewAnnee" class="form-control" placeholder="Saisir l'année Scolaire ici" required AutoPostBack="True"></asp:TextBox>
-	                                      </div> <br>
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtnationalité" class="form-control" placeholder="Saisir la nationalité ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                     </div>
+                                     <div class="col-lg-6 col-md-6"> 
+                                         <label>Nom du Père</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtNomPere" class="form-control" placeholder="Saisir le nom du père ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                        <label>Nom de la mère</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtNomMere" class="form-control" placeholder="Saisir le nom de la mère" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                          <label>Adresse de l'élève</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtAdresse" class="form-control" placeholder="Saisir l'adresse de l'élève ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div> 
+                                          <label>Lieu de naissance</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span>
+	                                              <asp:TextBox runat="server" ID="txtLieuNaiss" class="form-control" placeholder="Saisir le lieu de naissaince de l'élève ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                         <label>Date de naissance</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span>
+                                               	  <asp:TextBox runat="server" ID="txtdate" type="Date" class="form-control" placeholder="Saisir le lieu de naissaince de l'élève ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                         <label>Ecole de Provenance</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span>
+	                                              <asp:TextBox runat="server" ID="txtEcoleProv" class="form-control" placeholder="Saisir l'école de provenance de l'élève ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                         <label>Pourcentage de reussite</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span>
+	                                              <asp:TextBox runat="server" ID="txtPourc" class="form-control" placeholder="Saisir le pourcentage de réussite de l'élève ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div><br />
+
+                                     </div>  
                                                   <CENTER><asp:Label runat="server" ID="txtMessage" Text="Un de vos champs est vide" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
-                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER><br>
+                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER>
+                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnModification" Text="Mettre à jour" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnModification_Click" ></asp:Button><span></span></CENTER><br><br />
                                            
-                              </ContentTemplate>
-                </asp:UpdatePanel>
-              </form>
+                         <script type="text/javascript">
+                             function setmatricule(num) {
+                                 // Récupérer le contrôle TextBox par son ID et lui assigner la valeur du numéro matricule
+                                 document.getElementById('<%= txtMatricule.ClientID %>').value = num;
+                             }
+
+                        </script>
+                        <script type="text/javascript">
+                             function redirectToAdminInscription() {
+                                 // Actualisé la page
+                                 window.location.href = 'AdminInscription.aspx';
+                             }
+                        </script>
+                      </ContentTemplate>
+                     </asp:UpdatePanel>
+                    
+
             </div>
           </div>
         </div>
@@ -121,7 +223,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h1 class="page-title">ESPACE ADMIN --- GESTION DES INSCRIPTIONS</h1>
+		<h2 class="page-title">ESPACE ADMIN --- GESTION DES INSCRIPTIONS</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -139,17 +241,35 @@
 	<div class="main-content">
 		<div class="isotope-filter js__filter_isotope">
 			<br>
-        <div class="row">
-            <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Inscrire un élèves </h4></a>
-            <%--Affichage des etd--%>
+        <div class="modal-body row" style="overflow:auto">
+         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+             <ContentTemplate>
+                 <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Inscrire un élève </h4></a>
+                 <a data-scroll href="AdminChangeClasse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Changement des classe </h4></a>
+                <div class="input-group">
+                   <span class="input-group-addon"> <span class="fa fa-name"></span><asp:Label ID="Label10" runat="server" Text="Recherche approfondie des inscriptions " Visible="true"></asp:Label></span>
+                    <asp:TextBox runat="server" ID="txtRecherche" class="form-control"  AutoPostBack="true" placeholder="Par Nom de l'élève, Sexe, Adresse, Classe, section, date d'inscription, famille..." OnTextChanged="txtRecherche_TextChanged"></asp:TextBox>
+                    <span class="input-group-addon"><span class="fa fa-download"></span><asp:Button runat="server" class="btn btn-primary fa fa-download" ID="btnImprim" Text="Exporter en PDF le Résultat" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnImprim_Click"></asp:Button></span>   
+               </div> <br/>
+            <%--Affichage des inscriptions--%>
             <asp:Repeater ID="Data1" runat="server" OnItemCommand="Data1_ItemCommand">
                        <HeaderTemplate>
                      <table class="table table-condansed table-striped" border="2" style="border:medium ridge black;" >
                       <thead>
                         <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
-                          <th> # </th>
-                          <th> Designation</th>
-                          <th> Etat </th>
+                          <th> Date Insc. </th>
+                          <th> Matricule </th>
+                          <th> Nom </th>
+                          <th> Prénom </th>
+                          <th> Sexe</th>
+                          <th> Classe </th>
+                          <th> Option </th>
+                          <th> Niveau </th>
+                          <th> Nom Père </th>
+                          <th> Nom Mère</th>
+                          <th> LieuNaiss </th>
+                          <th> DateNaiss </th>
+                          <th> Adresse </th>
                           <th> Action</th>
                         </tr>
                       </thead>
@@ -158,10 +278,20 @@
 
                        <ItemTemplate>
                         <tr>
-                          <td style="border:1px solid black;"> <%#Eval("id") %></td>
-                          <td style="border:1px solid black;"> <%#Eval("designation ") %></td>
-                          <td style="border:1px solid black;"> <%#Eval("etat") %></td>
-                          <td style="border:1px solid black;"><a  id="btnUpdate" class="fa fa-edit" style="color:red;font-size: large;font-style: normal;border-color:black;font-weight: bold;" href="AdminUpdateAnnee.aspx?id=<%#Eval("id") %>">Changer Etat</a></td>
+                          <td style="border:1px solid black;"> <%#Eval("dateInscription") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("matricule ") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("nom") %></td>
+                        <td style="border:1px solid black;"> <%#Eval("prenom") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("sexe ") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("classe") %></td>
+                            <td style="border:1px solid black;"> <%#Eval("option") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("idEcole ") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("nom_du_pere") %></td>
+                            <td style="border:1px solid black;"> <%#Eval("nom_de_la_mere") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("lieuNaiss") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("dateNaiss") %></td>
+                            <td style="border:1px solid black;"> <%#Eval("adresse") %></td>
+                          <td style="border:1px solid black;"><a data-scroll href="#myModal" data-toggle="modal" onclick="setmatricule('<%# Eval("matricule") %>')" class="mdi mdi-pencil btn btn-primary animation animated-item-3" style="color:white;font-size: large;font-style: normal;border-color:black;font-weight: bold;">Modifier</a></td>
                         </tr>
                        </ItemTemplate>
 
@@ -170,14 +300,15 @@
                         </table>
                        </FooterTemplate>
                     </asp:Repeater>
-            
+            </ContentTemplate>
+         </asp:UpdatePanel>
 	    </div>
 		<!-- /.isotope-filter js__filter_isotope -->		
 		<?php require_once("../include/footer.php");?>
 	</div>
 	<!-- /.main-content -->
 </div><!--/#wrapper -->
-
+</form>
 <!-- Fin -->
 	<!-- Plugin JavaScript -->
 	<script src="../assets/scripts/jquery.min.js"></script>
@@ -196,6 +327,7 @@
 	<script src="../assets/plugin/lightview/js/lightview/lightview.js"></script>
 
 	<script src="../assets/scripts/main.min.js"></script>
+
 </body>
 </html>
 

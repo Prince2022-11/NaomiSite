@@ -79,8 +79,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminAnneeScolaire.aspx" />
+    <Content Include="AdminChangeClasse.aspx" />
+    <Content Include="AdminChangeClasseExecute.aspx" />
+    <Content Include="AdminFinance.aspx" />
+    <Content Include="AdminFinStructurerFrais.aspx" />
     <Content Include="AdminInscription.aspx" />
+    <Content Include="AdminModifierInscription.aspx" />
     <Content Include="AdminUpdateAnnee.aspx" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\jquery2.js" />
     <Content Include="packages.config" />
     <Content Include="bin\PrototypeGestionRecettesETD.dll.config" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
@@ -123,12 +130,47 @@
     <Compile Include="AdminAnneeScolaire.aspx.designer.cs">
       <DependentUpon>AdminAnneeScolaire.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminChangeClasse.aspx.cs">
+      <DependentUpon>AdminChangeClasse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminChangeClasse.aspx.designer.cs">
+      <DependentUpon>AdminChangeClasse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminChangeClasseExecute.aspx.cs">
+      <DependentUpon>AdminChangeClasseExecute.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminChangeClasseExecute.aspx.designer.cs">
+      <DependentUpon>AdminChangeClasseExecute.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinance.aspx.cs">
+      <DependentUpon>AdminFinance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinance.aspx.designer.cs">
+      <DependentUpon>AdminFinance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinStructurerFrais.aspx.cs">
+      <DependentUpon>AdminFinStructurerFrais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinStructurerFrais.aspx.designer.cs">
+      <DependentUpon>AdminFinStructurerFrais.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminInscription.aspx.cs">
       <DependentUpon>AdminInscription.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminInscription.aspx.designer.cs">
       <DependentUpon>AdminInscription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModifierInscription.aspx.cs">
+      <DependentUpon>AdminModifierInscription.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModifierInscription.aspx.designer.cs">
+      <DependentUpon>AdminModifierInscription.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminUpdateAnnee.aspx.cs">
       <DependentUpon>AdminUpdateAnnee.aspx</DependentUpon>
@@ -155,7 +197,6 @@
     <Folder Include="css\" />
     <Folder Include="img\" />
     <Folder Include="include\" />
-    <Folder Include="js\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <PropertyGroup>
