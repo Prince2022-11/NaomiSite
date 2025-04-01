@@ -20,53 +20,56 @@ namespace NaomiSite
             //Vérification de la connexion de la varibale session
             if (Session["autorisation"] != null && (bool)Session["autorisation"] == true)
             {
-                txtLogin.Text = Session["login"].ToString();
+                if (!IsPostBack)
+                {
+                    txtLogin.Text = Session["login"].ToString();
 
-                // Vérifier l'admin connecté
-                con.Open();
-                MySqlCommand cmd = new MySqlCommand("", con);
-                MySqlCommand cmde = con.CreateCommand();
-                cmde.CommandType = CommandType.Text;
-                cmd.CommandText = ("select * from utilisateur WHERE login='" + txtLogin.Text + "'");
-                MySqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    txtRole.Text = dr["service"].ToString();
-                }
-                con.Close();
+                    // Vérifier l'admin connecté
+                    con.Open();
+                    MySqlCommand cmd = new MySqlCommand("", con);
+                    MySqlCommand cmde = con.CreateCommand();
+                    cmde.CommandType = CommandType.Text;
+                    cmd.CommandText = ("select * from utilisateur WHERE login='" + txtLogin.Text + "'");
+                    MySqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        txtRole.Text = dr["service"].ToString();
+                    }
+                    con.Close();
 
-                //Vérification de l'année Active
-                con.Open();
-                MySqlCommand cmd1 = new MySqlCommand("", con);
-                MySqlCommand cmde1 = con.CreateCommand();
-                cmde1.CommandType = CommandType.Text;
-                cmd1.CommandText = ("select * from anneescol WHERE etat='Actif'");
-                MySqlDataReader dr1 = cmd1.ExecuteReader();
-                while (dr1.Read())
-                {
-                    txtIdAnnee.Text = dr1["anneeScolaire"].ToString();
-                    txtDesignationAnnee.Text = dr1["designation"].ToString();
-                }
-                con.Close();
-                AfficherInscription();
-                numMat();
-                TrouverIdEcole();
+                    //Vérification de l'année Active
+                    con.Open();
+                    MySqlCommand cmd1 = new MySqlCommand("", con);
+                    MySqlCommand cmde1 = con.CreateCommand();
+                    cmde1.CommandType = CommandType.Text;
+                    cmd1.CommandText = ("select * from anneescol WHERE etat='Actif'");
+                    MySqlDataReader dr1 = cmd1.ExecuteReader();
+                    while (dr1.Read())
+                    {
+                        txtIdAnnee.Text = dr1["anneeScolaire"].ToString();
+                        txtDesignationAnnee.Text = dr1["designation"].ToString();
+                    }
+                    con.Close();
+                    AfficherInscription();
+                    numMat();
+                    TrouverIdEcole();
 
-                if (txtMatricule.Text != "")
-                {
-                    TrouverEleve();
-                    btnAddStructure.Visible = false;
-                    txtmat.Visible = false;
-                    btnModification.Visible = true;
-                    TrouverEcoleModification();
-                    TrouverSectionModification();
-                    TrouverClasserModification();
-                }
-                else
-                {
-                    btnAddStructure.Visible = true;
-                    txtmat.Visible = true;
-                    btnModification.Visible = false;
+                    if (txtMatricule.Text != "")
+                    {
+                        TrouverEleve();
+                        btnAddStructure.Visible = false;
+                        txtmat.Visible = false;
+                        btnModification.Visible = true;
+                        TrouverEcoleModification();
+                        TrouverSectionModification();
+                        TrouverClasserModification();
+                    }
+                    else
+                    {
+                        btnAddStructure.Visible = true;
+                        txtmat.Visible = true;
+                        btnModification.Visible = false;
+                    }
                 }
 
             }

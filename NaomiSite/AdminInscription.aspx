@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminInscription.aspx.cs" Inherits="NaomiSite.AdminInscription" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

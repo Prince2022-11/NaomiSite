@@ -82,8 +82,11 @@
     <Content Include="AdminChangeClasse.aspx" />
     <Content Include="AdminChangeClasseExecute.aspx" />
     <Content Include="AdminFinance.aspx" />
+    <Content Include="AdminFinPayeFraisExecute.aspx" />
+    <Content Include="AdminFinPayementFrais.aspx" />
     <Content Include="AdminFinStructurerFrais.aspx" />
     <Content Include="AdminInscription.aspx" />
+    <Content Include="AdminModifFrais.aspx" />
     <Content Include="AdminModifierInscription.aspx" />
     <Content Include="AdminUpdateAnnee.aspx" />
     <Content Include="js\jquery.js" />
@@ -151,6 +154,20 @@
     <Compile Include="AdminFinance.aspx.designer.cs">
       <DependentUpon>AdminFinance.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminFinPayeFraisExecute.aspx.cs">
+      <DependentUpon>AdminFinPayeFraisExecute.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinPayeFraisExecute.aspx.designer.cs">
+      <DependentUpon>AdminFinPayeFraisExecute.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinPayementFrais.aspx.cs">
+      <DependentUpon>AdminFinPayementFrais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinPayementFrais.aspx.designer.cs">
+      <DependentUpon>AdminFinPayementFrais.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminFinStructurerFrais.aspx.cs">
       <DependentUpon>AdminFinStructurerFrais.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -164,6 +181,13 @@
     </Compile>
     <Compile Include="AdminInscription.aspx.designer.cs">
       <DependentUpon>AdminInscription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModifFrais.aspx.cs">
+      <DependentUpon>AdminModifFrais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModifFrais.aspx.designer.cs">
+      <DependentUpon>AdminModifFrais.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminModifierInscription.aspx.cs">
       <DependentUpon>AdminModifierInscription.aspx</DependentUpon>

@@ -15,6 +15,7 @@ namespace NaomiSite
     public partial class AdminFinStructurerFrais : System.Web.UI.Page
     {
         MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con2 = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
         protected void Page_Load(object sender, EventArgs e)
         {
             //Vérification de la connexion de la varibale session
@@ -50,7 +51,6 @@ namespace NaomiSite
                 con.Close();
                 AfficherFraisScolaire();
                 TrouverIdEcole();
-
             }
             else
             {
@@ -60,14 +60,13 @@ namespace NaomiSite
         public void AfficherFraisScolaire()
         {
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT frais_scolaire.idfrais as idfrais,ecole.nomEcole as nomEcole,section.nomSection as nomSection,t_classe.classe as nomClasse,frais_scolaire.designation as designation,frais_scolaire.tranche1 as tranche1,tranche2 as tranche2,tranche3 as tranche3,unite as unite from frais_scolaire,t_classe,section,ecole WHERE (frais_scolaire.classe=t_classe.id OR frais_scolaire.classe='Toutes les classes') AND (frais_scolaire.optionConcerne=section.idSection OR frais_scolaire.optionConcerne='Toutes les options') AND frais_scolaire.idEcole=ecole.idEcole AND frais_scolaire.anneeScolaire='" + txtIdAnnee.Text+"' ORDER BY nomEcole ASC,nomSection ASC,nomClasse ASC", con);
+            MySqlCommand cmdB1 = new MySqlCommand("SELECT DISTINCT frais_scolaire.idfrais as idfrais,ecole.nomEcole as nomEcole,section.nomSection as nomSection,t_classe.classe as nomClasse,frais_scolaire.designation as designation,frais_scolaire.tranche1 as tranche1,tranche2 as tranche2,tranche3 as tranche3,unite as unite from frais_scolaire,t_classe,section,ecole WHERE frais_scolaire.classe=t_classe.id AND frais_scolaire.idEcole=ecole.idEcole AND frais_scolaire.optionConcerne=section.idSection AND t_classe.idSection=section.idSection AND frais_scolaire.anneeScolaire='" + txtIdAnnee.Text + "' ORDER BY nomEcole ASC,nomSection ASC,nomClasse ASC", con);
             cmdB1.ExecuteNonQuery();
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
             da.Fill(dt);
             Data1.DataSource = dt;
             Data1.DataBind();
-            con.Close();
             con.Close();
         }
         public void recherche(string recherche)
@@ -78,7 +77,7 @@ namespace NaomiSite
                 con.Open();
                 MySqlCommand cmdD = con.CreateCommand();
                 cmdD.CommandType = CommandType.Text;
-                cmdD.CommandText = ("SELECT frais_scolaire.idfrais as idfrais,ecole.nomEcole as nomEcole,section.nomSection as nomSection,t_classe.classe as nomClasse,frais_scolaire.designation as designation,frais_scolaire.tranche1 as tranche1,tranche2 as tranche2,tranche3 as tranche3,unite as unite from frais_scolaire, t_classe, section, ecole WHERE frais_scolaire.classe = t_classe.id AND frais_scolaire.optionConcerne = section.idSection AND frais_scolaire.idEcole = ecole.idEcole AND frais_scolaire.anneeScolaire = '"+txtIdAnnee.Text+ "' AND CONCAT(ecole.nomEcole,section.nomSection,t_classe.classe,frais_scolaire.designation ) LIKE '%" + recherche + "%' ORDER BY nomEcole ASC,nomSection ASC,nomClasse ASC");
+                cmdD.CommandText = ("SELECT DISTINCT frais_scolaire.idfrais as idfrais,ecole.nomEcole as nomEcole,section.nomSection as nomSection,t_classe.classe as nomClasse,frais_scolaire.designation as designation,frais_scolaire.tranche1 as tranche1,tranche2 as tranche2,tranche3 as tranche3,unite as unite from frais_scolaire, t_classe, section, ecole WHERE frais_scolaire.classe = t_classe.id AND frais_scolaire.idEcole = ecole.idEcole AND frais_scolaire.optionConcerne = section.idSection AND t_classe.idSection = section.idSection AND frais_scolaire.anneeScolaire = '" + txtIdAnnee.Text + "' AND CONCAT(ecole.nomEcole,section.nomSection,t_classe.classe,frais_scolaire.designation ) LIKE '%" + recherche + "%' ORDER BY nomEcole ASC,nomSection ASC,nomClasse ASC");
                 cmdD.ExecuteNonQuery();
                 DataTable dtD = new DataTable();
                 MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
@@ -254,7 +253,10 @@ namespace NaomiSite
         }
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
+            con.Close();
+            con2.Close();
             con.Open();
+            con2.Open();
             double t1 = double.Parse(txtTranche1.Text);
             double t2 = double.Parse(txtTranche1.Text);
             double t3 = double.Parse(txtTranche1.Text);
@@ -264,19 +266,71 @@ namespace NaomiSite
             {
                 if (txtOption.SelectedValue== "Toutes les options de l'ecole" && txtClasse.SelectedValue == "Toutes les classes de la section")
                 {
-                    EnregFraisClasseGeneraleEtSectionGenerale();
+                    //Entregistrement d'un frais dans toutes les classes
+                    //Et dans toutes les options de l'école sélectionnée
+                    MySqlCommand cmdB = con.CreateCommand();
+                    cmdB.CommandType = CommandType.Text;
+                    cmdB.CommandText = ("SELECT *from t_classe WHERE idEcole='" + txtIdEcole.Text+"'");
+                    MySqlDataReader dr = cmdB.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        MySqlCommand cmd1a = con2.CreateCommand();
+                        cmd1a.CommandType = CommandType.Text;
+                        cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','"+ dr["id"].ToString() + "','"+ dr["idSection"].ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                        cmd1a.ExecuteNonQuery();
+                    }
+                    con2.Close();
+                    con.Close();
+                    Response.Redirect("AdminFinStructurerFrais.aspx");
                 }
                 if (txtOption.SelectedValue != "Toutes les options de l'ecole" && txtClasse.SelectedValue == "Toutes les classes de la section")
                 {
-                    EnregFraisClasseGeneraleEtSectionSpecifique();
+                    //Entregistrement d'un frais dans toutes les classes
+                    //de la section sélectionnée de cette école spécifiée
+                    MySqlCommand cmdB = con.CreateCommand();
+                    cmdB.CommandType = CommandType.Text;
+                    cmdB.CommandText = ("SELECT *from t_classe WHERE idSection='"+txtIdOption.Text+"' AND idEcole='" + txtIdEcole.Text + "'");
+                    MySqlDataReader dr = cmdB.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        MySqlCommand cmd1a = con2.CreateCommand();
+                        cmd1a.CommandType = CommandType.Text;
+                        cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','" + dr["id"].ToString() + "','" +txtIdOption.Text+ "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                        cmd1a.ExecuteNonQuery();
+                    }
+                    con2.Close();
+                    con.Close();
+                    Response.Redirect("AdminFinStructurerFrais.aspx");
                 }
                 if (txtClasse.SelectedValue != "Toutes les classes de la section" && txtOption.SelectedValue == "Toutes les options de l'ecole")
                 {
-                    EnregFraisClasseReduiteEtSectionSpecifique();
+                    //Entregistrement d'un frais dans la classe spécifiée
+                    //de toutes les sections sélectionnées de cette école spécifiée
+                    MySqlCommand cmdB = con.CreateCommand();
+                    cmdB.CommandType = CommandType.Text;
+                    cmdB.CommandText = ("SELECT *from t_classe WHERE classe='" + txtClasse.SelectedValue + "' AND idEcole='" + txtIdEcole.Text + "'");
+                    MySqlDataReader dr = cmdB.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        MySqlCommand cmd1a = con2.CreateCommand();
+                        cmd1a.CommandType = CommandType.Text;
+                        cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','" + dr["id"].ToString() + "','" + dr["idSection"].ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                        cmd1a.ExecuteNonQuery();
+                    }
+                    con2.Close();
+                    con.Close();
+                    Response.Redirect("AdminFinStructurerFrais.aspx");
                 }
                 if (txtOption.SelectedValue != "Toutes les options de l'ecole" && txtClasse.SelectedValue != "Toutes les classes de la section")
                 {
-                    EnregFraisClasseSpécifiqueEtSectionSpecifique();
+                    //Entregistrement d'un frais dans la classe spécifiée
+                    //de la section spécifiée de cette école spécifiée
+                    MySqlCommand cmd1a = con.CreateCommand();
+                    cmd1a.CommandType = CommandType.Text;
+                    cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','" + txtIdClasse.Text + "','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                    cmd1a.ExecuteNonQuery();
+                    con.Close();
+                    Response.Redirect("AdminFinStructurerFrais.aspx");
                 }
             }
             else

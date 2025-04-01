@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminFinance.aspx.cs" Inherits="NaomiSite.AdminFinance" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminModifFrais.aspx.cs" Inherits="NaomiSite.AdminModifFrais" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,14 +86,13 @@
 	</div>
 	<!-- /.content -->
 </div>
-   
 
-<!-- /.main-menu -->
-
+<!-- Formulaire Modal -->
+<form class="login-page form" runat="server" id="Form1">
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- GESTION DES FINANCES</h2>
+		<h1 class="page-title">ESPACE ADMIN --- MODIFICATION D'UN FRAIS SCOLAIRE POUR LA CLASSE</h1>
 		<!-- /.page-title -->
 	</div>
 
@@ -104,6 +103,7 @@
 	</div>
 <!-- /.fixed-navbar -->
 </div>
+    </div>
 
 <!-- Debut -->
 
@@ -111,33 +111,57 @@
 	<div class="main-content">
 		<div class="isotope-filter js__filter_isotope">
 			<br>
-        <div class="modal-body row" style="overflow:auto">
-             <form class="login-page form" runat="server">
-            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div class="row" style="overflow:auto">
+         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
                                         <div class="col-lg-6 col-md-6">
-                                             <label>ENTREES FINANCIERES</label> <br />
-                                             <a href="AdminFinStructurerFrais.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Structurer les Frais scolaires....... </h4></a><br /><br />
-                                             <a href="AdminFinPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des payements des frais</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Evaluer le Niveau de Payement..</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherche dans les payements..</h4></a><br /><br />
-                                         </div>
-                                         <div class="col-lg-6 col-md-6">
-                                             <label>SORTIES FINANCIERES</label> <br />
-                                             <a href="#"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Situation de la caisse Scolaire...</h4></a><br /><br />
-                                         </div>
+                                             <asp:TextBox runat="server" ID="txtIdEcole" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="txtIdFrais" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                          <asp:TextBox runat="server" ID="txtIdOption" ForeColor="blue" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                          <asp:TextBox runat="server" ID="txtIdClasse" ForeColor="black" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                        <asp:Label runat="server" ID="Label1" Text="Classe : " ForeColor="Black" Font-Bold="True" AutoPostBack="True"></asp:Label> 
+                                          <asp:Label runat="server" ID="txtClasse" Text=" 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label>
+                                         <asp:Label runat="server" ID="txtOption" Text=" 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label>
+                                         <asp:Label runat="server" ID="txtEcole" Text=" 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
+                                        <asp:Label runat="server" ID="Label0" Text="Libellé du Frais : " ForeColor="Black" Font-Bold="True" AutoPostBack="True"></asp:Label>
+                                        <asp:Label runat="server" ID="txtFrais" Text=" 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
+                                         <label>Unité monetaire concernée</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtUnite" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True">
+                                                        <asp:ListItem>USD</asp:ListItem>
+                                                        <asp:ListItem>CDF</asp:ListItem>
+                                                   </asp:DropDownList>
+	                                      </div> 
+                                         <label>Tranche 1</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtTranche1" class="form-control" placeholder="Combien Pour la Tranche 1" ReadOnly="false" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                        <label>Tranche2</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtTranche2" class="form-control" placeholder="Saisir le nom de la mère" ReadOnly="false" required AutoPostBack="True"></asp:TextBox>
+	                                      </div>
+                                          <label>Tranche3</label>
+								          <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtTranche3" class="form-control" placeholder="Saisir l'adresse de l'élève ici" ReadOnly="false" required AutoPostBack="True"></asp:TextBox>
+	                                      </div><br />
+                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Au minimum 1 Tranche doit être supérieure à 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
+                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Mettre à jour" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click"></asp:Button><span></span></CENTER><br>
+                                           
+                                        </div>
                               </ContentTemplate>
                 </asp:UpdatePanel>
-              </form>
-                 
 	    </div>
+		<!-- /.isotope-filter js__filter_isotope -->		
+		<?php require_once("../include/footer.php");?>
 	</div>
 	<!-- /.main-content -->
 </div><!--/#wrapper -->
+</form>
 <!-- Fin -->
 	<!-- Plugin JavaScript -->
 	<script src="../assets/scripts/jquery.min.js"></script>
@@ -159,3 +183,4 @@
 
 </body>
 </html>
+

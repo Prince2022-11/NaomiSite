@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminFinStructurerFrais.aspx.cs" Inherits="NaomiSite.AdminFinStructurerFrais" %>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -85,7 +86,8 @@
 	</div>
 	<!-- /.content -->
 </div>
-    <!-- Formulaire Modal -->
+
+<!-- Formulaire Modal -->
 <form class="login-page form" runat="server" id="Form1">
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
       <br></br><br></br>
@@ -148,12 +150,12 @@
                                         <label>Tranche2</label>
 								          <div class="form-group input-group" >
                                                   <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                              <asp:TextBox runat="server" ID="txtTranche2" class="form-control" placeholder="Saisir le nom de la mère" required AutoPostBack="True"></asp:TextBox>
+	                                              <asp:TextBox runat="server" ID="txtTranche2" class="form-control" placeholder="Combien Pour la Tranche 2" required AutoPostBack="True"></asp:TextBox>
 	                                      </div>
                                           <label>Tranche3</label>
 								          <div class="form-group input-group" >
                                                   <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                              <asp:TextBox runat="server" ID="txtTranche3" class="form-control" placeholder="Saisir l'adresse de l'élève ici" required AutoPostBack="True"></asp:TextBox>
+	                                              <asp:TextBox runat="server" ID="txtTranche3" class="form-control" placeholder="Combien Pour la Tranche 3" required AutoPostBack="True"></asp:TextBox>
 	                                      </div><br />
 
                                      </div>  
@@ -203,8 +205,8 @@
                         <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
                           <th> # </th>
                           <th> Ecole</th>
-                          <th> Option </th>
                           <th> Classe</th>
+                          <th> Option </th>
                           <th> Libellé du Frais</th>
                           <th> Unité</th>
                           <th> Tranche1</th>
@@ -221,14 +223,14 @@
                         <tr>
                           <td style="border:1px solid black;"> <%#Eval("idfrais") %></td>
                           <td style="border:1px solid black;"> <%#Eval("nomEcole ") %></td>
-                            <td style="border:1px solid black;"> <%#Eval("nomSection ") %></td>
                             <td style="border:1px solid black;"> <%#Eval("nomClasse") %></td>
+                            <td style="border:1px solid black;"> <%#Eval("nomSection ") %></td>
                           <td style="border:1px solid black;"> <%#Eval("designation ") %></td>
                             <td style="border:1px solid black;"> <%#Eval("unite ") %></td>
                             <td style="border:1px solid black;"> <%#Eval("tranche1 ") %></td>
                             <td style="border:1px solid black;"> <%#Eval("tranche2 ") %></td>
                           <td style="border:1px solid black;"> <%#Eval("tranche3") %></td>
-                          <td style="border:1px solid black;"><a  id="btnUpdate" class="fa fa-edit" style="color:blue;font-size: large;font-style: normal;border-color:black;font-weight: bold;" href="#?id=<%#Eval("idfrais") %>">MODIFIER</a></td>
+                          <td style="border:1px solid black;"><a  id="btnUpdate" class="fa fa-edit" style="color:blue;font-size: large;font-style: normal;border-color:black;font-weight: bold;" href="AdminModifFrais.aspx?id=<%#Eval("idfrais") %>">MODIFIER</a></td>
                         </tr>
                        </ItemTemplate>
 
@@ -237,14 +239,13 @@
                         </table>
                        </FooterTemplate>
                     </asp:Repeater>
-            
 	    </div>
 		<!-- /.isotope-filter js__filter_isotope -->		
 		<?php require_once("../include/footer.php");?>
 	</div>
 	<!-- /.main-content -->
 </div><!--/#wrapper -->
- </form>
+</form>
 <!-- Fin -->
 	<!-- Plugin JavaScript -->
 	<script src="../assets/scripts/jquery.min.js"></script>
@@ -263,6 +264,7 @@
 	<script src="../assets/plugin/lightview/js/lightview/lightview.js"></script>
 
 	<script src="../assets/scripts/main.min.js"></script>
+
 </body>
 </html>
 
