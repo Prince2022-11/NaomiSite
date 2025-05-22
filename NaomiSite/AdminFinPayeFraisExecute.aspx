@@ -37,6 +37,34 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+     <script type="text/javascript">
+        function imprimerFacture() {
+            var impressionDiv = document.getElementById("divFacture");
+            var fenetreImpression = window.open('', '', 'height=400,width=600');
+            fenetreImpression.document.write('<html<head><title>Reçu Payement</title>');
+            fenetreImpression.document.write('</head><body>');
+            fenetreImpression.document.write(impressionDiv.innerHTML);
+            fenetreImpression.document.write('</body></html>');
+            fenetreImpression.document.close();
+            fenetreImpression.print();
+        }
+
+        function setFactureData(matricule, nom, classe, dateRecu, montant, frais, unite1, prevu, unite2, apayer, reste, login) {
+            document.getElementById('factureMatricule').innerText = matricule;
+            document.getElementById('factureNom').innerText = nom;
+            document.getElementById('factureClasse').innerText = classe;
+            document.getElementById('factureDateRecu').innerText = dateRecu;
+            document.getElementById('factureMontant').innerText = montant;
+            document.getElementById('factureFrais').innerText = frais;
+            document.getElementById('factureUnite1').innerText = unite1;
+            document.getElementById('factureTranchePrevu').innerText = prevu;
+            document.getElementById('factureUnite2').innerText = unite2;
+            document.getElementById('factureTranchePaye').innerText = apayer;
+            document.getElementById('factureReste').innerText = reste;
+            document.getElementById('factureLogin').innerText = login;
+        }
+    </script>
 </head>
 
 <body>
@@ -119,6 +147,10 @@
                                             <asp:Label runat="server" ID="txtUnite" Text="0" ForeColor="Black" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label><br />
                                             <asp:TextBox runat="server" ID="TextBox1" ReadOnly="false" AutoPostBack="True" Font-Size="Smaller" ForeColor="Transparent" Width="0px" BorderColor="Transparent"></asp:TextBox>
                                              <asp:TextBox runat="server" ID="txtIdEcole" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                             <asp:Label runat="server" ID="txtDispo" ForeColor="Red" Text="0" AutoPostBack="True" Visible="false"></asp:Label>
+                                             <asp:Label runat="server" ID="txtEntree" ForeColor="Red" Text="0" AutoPostBack="True" Visible="false"></asp:Label>
+                                            <asp:TextBox runat="server" ID="txtDernierOperation" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                             <asp:Label runat="server" ID="txtSortie" ForeColor="Red" Text="0" AutoPostBack="True" Visible="false"></asp:Label>
                                         <asp:TextBox runat="server" ID="txtIdFrais" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
                                           <asp:TextBox runat="server" ID="txtIdOption" ForeColor="blue" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
                                         <asp:Label runat="server" ID="Label2" Text="Opération de : " ForeColor="Black" Font-Bold="True" AutoPostBack="True"></asp:Label>
@@ -144,6 +176,7 @@
                                               <asp:Label runat="server" ID="txtT2" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
                                               <label>Tr3 = </label>
                                               <asp:Label runat="server" ID="txtT3" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
+                                              <label>Le montant à payer</label>
                                            </div>
                                            <div class="col-lg-6 col-md-6">
                                                <asp:Label runat="server" ID="txtUnite2" Text="Evolution en payement en " ForeColor="Blue" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
@@ -153,32 +186,70 @@
                                               <asp:Label runat="server" ID="txtT22" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
                                               <label>Tr3 = </label>
                                               <asp:Label runat="server" ID="txtT33" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
+                                               <label>Reste à payer = </label>
+                                              <asp:Label runat="server" ID="txtReste" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label><br />
                                            </div>  
-                                         <label>Le montant à payer</label>
 								          <div class="form-group input-group" >
                                                   <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                              <asp:TextBox runat="server" ID="txtmontant" class="form-control" placeholder="Saisir ici le montant à payer" ReadOnly="false" required AutoPostBack="True"></asp:TextBox>
-	                                      </div><br />
-                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Au minimum 1 Tranche doit être supérieure à 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
-                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Effectuer" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClientClick="return confirmPayment();" OnClick="btnAddStructure_Click"></asp:Button><span></span></CENTER><br>
-                                           
+	                                              <asp:TextBox runat="server" ID="txtmontant" class="form-control" placeholder="Saisir ici le montant à payer" ReadOnly="false" OnTextChanged="txtmontant_TextChanged"  required AutoPostBack="True"></asp:TextBox>
+                                              <span class="input-group-addon"> <span class="fa fa-name"></span><asp:Button runat="server" class="fa fa-download"  ID="btnConvertir" Text="Convertir dans autre Unité" ForeColor="White" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnConvertir_Click" /></span>
+	                                      </div> 
+                                            <asp:Label runat="server" ID="Label3" Text="NB: Si le montant est un décimal, utilisez la virgule (,) pas un point" ForeColor="Red" Font-Bold="True" Font-Size="Smaller" AutoPostBack="True"></asp:Label><br />
+                                            <asp:Label runat="server" ID="txtConvertir" Text="Veuiller Saisir d'abord le montant que l'élève est venue avec à la caise" ForeColor="Red" Font-Bold="True" Font-Size="Smaller" AutoPostBack="True" Visible="false"></asp:Label><br />
+                                             <%-- Création de la base pour le message après avoir importer son script avant la fermeture de Body --%>
+	                                    <div class="alert  alert-danger"  id="error" runat="server">
+		                                    <strong> Vérifiez bien vos champs, ou soit le montant saisi est supérieur au reste de l'élève...</strong>
+	                                    </div>
+	                                    <div class="alert  alert-success"  id="success" runat="server">
+		                                    <strong> Payement fait avec succès, Si vous voulez payer encore sélectionnez encore un frais</strong>
+	                                    </div>
+                                    <%-- fin de la balise--%>
+                                            <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre et Imprimer" type="submit" style="background: #085ecf ;" OnClick="btnAddStructure_Click" CausesValidation="false" AutoPostBack="True"/><span></span></CENTER>
+                                            <%--<asp:Button runat="server" class="btn btn-primary" ID="Button1" Text="Effectuer" type="submit" style="background: #085ecf ;" OnClientClick="confirmPayment(); return false;" OnClick="btnAddStructure_Click"/><span></span>--%>
+                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Au minimum 1 Tranche doit être supérieure à 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER><br>
+                                          
                                         </div>
-                                        <script type="text/javascript">
-                                            function confirmPayment() {
-                                                return confirm("Sauvegarder l'opération de payement ?");
-                                            }
-                                        </script>
-                                        <script type="text/javascript">
-                                            function showError(message) {
-                                                alert(message); // Utilisation de alert() pour afficher le message
-                                            }
-                                        </script>
-                                        <script type="text/javascript">
-                                            function showSuccess(message) {
-                                                alert(message); // Utilisation de alert() pour afficher le message
-                                            }
-                                        </script>
+                                        <div class="col-lg-6 col-md-6">
+                                            <asp:Label runat="server" ID="lblTaux" Text="Taux de change en FC (Ex: 2850)" ForeColor="black" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label>
+                                             <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtTaux" class="form-control" placeholder="Saisir ici le taux de change" ReadOnly="false" AutoPostBack="True" Visible="false" OnTextChanged="txtTaux_TextChanged"></asp:TextBox>
+	                                      </div>
+                                            <asp:Label runat="server" ID="txtMontantVenuAvec" Text="0" ForeColor="black" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label>
+                                            <asp:Label runat="server" ID="lblEquivalence" Text="Equivalence dans l'autre unité " ForeColor="black" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label>
+                                             <div class="form-group input-group" >
+                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
+	                                              <asp:TextBox runat="server" ID="txtEquivalenceMontant" class="form-control" placeholder="Equivalence" ReadOnly="false" AutoPostBack="True" Visible="false"></asp:TextBox>
+	                                      </div> <br />
+                                            <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnValiderAvecConversion" Text="Convertir" type="submit" style="background: #085ecf ;" CausesValidation="false" AutoPostBack="True" OnClick="btnValiderAvecConversion_Click" Visible="false"/></CENTER>
 
+                                            <div id="divFacture" style="display:none;">
+                                                <h6>
+                                                    C.S NAOMI
+                                                    <p>RECU DE PAYEMENT</p>
+                                                    <p>N°<span id="factureMatricule"></span></p>
+                                                    <p>Nom : <span id="factureNom"></span></p>
+                                                    <p>Classe : <span id="factureClasse"></span></p>
+                                                    .................................................
+                                                    <p>Date : <span id="factureDateRecu"></span></p>
+                                                    <p>Montant Payé : <span id="factureMontant"></span></p>
+                                                    <p>Frais payé : <span id="factureFrais"></span></p>
+                                                    <p>Somme prévue à payer en <span id="factureUnite1"></span></p>
+                                                    <p>Tr1=<span id="factureTranchePrevu"></span></p>
+                                                    .................................................
+                                                    <p>Votre Niveau en payement <span id="factureUnite2"></span></p>
+                                                    <p>Tr1=<span id="factureTranchePaye"></span></p>
+                                                    <p>Reste : <span id="factureReste"></span></p>
+                                                    <p>Imprimé par <span id="factureLogin"></span></p>
+                                                    .................................................
+                                                </h6>
+
+                                            </div>
+                                            <%--<div>
+                                                 <asp:Button ID="btnImprimerFacture" runat="server" Text="Imprimer Facture" OnClick="btnImprimerFacture_Click"/>
+                                                
+                                            </div>--%>
+                                        </div>
 
                               </ContentTemplate>
                 </asp:UpdatePanel>
@@ -190,6 +261,22 @@
 </div><!--/#wrapper -->
 </form>
 <!-- Fin -->
+
+     <!--Script pour message erreur ou succes-->
+    <script src="~/js/jquery.js"></script>
+		 <script>
+		$(document).ready(function(){
+			$("#error").fadeTo(1000, 100).slideUp(1000, function(){
+					$("#error").slideUp(1000);
+			});
+			
+			$("#success").fadeTo(1000, 100).slideUp(1000, function(){
+					$("#success").slideUp(1000);
+			});
+		});
+	</script>
+	<!-- Fin script message-->
+
 	<!-- Plugin JavaScript -->
 	<script src="../assets/scripts/jquery.min.js"></script>
 	<script src="../assets/scripts/modernizr.min.js"></script>
@@ -198,7 +285,6 @@
 	<script src="../assets/plugin/nprogress/nprogress.js"></script>
 	<script src="../assets/plugin/sweet-alert/sweetalert.min.js"></script>
 	<script src="../assets/plugin/waves/waves.min.js"></script>
-
 	<!-- Isotope -->
 	<script src="../assets/scripts/isotope.pkgd.min.js"></script>
 	<script src="../assets/scripts/cells-by-row.min.js"></script>

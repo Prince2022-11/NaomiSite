@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyHTMLReports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\EasyHTMLReports.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\itextsharp.dll</HintPath>
@@ -78,6 +82,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminAgent.aspx" />
+    <Content Include="AdminAgentAjout.aspx" />
+    <Content Include="AdminAgentChargeHoraire.aspx" />
+    <Content Include="AdminAgentChargeHoraireModifer.aspx" />
     <Content Include="AdminAnneeScolaire.aspx" />
     <Content Include="AdminChangeClasse.aspx" />
     <Content Include="AdminChangeClasseExecute.aspx" />
@@ -88,7 +96,12 @@
     <Content Include="AdminInscription.aspx" />
     <Content Include="AdminModifFrais.aspx" />
     <Content Include="AdminModifierInscription.aspx" />
+    <Content Include="AdminNiveauPaye.aspx" />
+    <Content Include="AdminRechPayementFrais.aspx" />
+    <Content Include="AdminSituationCaisse.aspx" />
     <Content Include="AdminUpdateAnnee.aspx" />
+    <Content Include="AdminUpdateUser.aspx" />
+    <Content Include="AdminUtilisateur.aspx" />
     <Content Include="js\jquery.js" />
     <Content Include="js\jquery2.js" />
     <Content Include="packages.config" />
@@ -125,6 +138,34 @@
     </Compile>
     <Compile Include="Acceuil.aspx.designer.cs">
       <DependentUpon>Acceuil.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminAgent.aspx.cs">
+      <DependentUpon>AdminAgent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAgent.aspx.designer.cs">
+      <DependentUpon>AdminAgent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminAgentAjout.aspx.cs">
+      <DependentUpon>AdminAgentAjout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAgentAjout.aspx.designer.cs">
+      <DependentUpon>AdminAgentAjout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminAgentChargeHoraire.aspx.cs">
+      <DependentUpon>AdminAgentChargeHoraire.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAgentChargeHoraire.aspx.designer.cs">
+      <DependentUpon>AdminAgentChargeHoraire.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminAgentChargeHoraireModifer.aspx.cs">
+      <DependentUpon>AdminAgentChargeHoraireModifer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAgentChargeHoraireModifer.aspx.designer.cs">
+      <DependentUpon>AdminAgentChargeHoraireModifer.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminAnneeScolaire.aspx.cs">
       <DependentUpon>AdminAnneeScolaire.aspx</DependentUpon>
@@ -196,12 +237,47 @@
     <Compile Include="AdminModifierInscription.aspx.designer.cs">
       <DependentUpon>AdminModifierInscription.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminNiveauPaye.aspx.cs">
+      <DependentUpon>AdminNiveauPaye.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminNiveauPaye.aspx.designer.cs">
+      <DependentUpon>AdminNiveauPaye.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminRechPayementFrais.aspx.cs">
+      <DependentUpon>AdminRechPayementFrais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminRechPayementFrais.aspx.designer.cs">
+      <DependentUpon>AdminRechPayementFrais.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminSituationCaisse.aspx.cs">
+      <DependentUpon>AdminSituationCaisse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminSituationCaisse.aspx.designer.cs">
+      <DependentUpon>AdminSituationCaisse.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminUpdateAnnee.aspx.cs">
       <DependentUpon>AdminUpdateAnnee.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminUpdateAnnee.aspx.designer.cs">
       <DependentUpon>AdminUpdateAnnee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminUpdateUser.aspx.cs">
+      <DependentUpon>AdminUpdateUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminUpdateUser.aspx.designer.cs">
+      <DependentUpon>AdminUpdateUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminUtilisateur.aspx.cs">
+      <DependentUpon>AdminUtilisateur.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminUtilisateur.aspx.designer.cs">
+      <DependentUpon>AdminUtilisateur.aspx</DependentUpon>
     </Compile>
     <Compile Include="EspaceAdmin.aspx.cs">
       <DependentUpon>EspaceAdmin.aspx</DependentUpon>
@@ -222,6 +298,9 @@
     <Folder Include="img\" />
     <Folder Include="include\" />
     <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

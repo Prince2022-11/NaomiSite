@@ -10,7 +10,7 @@
 namespace NaomiSite {
     
     
-    public partial class AdminFinStructurerFrais {
+    public partial class AdminNiveauPaye {
         
         /// <summary>
         /// txtLogin control.
@@ -85,22 +85,13 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.TextBox txtIdEcole;
         
         /// <summary>
-        /// txtIdOption control.
+        /// lblInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdOption;
-        
-        /// <summary>
-        /// txtIdClasse control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdClasse;
+        protected global::System.Web.UI.WebControls.Label lblInfo;
         
         /// <summary>
         /// txtEcole control.
@@ -112,120 +103,93 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.DropDownList txtEcole;
         
         /// <summary>
-        /// txtOption control.
+        /// Label0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtOption;
+        protected global::System.Web.UI.WebControls.Label Label0;
         
         /// <summary>
-        /// txtClasse control.
+        /// txtmois control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtClasse;
+        protected global::System.Web.UI.WebControls.DropDownList txtmois;
         
         /// <summary>
-        /// txtLibelle control.
+        /// txtTotMois control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLibelle;
+        protected global::System.Web.UI.WebControls.Label txtTotMois;
         
         /// <summary>
-        /// txtUnite control.
+        /// TxtPromo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtUnite;
+        protected global::System.Web.UI.WebControls.Label TxtPromo;
         
         /// <summary>
-        /// txtTranche1 control.
+        /// txtFF control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTranche1;
+        protected global::System.Web.UI.WebControls.Label txtFF;
         
         /// <summary>
-        /// txtTranche2 control.
+        /// txtEnseignant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTranche2;
+        protected global::System.Web.UI.WebControls.Label txtEnseignant;
         
         /// <summary>
-        /// txtTranche3 control.
+        /// txtAnneeEncours control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTranche3;
+        protected global::System.Web.UI.WebControls.Label txtAnneeEncours;
         
         /// <summary>
-        /// Label3 control.
+        /// txtTotEleve control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label txtTotEleve;
         
         /// <summary>
-        /// txtMessage control.
+        /// txtTotPaye control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtMessage;
+        protected global::System.Web.UI.WebControls.Label txtTotPaye;
         
         /// <summary>
-        /// btnAddStructure control.
+        /// txtPourc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddStructure;
-        
-        /// <summary>
-        /// Label10 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
-        
-        /// <summary>
-        /// txtRecherche control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRecherche;
-        
-        /// <summary>
-        /// Data1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Data1;
+        protected global::System.Web.UI.WebControls.Label txtPourc;
     }
 }

@@ -10,7 +10,7 @@
 namespace NaomiSite {
     
     
-    public partial class AdminFinStructurerFrais {
+    public partial class AdminAgentAjout {
         
         /// <summary>
         /// txtLogin control.
@@ -85,22 +85,40 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.TextBox txtIdEcole;
         
         /// <summary>
-        /// txtIdOption control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdOption;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// txtIdClasse control.
+        /// txtmat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdClasse;
+        protected global::System.Web.UI.WebControls.Label txtmat;
+        
+        /// <summary>
+        /// txtMatricule control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMatricule;
+        
+        /// <summary>
+        /// txtDernierMat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtDernierMat;
         
         /// <summary>
         /// txtEcole control.
@@ -112,76 +130,85 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.DropDownList txtEcole;
         
         /// <summary>
-        /// txtOption control.
+        /// txtNom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtOption;
+        protected global::System.Web.UI.WebControls.TextBox txtNom;
         
         /// <summary>
-        /// txtClasse control.
+        /// txtPrenom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtClasse;
+        protected global::System.Web.UI.WebControls.TextBox txtPrenom;
         
         /// <summary>
-        /// txtLibelle control.
+        /// txtSexe control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLibelle;
+        protected global::System.Web.UI.WebControls.DropDownList txtSexe;
         
         /// <summary>
-        /// txtUnite control.
+        /// txtNiveau control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtUnite;
+        protected global::System.Web.UI.WebControls.DropDownList txtNiveau;
         
         /// <summary>
-        /// txtTranche1 control.
+        /// txtDomaine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTranche1;
+        protected global::System.Web.UI.WebControls.TextBox txtDomaine;
         
         /// <summary>
-        /// txtTranche2 control.
+        /// txtFonction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTranche2;
+        protected global::System.Web.UI.WebControls.DropDownList txtFonction;
         
         /// <summary>
-        /// txtTranche3 control.
+        /// txtEtatCivil control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTranche3;
+        protected global::System.Web.UI.WebControls.DropDownList txtEtatCivil;
         
         /// <summary>
-        /// Label3 control.
+        /// txtPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.TextBox txtPhone;
+        
+        /// <summary>
+        /// txtAdresse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAdresse;
         
         /// <summary>
         /// txtMessage control.
@@ -202,6 +229,24 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Button btnAddStructure;
         
         /// <summary>
+        /// btnModification control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModification;
+        
+        /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        
+        /// <summary>
         /// Label10 control.
         /// </summary>
         /// <remarks>
@@ -218,6 +263,15 @@ namespace NaomiSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRecherche;
+        
+        /// <summary>
+        /// btnRechApproFondie control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRechApproFondie;
         
         /// <summary>
         /// Data1 control.

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminFinance.aspx.cs" Inherits="NaomiSite.AdminFinance" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminSituationCaisse.aspx.cs" Inherits="NaomiSite.AdminSituationCaisse" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +37,7 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -86,14 +87,13 @@
 	</div>
 	<!-- /.content -->
 </div>
-   
 
-<!-- /.main-menu -->
-
+<!-- Formulaire Modal -->
+<form class="login-page form" runat="server" id="Form1">
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- GESTION DES FINANCES</h2>
+		<h1 class="page-title">ESPACE ADMIN --- ETAT DE LA CAISSE</h1>
 		<!-- /.page-title -->
 	</div>
 
@@ -104,6 +104,7 @@
 	</div>
 <!-- /.fixed-navbar -->
 </div>
+    </div>
 
 <!-- Debut -->
 
@@ -111,34 +112,71 @@
 	<div class="main-content">
 		<div class="isotope-filter js__filter_isotope">
 			<br>
-        <div class="modal-body row" style="overflow:auto">
-             <form class="login-page form" runat="server">
-            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div class="row" style="overflow:auto">
+         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
-                                        <div class="col-lg-6 col-md-6">
-                                             <label>ENTREES FINANCIERES</label> <br />
-                                             <a href="AdminFinStructurerFrais.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Structurer les Frais scolaires....... </h4></a><br /><br />
-                                             <a href="AdminFinPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des payements des frais</h4></a><br /><br />
-                                             <a href="AdminNiveauPaye.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Evaluer le Niveau de Payement..</h4></a><br /><br />
-                                             <a href="AdminRechPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherche dans les payements..</h4></a><br /><br />
-                                         </div>
-                                         <div class="col-lg-6 col-md-6">
-                                             <label>SORTIES FINANCIERES</label> <br />
-                                             <a href="#"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
-                                             <a href="AdminSituationCaisse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Situation de la caisse Scolaire...</h4></a><br /><br />
-                                         </div>
-                              </ContentTemplate>
+                              <div class="col-lg-9 col-md-9">
+                                   <asp:Label runat="server" ID="lblInfo" Text="LA SITUATION ACTUELLE DE LA CAISSE" ForeColor="Black" Font-Bold="True" AutoPostBack="True" Font-Size="Larger"></asp:Label> 
+                                         <asp:Repeater ID="Data1" runat="server">
+                                   <HeaderTemplate>
+                                 <table class="table table-condansed table-striped" border="2" style="border:medium ridge black;" >
+                                  <thead>
+                                    <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
+                                      <th> ECOLE</th>
+                                      <th> UNITE MONETAIRE</th>
+                                      <th> ENTREES </th>
+                                      <th> SORTIE</th>
+                                      <th> DISPONIBLE</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    </HeaderTemplate>
+
+                                   <ItemTemplate>
+                                    <tr>
+                                      <td style="border:1px solid black;"> <%#Eval("nomEcole") %></td>
+                                      <td style="border:1px solid black;"> <%#Eval("libelle ") %></td>
+                                        <td style="border:1px solid black;"> <%#Eval("Entree") %></td>
+                                        <td style="border:1px solid black;"> <%#Eval("Sortie ") %></td>
+                                      <td style="border:1px solid black;"> <%#Eval("Solde ") %></td>
+                                    </tr>
+                                   </ItemTemplate>
+
+                                   <FooterTemplate>
+                                    </tbody>
+                                    </table>
+                                   </FooterTemplate>
+                                </asp:Repeater>
+                                  </div>
+                                    </ContentTemplate>
+
                 </asp:UpdatePanel>
-              </form>
-                 
 	    </div>
+		<!-- /.isotope-filter js__filter_isotope -->		
+		<?php require_once("../include/footer.php");?>
 	</div>
 	<!-- /.main-content -->
 </div><!--/#wrapper -->
+</form>
 <!-- Fin -->
+
+     <!--Script pour message erreur ou succes-->
+    <script src="~/js/jquery.js"></script>
+		 <script>
+		$(document).ready(function(){
+			$("#error").fadeTo(1000, 100).slideUp(1000, function(){
+					$("#error").slideUp(1000);
+			});
+			
+			$("#success").fadeTo(1000, 100).slideUp(1000, function(){
+					$("#success").slideUp(1000);
+			});
+		});
+	</script>
+	<!-- Fin script message-->
+
 	<!-- Plugin JavaScript -->
 	<script src="../assets/scripts/jquery.min.js"></script>
 	<script src="../assets/scripts/modernizr.min.js"></script>
@@ -147,7 +185,6 @@
 	<script src="../assets/plugin/nprogress/nprogress.js"></script>
 	<script src="../assets/plugin/sweet-alert/sweetalert.min.js"></script>
 	<script src="../assets/plugin/waves/waves.min.js"></script>
-
 	<!-- Isotope -->
 	<script src="../assets/scripts/isotope.pkgd.min.js"></script>
 	<script src="../assets/scripts/cells-by-row.min.js"></script>

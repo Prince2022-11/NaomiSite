@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminFinance.aspx.cs" Inherits="NaomiSite.AdminFinance" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminAgent.aspx.cs" Inherits="NaomiSite.AdminAgent" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +93,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- GESTION DES FINANCES</h2>
+		<h2 class="page-title">ESPACE ADMIN --- GESTION DES AGENTS DE L'ECOLE</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -117,18 +117,18 @@
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
                                         <div class="col-lg-6 col-md-6">
-                                             <label>ENTREES FINANCIERES</label> <br />
-                                             <a href="AdminFinStructurerFrais.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Structurer les Frais scolaires....... </h4></a><br /><br />
-                                             <a href="AdminFinPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des payements des frais</h4></a><br /><br />
-                                             <a href="AdminNiveauPaye.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Evaluer le Niveau de Payement..</h4></a><br /><br />
-                                             <a href="AdminRechPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherche dans les payements..</h4></a><br /><br />
+                                             <label>DU COTE PRESTATION</label> <br />
+                                             <a href="AdminAgentAjout.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Ajout des agents dans le système.............</h4></a><br /><br />
+                                             <a href="AdminAgentChargeHoraire.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Attribution des charges horaires annuelles</h4></a><br /><br />
+                                             <a href="AdminAgentPresence.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Commencer les cours et Présences..........</h4></a><br /><br />
+                                             <a href="AdminAgentFinCours.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Cloturer les cours des enseignants présents</h4></a><br /><br />
                                          </div>
                                          <div class="col-lg-6 col-md-6">
-                                             <label>SORTIES FINANCIERES</label> <br />
+                                             <label>DU COTE REMUNERATION</label> <br />
                                              <a href="#"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
                                              <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
-                                             <a href="AdminSituationCaisse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Situation de la caisse Scolaire...</h4></a><br /><br />
+                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Compte de payement de l'agent</h4></a><br /><br />
+                                             <a href="AdminSituationCaisse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Des recherches approfondies....</h4></a><br /><br />
                                          </div>
                               </ContentTemplate>
                 </asp:UpdatePanel>

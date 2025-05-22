@@ -11,6 +11,9 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using KimToo;
+using System.Threading;
+
 
 namespace NaomiSite
 {
@@ -54,15 +57,20 @@ namespace NaomiSite
                         txtIdAnnee.Text = dr1["anneeScolaire"].ToString();
                         txtDesignationAnnee.Text = dr1["designation"].ToString();
                     }
+                    success.Visible = false;
+                    error.Visible = false;
                     con.Close();
                     try
                     {
+                        ViderChamps();
                         TrouverEleve();
                         TrouverEcole();
                         TrouverSection();
                         TrouverClasser();
                         TrouverFrais();
                         TrouverIdFrais();
+                        SituationCaisse();
+                        TrouverDerniereOperation();
                     }
                     catch { }
                 }
@@ -82,7 +90,7 @@ namespace NaomiSite
             MySqlDataReader dr = cmdB.ExecuteReader();
             while (dr.Read())
             {
-                txtEcole.Text = dr["nomEcole"].ToString();
+                txtEcole.Text = " / " + dr["nomEcole"].ToString();
             }
             con.Close();
         }
@@ -100,8 +108,8 @@ namespace NaomiSite
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
-                txtIdOption.Text = dr["optionEtude"].ToString();
                 txtIdEcole.Text = dr["idEcole"].ToString();
+                txtIdOption.Text = dr["optionEtude"].ToString();
                 txtIdClasse.Text = dr["classe"].ToString();
                 txtMatricule.Text = dr["matricule"].ToString();
                 txtNomEleve.Text = dr["nomEleve"].ToString()+" "+dr["prenom"].ToString()+"--";
@@ -116,7 +124,7 @@ namespace NaomiSite
             con.Open();
             MySqlCommand cmdB = con.CreateCommand();
             cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT nomSection from section WHERE idEcole='" + txtIdEcole.Text + "'");
+            cmdB.CommandText = ("SELECT nomSection from section WHERE idSection='" + txtIdOption.Text + "' AND idEcole='" + txtIdEcole.Text + "'");
             MySqlDataReader dr = cmdB.ExecuteReader();
             while (dr.Read())
             {
@@ -129,7 +137,7 @@ namespace NaomiSite
             con.Open();
             MySqlCommand cmdB = con.CreateCommand();
             cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from t_classe WHERE id='" + txtIdClasse.Text + "'");
+            cmdB.CommandText = ("SELECT *from t_classe WHERE id='" + txtIdClasse.Text + "' AND idSection='" + txtIdOption.Text + "' AND idEcole='" + txtIdEcole.Text + "' ");
             MySqlDataReader dr = cmdB.ExecuteReader();
             while (dr.Read())
             {
@@ -154,43 +162,23 @@ namespace NaomiSite
         }
         public void TrouverIdFrais()
         {
-            con.Open();
-            MySqlCommand cmdB = con.CreateCommand();
-            cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from frais_scolaire WHERE classe='" + txtIdClasse.Text + "' AND optionConcerne='" + txtIdOption.Text + "' AND anneeScolaire='" + txtIdAnnee.Text + "' AND idEcole='" + txtIdEcole.Text + "' AND designation='" + txtFrais.SelectedValue + "' ORDER BY designation ASC");
-            MySqlDataReader dr = cmdB.ExecuteReader();
-            while (dr.Read())
-            {
-                txtIdFrais.Text = dr["idfrais"].ToString();
-                txtT1.Text = dr["tranche1"].ToString();
-                txtT2.Text = dr["tranche2"].ToString();
-                txtT3.Text = dr["tranche3"].ToString();
-                txtUnite.Text = dr["unite"].ToString();
-                txtUnite1.Text = "Le montant prévu en " + dr["unite"].ToString();
-                txtUnite2.Text = "Evolution en payement en " + dr["unite"].ToString();
-            }
-            con.Close();
-        }
-        public void TrouverFraisDejaPaye()
-        {
             try
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("", con);
-                MySqlCommand cmde = con.CreateCommand();
-                cmde.CommandType = CommandType.Text;
-                cmd.CommandText = "select *from situation_paye where idFrais='" + txtIdFrais.Text + "' and matricule='" + txtMatricule.Text + "' and anneeScolaire='" + txtIdAnnee.Text + "'";
-                MySqlDataReader dr = cmd.ExecuteReader();
+                MySqlCommand cmdB = con.CreateCommand();
+                cmdB.CommandType = CommandType.Text;
+                cmdB.CommandText = ("SELECT *from frais_scolaire WHERE classe='" + txtIdClasse.Text + "' AND optionConcerne='" + txtIdOption.Text + "' AND anneeScolaire='" + txtIdAnnee.Text + "' AND idEcole='" + txtIdEcole.Text + "' AND designation='" + txtFrais.SelectedValue + "' ORDER BY designation ASC");
+                MySqlDataReader dr = cmdB.ExecuteReader();
                 while (dr.Read())
                 {
-                    txtT11.Text = "0";
-                    txtT22.Text = "0";
-                    txtT33.Text = "0";
-                    txtT11.Text = dr["tranche1"].ToString();
-                    txtT22.Text = dr["tranche2"].ToString();
-                    txtT33.Text = dr["tranche3"].ToString();
+                    txtIdFrais.Text = dr["idfrais"].ToString();
+                    txtT1.Text = dr["tranche1"].ToString();
+                    txtT2.Text = dr["tranche2"].ToString();
+                    txtT3.Text = dr["tranche3"].ToString();
+                    txtUnite.Text = dr["unite"].ToString();
+                    txtUnite1.Text = "Le montant prévu en " + dr["unite"].ToString();
+                    txtUnite2.Text = "Evolution en payement en " + dr["unite"].ToString();
                 }
-
                 con.Close();
             }
             catch
@@ -198,15 +186,100 @@ namespace NaomiSite
 
             }
         }
+        public void TrouverDerniereOperation()
+        {
+            try
+            {
+                con.Close();
+                con.Open();
+                MySqlCommand cmdB = con.CreateCommand();
+                cmdB.CommandType = CommandType.Text;
+                cmdB.CommandText = ("SELECT MAX(id_payement) as DOperation from t_payement_frais");
+                MySqlDataReader dr = cmdB.ExecuteReader();
+                txtDernierOperation.Text = "";
+                while (dr.Read())
+                {
+                    txtDernierOperation.Text = dr["DOperation"].ToString();
+                }
+                con.Close();
+            }
+            catch
+            {
+
+            }
+        }
+        public void TrouverFraisDejaPaye()
+        {
+            try
+            {
+                //using System.Globalization;using System.Threading;
+                //L'ajout de ces 2 lignes et de ces bibliothèques font l'utilisation du point au décimal
+                Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("", con);
+                MySqlCommand cmde = con.CreateCommand();
+                cmde.CommandType = CommandType.Text;
+                cmd.CommandText = "select *from situation_paye where idFrais='" + txtIdFrais.Text + "' and matricule='" + txtMatricule.Text + "' and anneeScolaire='" + txtIdAnnee.Text + "'";
+                MySqlDataReader dr = cmd.ExecuteReader();
+                txtT11.Text = "0";
+                txtT22.Text = "0";
+                txtT33.Text = "0";
+                txtReste.Text = "0";
+                while (dr.Read())
+                {
+                    
+                    txtT11.Text = dr["tranche1"].ToString();
+                    txtT22.Text = dr["tranche2"].ToString();
+                    txtT33.Text = dr["tranche3"].ToString();
+                }
+                //Trouver le reste d'un frais
+                double Apayer,Reste, Paye;
+                Apayer = double.Parse(txtT1.Text.Replace(',', '.').ToString()) + double.Parse(txtT2.Text.Replace(',', '.').ToString()) + double.Parse(txtT3.Text.Replace(',', '.').ToString());
+                Paye = double.Parse(txtT11.Text.Replace(',', '.').ToString()) + double.Parse(txtT22.Text.Replace(',', '.').ToString()) + double.Parse(txtT33.Text.Replace(',', '.').ToString());
+                Reste = Apayer - Paye;
+                txtReste.Text = Reste.ToString()+" "+txtUnite.Text;
+                con.Close();
+            }
+            catch
+            {
+
+            }
+        }
+        public void ViderChamps()
+        {
+            txtT11.Text = "0";
+            txtT22.Text = "0";
+            txtT33.Text = "0";
+            txtMontantVenuAvec.Text = "0";
+            txtmontant.Text = "";
+            txtIdFrais.Text = "";
+            txtT1.Text = "0";
+            txtT2.Text = "0";
+            txtT3.Text = "0";
+            txtTaux.Text = "";
+            txtEquivalenceMontant.Text = "";
+            txtReste.Text = "0";
+            if (!IsPostBack)
+            {
+                txtFrais.SelectedValue = "--Sélectionnez un frais que l'élève veut payer--";
+            }
+
+        }
         public void EnregistrerDansSituationEleve()
         {
             try
             {
+                //L'ajout de ces 2 lignes et de ces bibliothèques font l'utilisation du point au décimal
+                Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
                 //declaration des variables pour prendre ce qui est prévue dans un frais
                 double t1, t2, t3;
-                t1 = Convert.ToDouble(txtT1.Text, CultureInfo.InvariantCulture);
-                t2 = Convert.ToDouble(txtT2.Text, CultureInfo.InvariantCulture);
-                t3 = Convert.ToDouble(txtT3.Text, CultureInfo.InvariantCulture);
+                t1 = Convert.ToDouble(txtT1.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                t2 = Convert.ToDouble(txtT2.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                t3 = Convert.ToDouble(txtT3.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
 
                 //Déclaration des variables pour stocker ce que l'élève a déjà payé
                 double t11, t22, t33;
@@ -216,7 +289,7 @@ namespace NaomiSite
 
                 //Déclaration des variables pour le calcul (Resultat)
                 double ResT1, ResT2, ResT3, somme, diff, diff2, remb, b;
-                b = Convert.ToDouble(txtmontant.Text, CultureInfo.InvariantCulture);
+                b = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
                 somme = t11 + t22 + t33 + b;
 
                 if (somme > t1)
@@ -241,17 +314,36 @@ namespace NaomiSite
                             remb = diff2 - t3;
                             ResT3 = t3;
                             txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
+
+                            //L'élève fini à payer la 3e Tranche
+                            MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                            con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                            MySqlCommand commande = new MySqlCommand(cmd, con);
+                            commande.ExecuteNonQuery();
+                            con.Close();
                         }
                         else
                         {
                             ResT3 = diff2;
                             txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
+
+                            MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                            con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                            MySqlCommand commande = new MySqlCommand(cmd, con);
+                            commande.ExecuteNonQuery();
+                            con.Close();
                         }
                     }
                     else
                     {
                         ResT2 = diff;
                         txtT22.Text = ResT2.ToString(CultureInfo.InvariantCulture);
+
+                        MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                        con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                        MySqlCommand commande = new MySqlCommand(cmd, con);
+                        commande.ExecuteNonQuery();
+                        con.Close();
                     }
                 }
                 else
@@ -262,12 +354,14 @@ namespace NaomiSite
                     txtT11.Text = ResT1.ToString(CultureInfo.InvariantCulture);
                     txtT22.Text = ResT2.ToString(CultureInfo.InvariantCulture);
                     txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
+
+                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                    MySqlCommand commande = new MySqlCommand(cmd, con);
+                    commande.ExecuteNonQuery();
+                    con.Close();
                 }
-                MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
-                con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
-                MySqlCommand commande = new MySqlCommand(cmd, con);
-                commande.ExecuteNonQuery();
-                con.Close();
+                
             }
             catch
             {
@@ -279,22 +373,25 @@ namespace NaomiSite
             try
             {
                 con.Open();
+                //L'ajout de ces 2 lignes et de ces bibliothèques font l'utilisation du point au décimal
+                Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
                 //declaration des variables pour prendre ce qui est prévue dans un frais
                 double t1, t2, t3;
-                t1 = Convert.ToDouble(txtT1.Text, CultureInfo.InvariantCulture);
-                t2 = Convert.ToDouble(txtT2.Text, CultureInfo.InvariantCulture);
-                t3 = Convert.ToDouble(txtT3.Text, CultureInfo.InvariantCulture);
+                t1 = Convert.ToDouble(txtT1.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                t2 = Convert.ToDouble(txtT2.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                t3 = Convert.ToDouble(txtT3.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
 
                 //Déclaration des variables pour stocker ce que l'élève a déjà payé
                 double t11, t22, t33;
-                t11 = Convert.ToDouble(txtT11.Text, CultureInfo.InvariantCulture);
-                t22 = Convert.ToDouble(txtT22.Text, CultureInfo.InvariantCulture);
-                t33 = Convert.ToDouble(txtT33.Text, CultureInfo.InvariantCulture);
+                t11 = Convert.ToDouble(txtT11.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                t22 = Convert.ToDouble(txtT22.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                t33 = Convert.ToDouble(txtT33.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
 
                 //Déclaration des variables pour le calcul (Resultat)
                 double ResT1, ResT2, ResT3, somme, diff, diff2, remb, b;
-                b = Convert.ToDouble(txtmontant.Text, CultureInfo.InvariantCulture);
+                b = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
                 somme = t11 + t22 + t33 + b;
 
                 if (somme > t1)
@@ -319,17 +416,26 @@ namespace NaomiSite
                             remb = diff2 - t3;
                             ResT3 = t3;
                             txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
+                            string command = ("UPDATE situation_paye SET tranche1='" + ResT1.ToString(CultureInfo.InvariantCulture) + "',tranche2='" + ResT2.ToString(CultureInfo.InvariantCulture) + "',tranche3='" + ResT3.ToString(CultureInfo.InvariantCulture) + "' WHERE idFrais='" + txtIdFrais.Text + "' and matricule='" + txtMatricule.Text + "' and anneeScolaire='" + txtIdAnnee.Text + "' and idEcole='" + txtIdEcole.Text + "'");
+                            MySqlCommand cmde = new MySqlCommand(command, con);
+                            cmde.ExecuteNonQuery();
                         }
                         else
                         {
                             ResT3 = diff2;
                             txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
+                            string command = ("UPDATE situation_paye SET tranche1='" + ResT1.ToString(CultureInfo.InvariantCulture) + "',tranche2='" + ResT2.ToString(CultureInfo.InvariantCulture) + "',tranche3='" + ResT3.ToString(CultureInfo.InvariantCulture) + "' WHERE idFrais='" + txtIdFrais.Text + "' and matricule='" + txtMatricule.Text + "' and anneeScolaire='" + txtIdAnnee.Text + "' and idEcole='" + txtIdEcole.Text + "'");
+                            MySqlCommand cmde = new MySqlCommand(command, con);
+                            cmde.ExecuteNonQuery();
                         }
                     }
                     else
                     {
                         ResT2 = diff;
                         txtT22.Text = ResT2.ToString(CultureInfo.InvariantCulture);
+                        string command = ("UPDATE situation_paye SET tranche1='" + ResT1.ToString(CultureInfo.InvariantCulture) + "',tranche2='" + ResT2.ToString(CultureInfo.InvariantCulture) + "',tranche3='" + ResT3.ToString(CultureInfo.InvariantCulture) + "' WHERE idFrais='" + txtIdFrais.Text + "' and matricule='" + txtMatricule.Text + "' and anneeScolaire='" + txtIdAnnee.Text + "' and idEcole='" + txtIdEcole.Text + "'");
+                        MySqlCommand cmde = new MySqlCommand(command, con);
+                        cmde.ExecuteNonQuery();
                     }
                 }
                 else
@@ -340,11 +446,11 @@ namespace NaomiSite
                     txtT11.Text = ResT1.ToString(CultureInfo.InvariantCulture);
                     txtT22.Text = ResT2.ToString(CultureInfo.InvariantCulture);
                     txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
+                    string command = ("UPDATE situation_paye SET tranche1='" + ResT1.ToString(CultureInfo.InvariantCulture) + "',tranche2='" + ResT2.ToString(CultureInfo.InvariantCulture) + "',tranche3='" + ResT3.ToString(CultureInfo.InvariantCulture) + "' WHERE idFrais='" + txtIdFrais.Text + "' and matricule='" + txtMatricule.Text + "' and anneeScolaire='" + txtIdAnnee.Text + "' and idEcole='" + txtIdEcole.Text + "'");
+                    MySqlCommand cmde = new MySqlCommand(command, con);
+                    cmde.ExecuteNonQuery();
                 }
-
-                string command = ("UPDATE situation_paye SET tranche1='" + ResT1.ToString(CultureInfo.InvariantCulture) + "',tranche2='" + ResT2.ToString(CultureInfo.InvariantCulture) + "',tranche3='" + ResT3.ToString(CultureInfo.InvariantCulture) + "' WHERE idFrais='" + txtIdFrais.Text + "' and matricule='" + txtMatricule.Text + "' and anneeScolaire='" + txtIdAnnee.Text + "' and idEcole='" + txtIdEcole.Text + "'");
-                MySqlCommand cmde = new MySqlCommand(command, con);
-                cmde.ExecuteNonQuery();
+                
             }
             catch
             {
@@ -374,14 +480,25 @@ namespace NaomiSite
                 if (txtFrais.SelectedValue == "Frais scolaires")
                 {
                     double sept, octo, nov, dec, jan, fev, mars, avr, mai, juin, diff, mont;
-                    double Paye, Apayer;
+                    double t11, t22, t33, Apayer;
+                    t11 = Convert.ToDouble(txtT1.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t22 = Convert.ToDouble(txtT2.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t33 = Convert.ToDouble(txtT3.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    Apayer = t11 + t22 + t33;
 
-                    Apayer = Convert.ToDouble(txtT1.Text, CultureInfo.InvariantCulture) + Convert.ToDouble(txtT2.Text, CultureInfo.InvariantCulture) + Convert.ToDouble(txtT3.Text, CultureInfo.InvariantCulture);
-                    Paye = Convert.ToDouble(txtT11.Text, CultureInfo.InvariantCulture) + Convert.ToDouble(txtT22.Text, CultureInfo.InvariantCulture) + Convert.ToDouble(txtT33.Text, CultureInfo.InvariantCulture) + Convert.ToDouble(txtmontant.Text, CultureInfo.InvariantCulture);
+                    double t1, t2, t3, Paye,a;
+                    a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t1 = Convert.ToDouble(txtT11.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t2 = Convert.ToDouble(txtT22.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t3 = Convert.ToDouble(txtT33.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    Paye = t1 + t2 + t3 + a;
 
                     if (Paye > Apayer)
                     {
-                        //MessageBox.Show("Vérifier le montant saisi","",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        //Affichage du message d'erreur
+                        success.Visible = false;
+                        error.Visible = true;
+                        error.Style.Add("display", "block");
                     }
                     else
                     {
@@ -545,6 +662,110 @@ namespace NaomiSite
 
             }
         }
+        public void SituationCaisse()
+        {
+            con.Close();
+            con.Open();
+            MySqlCommand cmd = new MySqlCommand("", con);
+            MySqlCommand cmde = con.CreateCommand();
+            cmde.CommandType = CommandType.Text;
+            cmd.CommandText = "select *from t_caisse WHERE libelle='" + txtUnite.Text + "' AND idEcole=+'" + txtIdEcole.Text + "'";
+            MySqlDataReader dr = cmd.ExecuteReader();
+
+            txtDispo.Text = "0";
+            txtDispo.Text = "0";
+            txtDispo.Text = "0";
+            while (dr.Read())
+            {
+                txtDispo.Text = dr["Solde"].ToString();
+                txtEntree.Text = dr["Entree"].ToString();
+                txtSortie.Text = dr["Sortie"].ToString();
+            }
+
+            con.Close();
+        }
+        public void ImprimerFactureEleve()
+        {
+            // Récupération des valeurs des TextBox
+            string nom = txtNomEleve.Text;
+            string matricule= txtDernierOperation.Text+"-"+txtMatricule.Text;
+            string classe = txtClasse.Text +"-"+ txtOption.Text;
+            string dateRecu = DateTime.Today.Date.ToShortDateString();
+            string frais = txtFrais.SelectedValue;
+            string unite1 = txtUnite.Text;
+            string unite2 = txtUnite.Text;
+            string prevu = txtT1.Text + ", Tr2=" + txtT2.Text + ", Tr3=" + txtT3.Text;
+            string apayer = txtT11.Text + ", Tr2=" + txtT22.Text + ", Tr3=" + txtT33.Text;
+            string reste = txtReste.Text;
+            string login = txtLogin.Text;
+            if (txtMontantVenuAvec.Text == "0")
+            {
+                string montant = txtmontant.Text + " " + txtUnite.Text;
+                // Enregistrement du script pour définir les données de la facture
+                ScriptManager.RegisterStartupScript(this, GetType(), "setData", $"setFactureData('{matricule}', '{nom}','{classe}', '{dateRecu}', '{montant}', '{frais}', '{unite1}', '{prevu}', '{unite2}', '{apayer}', '{reste}', '{login}'); imprimerFacture();", true);
+            }
+            else
+            {
+                if (txtUnite.Text == "USD")
+                {
+                    string montant = txtMontantVenuAvec.Text + " CDF";
+                    // Enregistrement du script pour définir les données de la facture
+                    ScriptManager.RegisterStartupScript(this, GetType(), "setData", $"setFactureData('{matricule}', '{nom}','{classe}', '{dateRecu}', '{montant}', '{frais}', '{unite1}', '{prevu}', '{unite2}', '{apayer}', '{reste}', '{login}'); imprimerFacture();", true);
+                }
+                if (txtUnite.Text == "CDF")
+                {
+                    string montant = txtMontantVenuAvec.Text + " USD";
+                    // Enregistrement du script pour définir les données de la facture
+                    ScriptManager.RegisterStartupScript(this, GetType(), "setData", $"setFactureData('{matricule}', '{nom}','{classe}', '{dateRecu}', '{montant}', '{frais}', '{unite1}', '{prevu}', '{unite2}', '{apayer}', '{reste}', '{login}'); imprimerFacture();", true);
+                }
+            }
+            
+        }
+        public void ActualiserLaCaisseEnEntree()
+        {
+            //Actualiser la caisse
+            //L'ajout de ces 2 lignes et de ces bibliothèques font l'utilisation du point au décimal
+            //Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            //Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
+            double b, sort, Disp, Entr;
+            MySqlConnection conx1 = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+            conx1.Open();
+            if (txtMontantVenuAvec.Text == "0")
+            {
+
+                //Actualisation de la caisse s'il n'y a pas eu de conversion de l'argent de l'élève
+                b = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                sort = Convert.ToDouble(txtSortie.Text.Replace(',', '.'), CultureInfo.InvariantCulture) - b;
+                Entr = Convert.ToDouble(txtEntree.Text.Replace(',', '.'), CultureInfo.InvariantCulture) + b;
+                Disp = Convert.ToDouble(txtDispo.Text.Replace(',', '.'), CultureInfo.InvariantCulture) + b;
+
+                string command = ("UPDATE t_caisse SET Entree ='" + Entr + "', Solde ='" + Disp + "' WHERE libelle='" + txtUnite.Text + "' AND idEcole=+'" + txtIdEcole.Text + "'");
+                MySqlCommand cmde = new MySqlCommand(command, conx1);
+                cmde.ExecuteNonQuery();
+            }
+            else
+            {
+                //Actualisation de la caisse s'il y a eu de conversion de l'argent de l'élève
+                b = Convert.ToDouble(txtMontantVenuAvec.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                sort = Convert.ToDouble(txtSortie.Text.Replace(',', '.'), CultureInfo.InvariantCulture) - b;
+                Entr = Convert.ToDouble(txtEntree.Text.Replace(',', '.'), CultureInfo.InvariantCulture) + b;
+                Disp = Convert.ToDouble(txtDispo.Text.Replace(',', '.'), CultureInfo.InvariantCulture) + b;
+                if (txtUnite.Text == "USD")
+                {
+                    string command = ("UPDATE t_caisse SET Entree ='" + Entr + "', Solde ='" + Disp + "' WHERE libelle='CDF' AND idEcole=+'" + txtIdEcole.Text + "'");
+                    MySqlCommand cmde = new MySqlCommand(command, conx1);
+                    cmde.ExecuteNonQuery();
+                }
+                if (txtUnite.Text == "CDF")
+                {
+                    string command = ("UPDATE t_caisse SET Entree ='" + Entr + "', Solde ='" + Disp + "' WHERE libelle='USD' AND idEcole=+'" + txtIdEcole.Text + "'");
+                    MySqlCommand cmde = new MySqlCommand(command, conx1);
+                    cmde.ExecuteNonQuery();
+                }
+            }
+            
+        }
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
             try
@@ -552,67 +773,191 @@ namespace NaomiSite
                 MySqlConnection conx = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
                 conx.Open();
                 string TakeDate = DateTime.Today.ToShortDateString();
-                string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtmontant.Text + "','" + txtUnite.Text + "','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "')";
-                MySqlCommand commande = new MySqlCommand(cmd, conx);
-
-                double a = Convert.ToDouble(txtmontant.Text, CultureInfo.InvariantCulture);
-                double t11, t22, t33, APayer;
-                t11 = Convert.ToDouble(txtT1.Text, CultureInfo.InvariantCulture);
-                t22 = Convert.ToDouble(txtT2.Text, CultureInfo.InvariantCulture);
-                t33 = Convert.ToDouble(txtT3.Text, CultureInfo.InvariantCulture);
-                APayer = t11 + t22 + t33;
-
-                double t1, t2, t3, Payer;
-                t1 = Convert.ToDouble(txtT11.Text, CultureInfo.InvariantCulture);
-                t2 = Convert.ToDouble(txtT22.Text, CultureInfo.InvariantCulture);
-                t3 = Convert.ToDouble(txtT33.Text, CultureInfo.InvariantCulture);
-                Payer = t1 + t2 + t3 + a;
-
-                bool canPay = false;
-                if (a > 0 && a <= APayer)
+                Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+                if (txtMontantVenuAvec.Text=="0")
                 {
-                    
-                    if (Payer <= APayer)
+                    //Enregistrement si on n'a pas converti le montant que l'élève est venu avec à la caisse
+                    string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtmontant.Text.Replace(',', '.') + "','" + txtUnite.Text + "','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "')";
+                    MySqlCommand commande = new MySqlCommand(cmd, conx);
+
+                    double a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    double t11, t22, t33, APayer;
+                    t11 = Convert.ToDouble(txtT1.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t22 = Convert.ToDouble(txtT2.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t33 = Convert.ToDouble(txtT3.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    APayer = t11 + t22 + t33;
+
+                    double t1, t2, t3, Payer;
+                    t1 = Convert.ToDouble(txtT11.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t2 = Convert.ToDouble(txtT22.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    t3 = Convert.ToDouble(txtT33.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    Payer = t1 + t2 + t3 + a;
+
+                    if (a > 0 && a <= APayer)
                     {
-                        //Pour mettre à jour le compte de l'élève 
-                        MettreAjourComptePayementEleve();
 
-                        commande.ExecuteNonQuery();
-                        //====Actualiser la situation de l'élève ou en créer une pour un frais======
-                        ExecuterSituation();
-
-                        //Actualiser la caisse
-                        double b = Convert.ToDouble(txtmontant.Text, CultureInfo.InvariantCulture);
-
-                        MySqlConnection conx1 = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
-                        conx1.Open();
-                        string command = ("UPDATE t_caisse SET Entree =Entree+'" + b + "', Solde =Solde+'" + b + "'' WHERE libelle='" + txtUnite.Text + "' AND idEcole=+'" + txtIdEcole.Text + "'");
-                        MySqlCommand cmde = new MySqlCommand(command, conx1);
-                        cmde.ExecuteNonQuery();
-                        //EnregistrementRecu();
-
-                        //Succès opération
-                        bool isSaved = true;
-                        if (isSaved)
+                        if (Payer <= APayer)
                         {
-                            string message = "Opération Sauvegardée";
-                            string script = $"showSuccess('{message}');";
-                            ClientScript.RegisterStartupScript(this.GetType(), "showSuccess", script, true);
-                        }
-                        conx1.Close();
-                        conx.Close();
-                    }
-                    else
-                    {
-                        if (!canPay)
-                        {
-                            string message = "Cet(te) élève ne peut pas payer tout ce montant ou soit il (elle) est déjà en ordre avec ce frais pour l'année indiquée.";
-                            string script = $"showError('{message}');";
-                            ClientScript.RegisterStartupScript(this.GetType(), "showError", script, true);
-                        }
-                    }
+                            //Pour mettre à jour le compte de l'élève 
+                            MettreAjourComptePayementEleve();
 
+                            commande.ExecuteNonQuery();
+                            //====Actualiser la situation de l'élève ou en créer une pour un frais======
+                            ExecuterSituation();
+                            SituationCaisse();
+                            ActualiserLaCaisseEnEntree();
+
+                            TrouverDerniereOperation();
+                            TrouverFraisDejaPaye();
+                            ImprimerFactureEleve();
+                            ViderChamps();
+
+                            SituationCaisse();
+
+                            //Affichage du message succès
+                            success.Visible = true;
+                            error.Visible = false;
+                            success.Style.Add("display", "block");
+                            conx.Close();
+                            //Response.Redirect("AdminFinPayeFraisExecute.aspx");
+
+
+                        }
+                        else
+                        {
+                            //Affichage du message d'erreur
+                            success.Visible = false;
+                            error.Visible = true;
+                            error.Style.Add("display", "block");
+                        }
+
+                    }
                 }
+                else
+                {
+                    //Enregistrement si on a converti le montant que l'élève est venu avec à la caisse
+                    if (txtUnite.Text == "USD")
+                    {
+                        string unite = "CDF";
+                        string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','CDF','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "')";
+                        MySqlCommand commande = new MySqlCommand(cmd, conx);
+
+                        double a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        double t11, t22, t33, APayer;
+                        t11 = Convert.ToDouble(txtT1.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        t22 = Convert.ToDouble(txtT2.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        t33 = Convert.ToDouble(txtT3.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        APayer = t11 + t22 + t33;
+
+                        double t1, t2, t3, Payer;
+                        t1 = Convert.ToDouble(txtT11.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        t2 = Convert.ToDouble(txtT22.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        t3 = Convert.ToDouble(txtT33.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        Payer = t1 + t2 + t3 + a;
+
+                        if (a > 0 && a <= APayer)
+                        {
+
+                            if (Payer <= APayer)
+                            {
+                                //Pour mettre à jour le compte de l'élève 
+                                MettreAjourComptePayementEleve();
+
+                                commande.ExecuteNonQuery();
+                                //====Actualiser la situation de l'élève ou en créer une pour un frais======
+                                ExecuterSituation();
+                                SituationCaisse();
+                                ActualiserLaCaisseEnEntree();
+
+                                TrouverDerniereOperation();
+                                TrouverFraisDejaPaye();
+                                ImprimerFactureEleve();
+                                ViderChamps();
+
+                                SituationCaisse();
+
+                                //Affichage du message succès
+                                success.Visible = true;
+                                error.Visible = false;
+                                success.Style.Add("display", "block");
+                                conx.Close();
+                                //Response.Redirect("AdminFinPayeFraisExecute.aspx");
+
+
+                            }
+                            else
+                            {
+                                //Affichage du message d'erreur
+                                success.Visible = false;
+                                error.Visible = true;
+                                error.Style.Add("display", "block");
+                            }
+
+                        }
+                    }
+                    if (txtUnite.Text == "CDF")
+                    {
+                        string unite = "USD";
+                        string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','USD','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "')";
+                        MySqlCommand commande = new MySqlCommand(cmd, conx);
+
+                        double a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                        double t11, t22, t33, APayer;
+                        t11 = Convert.ToDouble(txtT1.Text, CultureInfo.InvariantCulture);
+                        t22 = Convert.ToDouble(txtT2.Text, CultureInfo.InvariantCulture);
+                        t33 = Convert.ToDouble(txtT3.Text, CultureInfo.InvariantCulture);
+                        APayer = t11 + t22 + t33;
+
+                        double t1, t2, t3, Payer;
+                        t1 = Convert.ToDouble(txtT11.Text, CultureInfo.InvariantCulture);
+                        t2 = Convert.ToDouble(txtT22.Text, CultureInfo.InvariantCulture);
+                        t3 = Convert.ToDouble(txtT33.Text, CultureInfo.InvariantCulture);
+                        Payer = t1 + t2 + t3 + a;
+
+                        if (a > 0 && a <= APayer)
+                        {
+
+                            if (Payer <= APayer)
+                            {
+                                //Pour mettre à jour le compte de l'élève 
+                                MettreAjourComptePayementEleve();
+
+                                commande.ExecuteNonQuery();
+                                //====Actualiser la situation de l'élève ou en créer une pour un frais======
+                                ExecuterSituation();
+                                SituationCaisse();
+                                ActualiserLaCaisseEnEntree();
+
+                                TrouverDerniereOperation();
+                                TrouverFraisDejaPaye();
+                                ImprimerFactureEleve();
+                                ViderChamps();
+
+                                SituationCaisse();
+
+                                //Affichage du message succès
+                                success.Visible = true;
+                                error.Visible = false;
+                                success.Style.Add("display", "block");
+                                conx.Close();
+                                //Response.Redirect("AdminFinPayeFraisExecute.aspx");
+
+
+                            }
+                            else
+                            {
+                                //Affichage du message d'erreur
+                                success.Visible = false;
+                                error.Visible = true;
+                                error.Style.Add("display", "block");
+                            }
+
+                        }
+                    }
+                    
+                }
+                
             }
             catch
             {
@@ -623,8 +968,119 @@ namespace NaomiSite
 
         protected void txtFrais_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ViderChamps();
             TrouverIdFrais();
             TrouverFraisDejaPaye();
+            SituationCaisse();
+            TrouverDerniereOperation();
+            success.Visible = false;
+            error.Visible = false;
+        }
+
+        protected void txtmontant_TextChanged(object sender, EventArgs e)
+        {
+            success.Visible = false;
+            error.Visible = false;
+            txtConvertir.Visible = false;
+        }
+
+        protected void btnConvertir_Click(object sender, EventArgs e)
+        {
+            if (txtmontant.Text=="")
+            {
+                txtConvertir.Visible = true;
+            }
+            else
+            {
+                lblEquivalence.Visible = true;
+                lblTaux.Visible = true;
+                txtEquivalenceMontant.Visible = true;
+                txtTaux.Visible = true;
+                btnAddStructure.Visible = false;
+                btnValiderAvecConversion.Visible = true;
+
+                txtMontantVenuAvec.Text = txtmontant.Text;
+                lblEquivalence.Text = txtMontantVenuAvec.Text + " Equivalent en " +txtUnite.Text + " à ";
+                if (txtUnite.Text=="USD")
+                {
+                    txtTaux.Text = "3200";
+                    double a, b;
+                    a= Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    b = a/ 3200;
+                    txtEquivalenceMontant.Text =b.ToString();
+
+                }
+                if (txtUnite.Text == "CDF")
+                {
+                    txtTaux.Text = "3200";
+                    double a, b;
+                    a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                    b = a*3200;
+                    txtEquivalenceMontant.Text = b.ToString();
+                }
+
+            }
+        }
+
+        protected void btnValiderAvecConversion_Click(object sender, EventArgs e)
+        {
+            btnAddStructure.Visible = false;
+            if (txtUnite.Text == "USD")
+            {
+                double a, montaConverti, taux;
+                taux = Convert.ToDouble(txtTaux.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                montaConverti = a / taux;
+                txtEquivalenceMontant.Text = montaConverti.ToString();
+                txtmontant.Text = montaConverti.ToString();
+
+                //Afficher les cashés
+                lblEquivalence.Visible = false;
+                lblTaux.Visible = false;
+                txtEquivalenceMontant.Visible = false;
+                txtTaux.Visible = false;
+                btnAddStructure.Visible = true;
+                btnValiderAvecConversion.Visible = false;
+
+            }
+            if (txtUnite.Text == "CDF")
+            {
+                double a, montaConverti, taux;
+                taux = Convert.ToDouble(txtTaux.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                montaConverti = a * taux;
+                txtEquivalenceMontant.Text = montaConverti.ToString();
+                txtmontant.Text = montaConverti.ToString();
+
+                //Afficher les cashés
+                lblEquivalence.Visible = false;
+                lblTaux.Visible = false;
+                txtEquivalenceMontant.Visible = false;
+                txtTaux.Visible = false;
+                btnAddStructure.Visible = true;
+                btnValiderAvecConversion.Visible = false;
+            }
+        }
+
+        protected void txtTaux_TextChanged(object sender, EventArgs e)
+        {
+            if (txtUnite.Text == "USD")
+            {
+                double a, b,taux;
+                taux= Convert.ToDouble(txtTaux.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                b = a / taux;
+                txtEquivalenceMontant.Text = b.ToString();
+
+            }
+            if (txtUnite.Text == "CDF")
+            {
+                double a, b, taux;
+                taux = Convert.ToDouble(txtTaux.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                b = a * taux;
+                txtEquivalenceMontant.Text = b.ToString();
+            }
         }
     }
 }

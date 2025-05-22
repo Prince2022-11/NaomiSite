@@ -39,7 +39,7 @@ namespace NaomiSite
             //con.Open();
             MySqlCommand cmde = con.CreateCommand();
             cmde.CommandType = CommandType.Text;
-            cmd.CommandText = ("select *from utilisateur where service='Admin' and login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' ");
+            cmd.CommandText = ("select *from utilisateur where service='Admin' and login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' AND etat='Actif' ");
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {

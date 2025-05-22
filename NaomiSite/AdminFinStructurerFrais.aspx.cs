@@ -6,9 +6,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using MySql.Data.MySqlClient;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
-using System.IO;
+using System.ComponentModel;
+using System.Drawing;
+using System.Text;
+using System.Threading.Tasks;
+using System.Globalization;
+using KimToo;
+using System.Threading;
 
 namespace NaomiSite
 {
@@ -49,8 +53,13 @@ namespace NaomiSite
                     txtDesignationAnnee.Text = dr1["designation"].ToString();
                 }
                 con.Close();
-                AfficherFraisScolaire();
-                TrouverIdEcole();
+                if (!IsPostBack)
+                {
+                    AfficherFraisScolaire();
+                    TrouverIdEcole();
+                    txtLibelle.Text = "Frais scolaires";
+                }
+                
             }
             else
             {
@@ -219,7 +228,7 @@ namespace NaomiSite
         {
             MySqlCommand cmd1a = con.CreateCommand();
             cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','" + txtIdClasse.Text + "','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','" + txtIdClasse.Text + "','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
             cmd1a.ExecuteNonQuery();
             con.Close();
             Response.Redirect("AdminFinStructurerFrais.aspx");
@@ -228,7 +237,7 @@ namespace NaomiSite
         {
             MySqlCommand cmd1a = con.CreateCommand();
             cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','Toutes les classes','Toutes les options','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','Toutes les classes','Toutes les options','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
             cmd1a.ExecuteNonQuery();
             con.Close();
             Response.Redirect("AdminFinStructurerFrais.aspx");
@@ -237,7 +246,7 @@ namespace NaomiSite
         {
             MySqlCommand cmd1a = con.CreateCommand();
             cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','Toutes les classes','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','Toutes les classes','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
             cmd1a.ExecuteNonQuery();
             con.Close();
             Response.Redirect("AdminFinStructurerFrais.aspx");
@@ -246,98 +255,102 @@ namespace NaomiSite
         {
             MySqlCommand cmd1a = con.CreateCommand();
             cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','"+txtClasse.SelectedValue+"','Toutes les options','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','"+txtClasse.SelectedValue+"','Toutes les options','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
             cmd1a.ExecuteNonQuery();
             con.Close();
             Response.Redirect("AdminFinStructurerFrais.aspx");
         }
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
-            con.Close();
-            con2.Close();
-            con.Open();
-            con2.Open();
-            double t1 = double.Parse(txtTranche1.Text);
-            double t2 = double.Parse(txtTranche1.Text);
-            double t3 = double.Parse(txtTranche1.Text);
-            double somme = t1 + t2 + t3;
+                con.Close();
+                con2.Close();
+                con.Open();
+                con2.Open();
 
-            if (somme > 0)
-            {
-                if (txtOption.SelectedValue== "Toutes les options de l'ecole" && txtClasse.SelectedValue == "Toutes les classes de la section")
+                Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
+                double t1 = double.Parse(txtTranche1.Text.Replace(',', '.'));
+                double t2 = double.Parse(txtTranche1.Text.Replace(',', '.'));
+                double t3 = double.Parse(txtTranche1.Text.Replace(',', '.'));
+                double somme = t1 + t2 + t3;
+
+                if (somme > 0)
                 {
-                    //Entregistrement d'un frais dans toutes les classes
-                    //Et dans toutes les options de l'école sélectionnée
-                    MySqlCommand cmdB = con.CreateCommand();
-                    cmdB.CommandType = CommandType.Text;
-                    cmdB.CommandText = ("SELECT *from t_classe WHERE idEcole='" + txtIdEcole.Text+"'");
-                    MySqlDataReader dr = cmdB.ExecuteReader();
-                    while (dr.Read())
+                    if (txtOption.SelectedValue == "Toutes les options de l'ecole" && txtClasse.SelectedValue == "Toutes les classes de la section")
                     {
-                        MySqlCommand cmd1a = con2.CreateCommand();
-                        cmd1a.CommandType = CommandType.Text;
-                        cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','"+ dr["id"].ToString() + "','"+ dr["idSection"].ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
-                        cmd1a.ExecuteNonQuery();
+                        //Entregistrement d'un frais dans toutes les classes
+                        //Et dans toutes les options de l'école sélectionnée
+                        MySqlCommand cmdB = con.CreateCommand();
+                        cmdB.CommandType = CommandType.Text;
+                        cmdB.CommandText = ("SELECT *from t_classe WHERE idEcole='" + txtIdEcole.Text + "'");
+                        MySqlDataReader dr = cmdB.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            MySqlCommand cmd1a = con2.CreateCommand();
+                            cmd1a.CommandType = CommandType.Text;
+                            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','" + dr["id"].ToString() + "','" + dr["idSection"].ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                            cmd1a.ExecuteNonQuery();
+                        }
+                        con2.Close();
+                        con.Close();
+                        Response.Redirect("AdminFinStructurerFrais.aspx");
                     }
-                    con2.Close();
-                    con.Close();
-                    Response.Redirect("AdminFinStructurerFrais.aspx");
-                }
-                if (txtOption.SelectedValue != "Toutes les options de l'ecole" && txtClasse.SelectedValue == "Toutes les classes de la section")
-                {
-                    //Entregistrement d'un frais dans toutes les classes
-                    //de la section sélectionnée de cette école spécifiée
-                    MySqlCommand cmdB = con.CreateCommand();
-                    cmdB.CommandType = CommandType.Text;
-                    cmdB.CommandText = ("SELECT *from t_classe WHERE idSection='"+txtIdOption.Text+"' AND idEcole='" + txtIdEcole.Text + "'");
-                    MySqlDataReader dr = cmdB.ExecuteReader();
-                    while (dr.Read())
+                    if (txtOption.SelectedValue != "Toutes les options de l'ecole" && txtClasse.SelectedValue == "Toutes les classes de la section")
                     {
-                        MySqlCommand cmd1a = con2.CreateCommand();
-                        cmd1a.CommandType = CommandType.Text;
-                        cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','" + dr["id"].ToString() + "','" +txtIdOption.Text+ "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
-                        cmd1a.ExecuteNonQuery();
+                        //Entregistrement d'un frais dans toutes les classes
+                        //de la section sélectionnée de cette école spécifiée
+                        MySqlCommand cmdB = con.CreateCommand();
+                        cmdB.CommandType = CommandType.Text;
+                        cmdB.CommandText = ("SELECT *from t_classe WHERE idSection='" + txtIdOption.Text + "' AND idEcole='" + txtIdEcole.Text + "'");
+                        MySqlDataReader dr = cmdB.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            MySqlCommand cmd1a = con2.CreateCommand();
+                            cmd1a.CommandType = CommandType.Text;
+                            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','" + dr["id"].ToString() + "','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                            cmd1a.ExecuteNonQuery();
+                        }
+                        con2.Close();
+                        con.Close();
+                        Response.Redirect("AdminFinStructurerFrais.aspx");
                     }
-                    con2.Close();
-                    con.Close();
-                    Response.Redirect("AdminFinStructurerFrais.aspx");
-                }
-                if (txtClasse.SelectedValue != "Toutes les classes de la section" && txtOption.SelectedValue == "Toutes les options de l'ecole")
-                {
-                    //Entregistrement d'un frais dans la classe spécifiée
-                    //de toutes les sections sélectionnées de cette école spécifiée
-                    MySqlCommand cmdB = con.CreateCommand();
-                    cmdB.CommandType = CommandType.Text;
-                    cmdB.CommandText = ("SELECT *from t_classe WHERE classe='" + txtClasse.SelectedValue + "' AND idEcole='" + txtIdEcole.Text + "'");
-                    MySqlDataReader dr = cmdB.ExecuteReader();
-                    while (dr.Read())
+                    if (txtClasse.SelectedValue != "Toutes les classes de la section" && txtOption.SelectedValue == "Toutes les options de l'ecole")
                     {
-                        MySqlCommand cmd1a = con2.CreateCommand();
-                        cmd1a.CommandType = CommandType.Text;
-                        cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','" + dr["id"].ToString() + "','" + dr["idSection"].ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
-                        cmd1a.ExecuteNonQuery();
+                        //Entregistrement d'un frais dans la classe spécifiée
+                        //de toutes les sections sélectionnées de cette école spécifiée
+                        MySqlCommand cmdB = con.CreateCommand();
+                        cmdB.CommandType = CommandType.Text;
+                        cmdB.CommandText = ("SELECT *from t_classe WHERE classe='" + txtClasse.SelectedValue + "' AND idEcole='" + txtIdEcole.Text + "'");
+                        MySqlDataReader dr = cmdB.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            MySqlCommand cmd1a = con2.CreateCommand();
+                            cmd1a.CommandType = CommandType.Text;
+                            cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','" + dr["id"].ToString() + "','" + dr["idSection"].ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                            cmd1a.ExecuteNonQuery();
+                        }
+                        con2.Close();
+                        con.Close();
+                        Response.Redirect("AdminFinStructurerFrais.aspx");
                     }
-                    con2.Close();
-                    con.Close();
-                    Response.Redirect("AdminFinStructurerFrais.aspx");
+                    if (txtOption.SelectedValue != "Toutes les options de l'ecole" && txtClasse.SelectedValue != "Toutes les classes de la section")
+                    {
+                        //Entregistrement d'un frais dans la classe spécifiée
+                        //de la section spécifiée de cette école spécifiée
+                        MySqlCommand cmd1a = con.CreateCommand();
+                        cmd1a.CommandType = CommandType.Text;
+                        cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text.Replace(',', '.') + "','" + txtTranche2.Text.Replace(',', '.') + "','" + txtTranche3.Text.Replace(',', '.') + "','" + txtUnite.SelectedValue + "','" + txtIdClasse.Text + "','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                        cmd1a.ExecuteNonQuery();
+                        con.Close();
+                        Response.Redirect("AdminFinStructurerFrais.aspx");
+                    }
                 }
-                if (txtOption.SelectedValue != "Toutes les options de l'ecole" && txtClasse.SelectedValue != "Toutes les classes de la section")
+                else
                 {
-                    //Entregistrement d'un frais dans la classe spécifiée
-                    //de la section spécifiée de cette école spécifiée
-                    MySqlCommand cmd1a = con.CreateCommand();
-                    cmd1a.CommandType = CommandType.Text;
-                    cmd1a.CommandText = "insert into frais_scolaire values(default,'" + txtLibelle.Text + "','" + txtTranche1.Text + "','" + txtTranche2.Text + "','" + txtTranche3.Text + "','" + txtUnite.SelectedValue + "','" + txtIdClasse.Text + "','" + txtIdOption.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
-                    cmd1a.ExecuteNonQuery();
-                    con.Close();
-                    Response.Redirect("AdminFinStructurerFrais.aspx");
+                    txtMessage.Visible = true;
                 }
-            }
-            else
-            {
-                txtMessage.Visible = true;
-            }
-            
+                
         }
     }
 }

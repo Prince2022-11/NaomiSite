@@ -127,7 +127,7 @@
                                               <asp:DropDownList ID="txtClasse" runat="server"  class="form-control" placeholder="Sélectionnez" required AutoPostBack="True" OnSelectedIndexChanged="txtClasse_SelectedIndexChanged">
                                               </asp:DropDownList>
 	                                      </div>
-                                         <label>Libellé du Frais</label>
+                                         <label>Intitulé du Frais (Si c'est Prime, mettez "Frais scolaires")</label>
 								          <div class="form-group input-group" >
                                                   <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
 	                                              <asp:TextBox runat="server" ID="txtLibelle" class="form-control" placeholder="Saisir l'intitulé du frais ici" required AutoPostBack="True"></asp:TextBox>
@@ -141,7 +141,8 @@
                                                         <asp:ListItem>USD</asp:ListItem>
                                                         <asp:ListItem>CDF</asp:ListItem>
                                                    </asp:DropDownList>
-	                                      </div> 
+	                                      </div>
+                                          
                                          <label>Tranche 1</label>
 								          <div class="form-group input-group" >
                                                   <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
@@ -156,9 +157,11 @@
 								          <div class="form-group input-group" >
                                                   <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
 	                                              <asp:TextBox runat="server" ID="txtTranche3" class="form-control" placeholder="Combien Pour la Tranche 3" required AutoPostBack="True"></asp:TextBox>
-	                                      </div><br />
+                                               
+	                                      </div>
 
-                                     </div>  
+                                     </div>
+                                        <CENTER><asp:Label runat="server" ID="Label3" Text="NB: Si le montant est un décimal, utilisez la virgule (,) pas un point" ForeColor="Red" Font-Bold="True" Font-Size="Smaller" AutoPostBack="True"></asp:Label></CENTER>  
                                                   <CENTER><asp:Label runat="server" ID="txtMessage" Text="Au minimum 1 Tranche doit être supérieure à 0" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
                                                   <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click"></asp:Button><span></span></CENTER><br>
                                            
