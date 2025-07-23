@@ -120,7 +120,7 @@
                                              <label>DU COTE PRESTATION</label> <br />
                                              <a href="AdminAgentAjout.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Ajout des agents dans le système.............</h4></a><br /><br />
                                              <a href="AdminAgentChargeHoraire.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Attribution des charges horaires annuelles</h4></a><br /><br />
-                                             <a href="AdminAgentPresence.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Commencer les cours et Présences..........</h4></a><br /><br />
+                                             <a href="AdminAgentPresence.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Commencer les cours en pointant Présent</h4></a><br /><br />
                                              <a href="AdminAgentFinCours.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Cloturer les cours des enseignants présents</h4></a><br /><br />
                                          </div>
                                          <div class="col-lg-6 col-md-6">

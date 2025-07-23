@@ -14,7 +14,7 @@ using System.Threading;
 
 namespace NaomiSite
 {
-    public partial class AdminAgentAjout : System.Web.UI.Page
+    public partial class AdminFinDepense : System.Web.UI.Page
     {
         MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
         protected void Page_Load(object sender, EventArgs e)
@@ -192,25 +192,25 @@ namespace NaomiSite
 
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
-            con.Open();
-            MySqlCommand cmd1a = con.CreateCommand();
-            cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into t_agent values('" + txtmat.Text + "','" + txtNom.Text + "','" + txtPrenom.Text + "','" + txtSexe.SelectedValue + "','" + txtNiveau.SelectedValue + "','" + txtDomaine.Text + "','" + txtFonction.SelectedValue + "','" + txtEtatCivil.SelectedValue + "','" + txtPhone.Text + "','" + txtAdresse.Text + "','" + txtIdEcole.Text + "')";
-            cmd1a.ExecuteNonQuery();
-            con.Close();
-            CreerCompteAgent();
-            Response.Redirect("AdminAgentAjout.aspx");
+            //con.Open();
+            //MySqlCommand cmd1a = con.CreateCommand();
+            //cmd1a.CommandType = CommandType.Text;
+            //cmd1a.CommandText = "insert into t_agent values('" + txtmat.Text + "','" + txtNom.Text + "','" + txtPrenom.Text + "','" + txtSexe.SelectedValue + "','" + txtNiveau.SelectedValue + "','" + txtDomaine.Text + "','" + txtFonction.SelectedValue + "','" + txtEtatCivil.SelectedValue + "','" + txtPhone.Text + "','" + txtAdresse.Text + "','" + txtIdEcole.Text + "')";
+            //cmd1a.ExecuteNonQuery();
+            //con.Close();
+            //CreerCompteAgent();
+            //Response.Redirect("AdminAgentAjout.aspx");
         }
         protected void btnModification_Click(object sender, EventArgs e)
         {
-            con.Open();
-            string dateInscription = DateTime.Today.Date.ToShortDateString();
-            MySqlCommand cmd1a = con.CreateCommand();
-            cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "UPDATE t_agent SET nom='" + txtNom.Text + "',prenom='" + txtPrenom.Text + "',sexe='" + txtSexe.SelectedValue + "',niveau='" + txtNiveau.SelectedValue + "',domaine='" + txtDomaine.Text + "',fonction='" + txtFonction.SelectedValue + "',etat_civil='" + txtEtatCivil.Text + "',adresse='" + txtAdresse.Text + "',idEcole='" + txtIdEcole.Text + "' WHERE matricule='" + txtMatricule.Text + "'";
-            cmd1a.ExecuteNonQuery();
-            con.Close();
-            Response.Redirect("AdminAgentAjout.aspx");
+            //con.Open();
+            //string dateInscription = DateTime.Today.Date.ToShortDateString();
+            //MySqlCommand cmd1a = con.CreateCommand();
+            //cmd1a.CommandType = CommandType.Text;
+            //cmd1a.CommandText = "UPDATE t_agent SET nom='" + txtNom.Text + "',prenom='" + txtPrenom.Text + "',sexe='" + txtSexe.SelectedValue + "',niveau='" + txtNiveau.SelectedValue + "',domaine='" + txtDomaine.Text + "',fonction='" + txtFonction.SelectedValue + "',etat_civil='" + txtEtatCivil.Text + "',adresse='" + txtAdresse.Text + "',idEcole='" + txtIdEcole.Text + "' WHERE matricule='" + txtMatricule.Text + "'";
+            //cmd1a.ExecuteNonQuery();
+            //con.Close();
+            //Response.Redirect("AdminAgentAjout.aspx");
         }
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -227,25 +227,25 @@ namespace NaomiSite
         }
         public void TrouverAgent()
         {
-            con.Open();
-            MySqlCommand cmdB = con.CreateCommand();
-            cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from t_agent WHERE matricule='" + txtMatricule.Text + "'");
-            MySqlDataReader dr = cmdB.ExecuteReader();
-            while (dr.Read())
-            {
-                txtNom.Text = dr["nom"].ToString();
-                txtPrenom.Text = dr["prenom"].ToString();
-                txtSexe.Text = dr["sexe"].ToString();
-                txtIdEcole.Text = dr["idEcole"].ToString();
-                txtNiveau.Text = dr["niveau"].ToString();
-                txtDomaine.Text = dr["domaine"].ToString();
-                txtFonction.Text = dr["fonction"].ToString();
-                txtEtatCivil.Text = dr["etat_civil"].ToString();
-                txtPhone.Text = dr["telephone"].ToString();
-                txtAdresse.Text = dr["adresse"].ToString();
-            }
-            con.Close();
+            //con.Open();
+            //MySqlCommand cmdB = con.CreateCommand();
+            //cmdB.CommandType = CommandType.Text;
+            //cmdB.CommandText = ("SELECT *from t_agent WHERE matricule='" + txtMatricule.Text + "'");
+            //MySqlDataReader dr = cmdB.ExecuteReader();
+            //while (dr.Read())
+            //{
+            //    txtNom.Text = dr["nom"].ToString();
+            //    txtPrenom.Text = dr["prenom"].ToString();
+            //    txtSexe.Text = dr["sexe"].ToString();
+            //    txtIdEcole.Text = dr["idEcole"].ToString();
+            //    txtNiveau.Text = dr["niveau"].ToString();
+            //    txtDomaine.Text = dr["domaine"].ToString();
+            //    txtFonction.Text = dr["fonction"].ToString();
+            //    txtEtatCivil.Text = dr["etat_civil"].ToString();
+            //    txtPhone.Text = dr["telephone"].ToString();
+            //    txtAdresse.Text = dr["adresse"].ToString();
+            //}
+            //con.Close();
         }
 
         protected void txtRecherche_TextChanged(object sender, EventArgs e)

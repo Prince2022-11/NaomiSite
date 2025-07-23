@@ -4,16 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using MySql.Data.MySqlClient;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 using System.Globalization;
-using KimToo;
 using System.Threading;
-
 
 namespace NaomiSite
 {
@@ -200,6 +197,8 @@ namespace NaomiSite
                 while (dr.Read())
                 {
                     txtDernierOperation.Text = dr["DOperation"].ToString();
+                    int NouvelleOperation = int.Parse(dr["DOperation"].ToString()) + 1;
+                    txtIdRecu.Text= NouvelleOperation.ToString() + "-" + txtMatricule.Text;
                 }
                 con.Close();
             }
@@ -684,6 +683,16 @@ namespace NaomiSite
 
             con.Close();
         }
+        public void SauvegarderRecuPayement()
+        {
+            string dateRecu = DateTime.Today.Date.ToShortDateString();
+            con.Open();
+            MySqlCommand cmd1a = con.CreateCommand();
+            cmd1a.CommandType = CommandType.Text;
+            cmd1a.CommandText = "insert into recu_payement values('" + txtIdRecu.Text + "','" + dateRecu.ToString() + "','" + txtMatricule.Text + "','" + txtIdEcole.Text + "','" + txtFrais.SelectedValue + "','" + txtUnite.Text + "','" + txtIdAnnee.Text + "','" + txtT1.Text + "','" + txtT2.Text + "','" + txtT3.Text + "','" + txtT11.Text + "','" + txtT22.Text + "','" + txtT33.Text + "','" + txtReste.Text + "')";
+            cmd1a.ExecuteNonQuery();
+            con.Close();
+        }
         public void ImprimerFactureEleve()
         {
             // Récupération des valeurs des TextBox
@@ -775,10 +784,10 @@ namespace NaomiSite
                 string TakeDate = DateTime.Today.ToShortDateString();
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-                if (txtMontantVenuAvec.Text=="0")
+                if (txtMontantVenuAvec.Text == "0")
                 {
                     //Enregistrement si on n'a pas converti le montant que l'élève est venu avec à la caisse
-                    string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtmontant.Text.Replace(',', '.') + "','" + txtUnite.Text + "','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "')";
+                    string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtmontant.Text.Replace(',', '.') + "','" + txtUnite.Text + "','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "','" + txtIdRecu.Text + "')";
                     MySqlCommand commande = new MySqlCommand(cmd, conx);
 
                     double a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
@@ -808,12 +817,15 @@ namespace NaomiSite
                             SituationCaisse();
                             ActualiserLaCaisseEnEntree();
 
-                            TrouverDerniereOperation();
                             TrouverFraisDejaPaye();
+                            SauvegarderRecuPayement();
+                            TrouverDerniereOperation();
                             ImprimerFactureEleve();
+
                             ViderChamps();
 
                             SituationCaisse();
+                            btnAddStructure.Visible = false;
 
                             //Affichage du message succès
                             success.Visible = true;
@@ -840,7 +852,7 @@ namespace NaomiSite
                     if (txtUnite.Text == "USD")
                     {
                         string unite = "CDF";
-                        string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','CDF','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "')";
+                        string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','CDF','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "','" + txtIdRecu.Text + "')";
                         MySqlCommand commande = new MySqlCommand(cmd, conx);
 
                         double a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
@@ -870,12 +882,14 @@ namespace NaomiSite
                                 SituationCaisse();
                                 ActualiserLaCaisseEnEntree();
 
-                                TrouverDerniereOperation();
                                 TrouverFraisDejaPaye();
+                                SauvegarderRecuPayement();
+                                TrouverDerniereOperation();
                                 ImprimerFactureEleve();
                                 ViderChamps();
 
                                 SituationCaisse();
+                                btnAddStructure.Visible = false;
 
                                 //Affichage du message succès
                                 success.Visible = true;
@@ -899,7 +913,7 @@ namespace NaomiSite
                     if (txtUnite.Text == "CDF")
                     {
                         string unite = "USD";
-                        string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','USD','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "')";
+                        string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','USD','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "','" + txtIdRecu.Text + "')";
                         MySqlCommand commande = new MySqlCommand(cmd, conx);
 
                         double a = Convert.ToDouble(txtmontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
@@ -929,12 +943,15 @@ namespace NaomiSite
                                 SituationCaisse();
                                 ActualiserLaCaisseEnEntree();
 
-                                TrouverDerniereOperation();
                                 TrouverFraisDejaPaye();
+                                SauvegarderRecuPayement();
+                                TrouverDerniereOperation();
                                 ImprimerFactureEleve();
+
                                 ViderChamps();
 
                                 SituationCaisse();
+                                btnAddStructure.Visible = false;
 
                                 //Affichage du message succès
                                 success.Visible = true;
@@ -955,9 +972,9 @@ namespace NaomiSite
 
                         }
                     }
-                    
+
                 }
-                
+
             }
             catch
             {

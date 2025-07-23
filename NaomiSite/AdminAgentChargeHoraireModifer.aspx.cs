@@ -4,14 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using MySql.Data.MySqlClient;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 using System.Globalization;
-using KimToo;
 using System.Threading;
 
 namespace NaomiSite
@@ -60,7 +58,6 @@ namespace NaomiSite
                     try
                     {
                         TrouverPrestationAgent();
-                        CalculerHeures();
                         txtSuccess.Visible = false;
                         txtMessage.Visible = false;
                         btnLundi.Checked = false;
@@ -75,6 +72,8 @@ namespace NaomiSite
                         txtJeudi.Enabled = false;
                         txtVendredi.Enabled = false;
                         txtSamedi.Enabled = false;
+
+                        CalculerHeures();
                         RendreChampsVisible();
                         RestreindreHeures();
                     }
@@ -291,42 +290,33 @@ namespace NaomiSite
         }
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
-            //if (txtmat.Text != "0" && txtHeure.Text != "0" && txtHeure.Text != "" && txtCours.Text != "0" && txtCours.Text != "" && (txtLundi.Text != "0" || txtMardi.Text != "0" || txtMercredi.Text != "0" || txtJeudi.Text != "0" || txtVendredi.Text != "0" || txtSamedi.Text != "0") && (txtLundi.Text != "" && txtMardi.Text != "" && txtMercredi.Text != "" && txtJeudi.Text != "" && txtVendredi.Text != "" && txtSamedi.Text != ""))
-            //{
-            //    con.Open();
-            //    CalculerHeures();
-            //    MySqlCommand cmd1a = con.CreateCommand();
-            //    cmd1a.CommandType = CommandType.Text;
-            //    cmd1a.CommandText = "insert into attribution_horaire values(default,'" + txtCours.Text + "','" + txtHeure.Text + "','" + txtmat.Text + "','" + lblLundi.Text + "','" + lblMardi.Text + "','" + lblMercredi.Text + "','" + lblJeudi.Text + "','" + lblVendredi.Text + "','" + lblSamedi.Text + "','" + txtLundi.Text + "','" + txtMardi.Text + "','" + txtMercredi.Text + "','" + txtJeudi.Text + "','" + txtVendredi.Text + "','" + txtSamedi.Text + "','" + txtIdAnnee.Text + "','3')";
-            //    cmd1a.ExecuteNonQuery();
-            //    con.Close();
-            //    ViderChamps();
-            //    txtSuccess.Visible = true;
-            //}
-            //else
-            //{
-            //    txtMessage.Visible = true;
-            //}
+            if (txtmat.Text != "0" && txtHeure.Text != "0" && txtHeure.Text != "" && txtCours.Text != "0" && txtCours.Text != "" && (txtLundi.Text != "0" || txtMardi.Text != "0" || txtMercredi.Text != "0" || txtJeudi.Text != "0" || txtVendredi.Text != "0" || txtSamedi.Text != "0") && (txtLundi.Text != "" && txtMardi.Text != "" && txtMercredi.Text != "" && txtJeudi.Text != "" && txtVendredi.Text != "" && txtSamedi.Text != ""))
+            {
+                con.Open();
+                CalculerHeures();
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "UPDATE attribution_horaire SET coursAttribue='"+ txtCours.Text + "',totalHeure='" + txtHeure.Text + "',Lundi='" + lblLundi.Text + "',Mardi='" + lblMardi.Text + "',Mercredi='" + lblMercredi.Text + "',Jeudi='" + lblJeudi.Text + "',Vendredi='" + lblVendredi.Text + "',Samedi='" + lblSamedi.Text + "',nbHlundi='" + txtLundi.Text + "',nbHmardi='" + txtMardi.Text + "',nbHmercredi='" + txtMercredi.Text + "',nbHjeudi='" + txtJeudi.Text + "',nbHvendredi='" + txtVendredi.Text + "',nbHsamedi='" + txtSamedi.Text + "' WHERE Matricule='" + txtmat.Text + "' AND anneeScolaire='" + txtIdAnnee.Text + "'";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+                txtSuccess.Visible = true;
+                Response.Redirect("AdminAgentChargeHoraire.aspx");
+            }
+            else
+            {
+                txtMessage.Visible = true;
+            }
         }
         protected void btnLundi_CheckedChanged(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                RendreChampsVisible();
-                RestreindreHeures();
-                CalculerHeures();
-            }
-           
+            RestreindreHeures();
+            RendreChampsVisible();
+            CalculerHeures();
         }
 
         protected void txtLundi_TextChanged(object sender, EventArgs e)
         {
             CalculerHeures();
-        }
-
-        protected void txtmat_TextChanged(object sender, EventArgs e)
-        {
-            TrouverAgent();
         }
     }
 }

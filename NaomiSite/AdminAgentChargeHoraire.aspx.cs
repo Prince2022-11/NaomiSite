@@ -4,14 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using MySql.Data.MySqlClient;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 using System.Globalization;
-using KimToo;
 using System.Threading;
 
 namespace NaomiSite
@@ -162,7 +160,7 @@ namespace NaomiSite
             if (btnMercredi.Checked == true)
             {
                 txtMercredi.Enabled = true;
-                txtMercredi.Text = "Oui";
+                lblMercredi.Text = "Oui";
             }
             else
             {
@@ -253,6 +251,24 @@ namespace NaomiSite
                 txtmat.Text=dr["matricule"].ToString();
             }
             con.Close();
+            TrouverSiAgentAuneChargeHoraire();
+        }
+        public void TrouverSiAgentAuneChargeHoraire()
+        {
+            con.Open();
+            txtMessage.Visible = false;
+            btnAddStructure.Visible = true;
+            MySqlCommand cmdB = con.CreateCommand();
+            cmdB.CommandType = CommandType.Text;
+            cmdB.CommandText = ("SELECT * from attribution_horaire WHERE Matricule='" + txtmat.Text + "' AND anneeScolaire='"+txtIdAnnee.Text+"'");
+            MySqlDataReader dr = cmdB.ExecuteReader();
+            while (dr.Read())
+            {
+                txtMessage.Visible = true;
+                txtMessage.Text = "L'agent sélectionné a déjà une charge horaire encours de cette année";
+                btnAddStructure.Visible = false;
+            }
+            con.Close();
         }
 
         protected void btnAddStructure_Click(object sender, EventArgs e)
@@ -294,6 +310,7 @@ namespace NaomiSite
         {
             ViderChamps();
             TrouverMatAgent();
+            TrouverSiAgentAuneChargeHoraire();
         }
         protected void btnRechApproFondie_Click(object sender, EventArgs e)
         {

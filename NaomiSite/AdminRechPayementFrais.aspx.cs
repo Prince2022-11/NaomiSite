@@ -9,6 +9,8 @@ using System.Data;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.IO;
+using System.Globalization;
+using System.Threading;
 
 namespace NaomiSite
 {
@@ -74,7 +76,7 @@ namespace NaomiSite
         public void AfficherToutPayement()
         {
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' ORDER BY date_payement ASC", con);
+            MySqlCommand cmdB1 = new MySqlCommand("SELECT t_payement_frais.id_payement as id_Payement,t_payement_frais.idRecu as idRecu,t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' ORDER BY date_payement DESC,id_payement DESC", con);
             cmdB1.ExecuteNonQuery();
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
@@ -92,7 +94,7 @@ namespace NaomiSite
                 con.Open();
                 MySqlCommand cmdD = con.CreateCommand();
                 cmdD.CommandType = CommandType.Text;
-                cmdD.CommandText = ("SELECT t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND CONCAT(change_classe.matricule,change_classe.nomEleve,change_classe.prenom,t_classe.classe,section.nomSection,ecole.nomEcole,t_payement_frais.date_payement,frais_scolaire.designation) LIKE '%" + recherche + "%' ORDER BY nom ASC ");
+                cmdD.CommandText = ("SELECT t_payement_frais.id_payement as id_Payement,t_payement_frais.idRecu as idRecu,t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND CONCAT(change_classe.matricule,change_classe.nomEleve,change_classe.prenom,t_classe.classe,section.nomSection,ecole.nomEcole,t_payement_frais.date_payement,frais_scolaire.designation) LIKE '%" + recherche + "%' ORDER date_payement DESC,id_payement DESC ");
                 cmdD.ExecuteNonQuery();
                 txtMessage.Text = "Les payements effectués incluants le critère '"+txtRecherche.Text+"'";
                 DataTable dtD = new DataTable();
@@ -113,7 +115,7 @@ namespace NaomiSite
             string d1, d2;
             d1 = DateTime.Parse(txtDate1.Text).ToShortDateString();
             d2 = DateTime.Parse(txtDate2.Text).ToShortDateString();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND t_payement_frais.date_payement BETWEEN '"+d1+"' AND '"+d2 + "' ORDER BY date_payement ASC", con);
+            MySqlCommand cmdB1 = new MySqlCommand("SELECT t_payement_frais.id_payement as id_Payement,t_payement_frais.idRecu as idRecu,t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND t_payement_frais.date_payement BETWEEN '" + d1+"' AND '"+d2 + "' ORDER BY date_payement DESC,id_payement DESC", con);
             cmdB1.ExecuteNonQuery();
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
@@ -1201,15 +1203,25 @@ namespace NaomiSite
 
         protected void btnRechApproFondie_Click(object sender, EventArgs e)
         {
-            recherche(txtRecherche.Text);
-            afficherParDate(txtRecherche.Text);
+            try
+            {
+                recherche(txtRecherche.Text);
+                afficherParDate(txtRecherche.Text);
+            }
+            catch { }
+            
 
         }
 
         protected void btnRechIntervalle_Click(object sender, EventArgs e)
         {
-            AfficherParIntervalleDate();
-            IntervalleDatePDF();
+            try
+            {
+                AfficherParIntervalleDate();
+                IntervalleDatePDF();
+            }
+            catch { }
+            
         }
 
         protected void btnRechEnOrdreEtPasEnOrdre_Click(object sender, EventArgs e)

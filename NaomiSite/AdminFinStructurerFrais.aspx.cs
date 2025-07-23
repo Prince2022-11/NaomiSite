@@ -4,14 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using MySql.Data.MySqlClient;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 using System.Globalization;
-using KimToo;
 using System.Threading;
 
 namespace NaomiSite

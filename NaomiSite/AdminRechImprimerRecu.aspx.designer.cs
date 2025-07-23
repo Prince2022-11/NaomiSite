@@ -10,7 +10,7 @@
 namespace NaomiSite {
     
     
-    public partial class AdminFinPayeFraisExecute {
+    public partial class AdminRechImprimerRecu {
         
         /// <summary>
         /// txtLogin control.
@@ -85,15 +85,6 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Label txtUnite;
         
         /// <summary>
-        /// TextBox1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
-        
-        /// <summary>
         /// txtIdEcole control.
         /// </summary>
         /// <remarks>
@@ -101,15 +92,6 @@ namespace NaomiSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIdEcole;
-        
-        /// <summary>
-        /// txtIdRecu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdRecu;
         
         /// <summary>
         /// txtDispo control.
@@ -157,6 +139,15 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.TextBox txtIdFrais;
         
         /// <summary>
+        /// txtOperateur control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOperateur;
+        
+        /// <summary>
         /// txtIdOption control.
         /// </summary>
         /// <remarks>
@@ -164,6 +155,42 @@ namespace NaomiSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIdOption;
+        
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// txtIdRecu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtIdRecu;
+        
+        /// <summary>
+        /// Label4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label4;
+        
+        /// <summary>
+        /// txtDatePayement control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtDatePayement;
         
         /// <summary>
         /// Label2 control.
@@ -238,13 +265,13 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Label txtEcole;
         
         /// <summary>
-        /// Label0 control.
+        /// Label5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label0;
+        protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
         /// txtFrais control.
@@ -253,7 +280,7 @@ namespace NaomiSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtFrais;
+        protected global::System.Web.UI.WebControls.Label txtFrais;
         
         /// <summary>
         /// txtUnite1 control.
@@ -346,33 +373,6 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.TextBox txtmontant;
         
         /// <summary>
-        /// btnConvertir control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConvertir;
-        
-        /// <summary>
-        /// Label3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
-        
-        /// <summary>
-        /// txtConvertir control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtConvertir;
-        
-        /// <summary>
         /// error control.
         /// </summary>
         /// <remarks>
@@ -391,13 +391,13 @@ namespace NaomiSite {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl success;
         
         /// <summary>
-        /// btnAddStructure control.
+        /// btnImprimer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddStructure;
+        protected global::System.Web.UI.WebControls.Button btnImprimer;
         
         /// <summary>
         /// txtMessage control.
@@ -407,59 +407,5 @@ namespace NaomiSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label txtMessage;
-        
-        /// <summary>
-        /// lblTaux control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTaux;
-        
-        /// <summary>
-        /// txtTaux control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTaux;
-        
-        /// <summary>
-        /// txtMontantVenuAvec control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtMontantVenuAvec;
-        
-        /// <summary>
-        /// lblEquivalence control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEquivalence;
-        
-        /// <summary>
-        /// txtEquivalenceMontant control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEquivalenceMontant;
-        
-        /// <summary>
-        /// btnValiderAvecConversion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnValiderAvecConversion;
     }
 }

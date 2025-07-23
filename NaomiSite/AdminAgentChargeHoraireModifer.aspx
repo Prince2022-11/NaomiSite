@@ -38,33 +38,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
-     <script type="text/javascript">
-        function imprimerFacture() {
-            var impressionDiv = document.getElementById("divFacture");
-            var fenetreImpression = window.open('', '', 'height=400,width=600');
-            fenetreImpression.document.write('<html<head><title>Reçu Payement</title>');
-            fenetreImpression.document.write('</head><body>');
-            fenetreImpression.document.write(impressionDiv.innerHTML);
-            fenetreImpression.document.write('</body></html>');
-            fenetreImpression.document.close();
-            fenetreImpression.print();
-        }
-
-        function setFactureData(matricule, nom, classe, dateRecu, montant, frais, unite1, prevu, unite2, apayer, reste, login) {
-            document.getElementById('factureMatricule').innerText = matricule;
-            document.getElementById('factureNom').innerText = nom;
-            document.getElementById('factureClasse').innerText = classe;
-            document.getElementById('factureDateRecu').innerText = dateRecu;
-            document.getElementById('factureMontant').innerText = montant;
-            document.getElementById('factureFrais').innerText = frais;
-            document.getElementById('factureUnite1').innerText = unite1;
-            document.getElementById('factureTranchePrevu').innerText = prevu;
-            document.getElementById('factureUnite2').innerText = unite2;
-            document.getElementById('factureTranchePaye').innerText = apayer;
-            document.getElementById('factureReste').innerText = reste;
-            document.getElementById('factureLogin').innerText = login;
-        }
-    </script>
+     
 </head>
 
 <body>
@@ -120,7 +94,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h1 class="page-title">ESPACE ADMIN --- EFFECTUER LE PAYEMENT D'UN FRAIS POUR ELEVE</h1>
+		<h1 class="page-title">ESPACE ADMIN --- MODIFICATION DE LA CHARGE HORAIRE D'UN ENSEIGNANT/SECONDAIRE</h1>
 		<!-- /.page-title -->
 	</div>
 
@@ -143,7 +117,7 @@
          <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
-                                         <asp:TextBox runat="server" ID="txtmat" ForeColor="Red" Text="" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false" OnTextChanged="txtmat_TextChanged"></asp:TextBox>
+                                         <asp:TextBox runat="server" ID="txtmat" ForeColor="Red" Text="" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:TextBox>
                                         <asp:label runat="server" ID="txtIdAttribution" ForeColor="Red" Text="matr" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label>
                                          <asp:label runat="server" ID="lblLundi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label> 
                                          <asp:label runat="server" ID="lblMardi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label> 
@@ -174,29 +148,29 @@
                                           <label>Cochez les jours de prestation de l'agent par semaine</label>
                                           <div class="col-lg-4 col-md-4">
                                               <div class="form-group input-group" >
-                                                  <asp:CheckBox ID="btnLundi" runat="server" Text=" Lundi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue"  OnCheckedChanged="btnLundi_CheckedChanged"/>
+                                                  <asp:CheckBox ID="btnLundi" runat="server" Text=" Lundi" AutoPostBack="true" Font-Size="Small" ForeColor="Blue"  OnCheckedChanged="btnLundi_CheckedChanged"/>
 	                                          <asp:TextBox runat="server" ID="txtLundi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
 	                                          </div>
                                               <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnMardi" runat="server" Text=" Mardi" AutoPostBack="true" Checked="True"  Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
+                                                <asp:CheckBox ID="btnMardi" runat="server" Text=" Mardi" AutoPostBack="true" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
 	                                            <asp:TextBox runat="server" ID="txtMardi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
 	                                          </div>
                                               <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnMercredi" runat="server" Text=" Mercredi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
+                                                <asp:CheckBox ID="btnMercredi" runat="server" Text=" Mercredi" AutoPostBack="true" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
                                                 <asp:TextBox runat="server" ID="txtMercredi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
 	                                          </div>
                                           </div>
                                           <div class="col-lg-5 col-md-5">
                                               <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnJeudi" runat="server" Text=" Jeudi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
+                                                <asp:CheckBox ID="btnJeudi" runat="server" Text=" Jeudi" AutoPostBack="true" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
 	                                          <asp:TextBox runat="server" ID="txtJeudi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
 	                                          </div>
                                               <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnVendredi" runat="server" Text=" Vendredi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
+                                                <asp:CheckBox ID="btnVendredi" runat="server" Text=" Vendredi" AutoPostBack="true" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
 	                                            <asp:TextBox runat="server" ID="txtVendredi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
 	                                          </div>
                                               <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnSamedi" runat="server" Text=" Samedi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue"  OnCheckedChanged="btnLundi_CheckedChanged"/>
+                                                <asp:CheckBox ID="btnSamedi" runat="server" Text=" Samedi" AutoPostBack="true" Font-Size="Small" ForeColor="Blue"  OnCheckedChanged="btnLundi_CheckedChanged"/>
 	                                            <asp:TextBox runat="server" ID="txtSamedi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox><br />
 	                                          </div>
                                           </div>

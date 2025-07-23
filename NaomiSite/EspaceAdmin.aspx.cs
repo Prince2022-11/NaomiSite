@@ -4,8 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using MySql.Data.MySqlClient;
+using System.Data;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
+using System.Globalization;
+using System.Threading;
 
 namespace NaomiSite
 {

@@ -109,7 +109,7 @@
 	<div class="main-content">
 		<div class="isotope-filter js__filter_isotope">
 			<br>
-        <div class="modal-body row">
+        <div class="modal-body row" style="overflow:auto">
          <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
          <asp:UpdatePanel ID="UpdatePanel2" runat="server">
              <ContentTemplate>
@@ -182,10 +182,10 @@
                                                             <asp:ListItem>Tranche3</asp:ListItem>
                                                        </asp:DropDownList>
 	                                            </div> 
-                                                  <asp:Label runat="server" ID="txtT1" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label>
-                                                  <asp:Label runat="server" ID="txtT2" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label>
-                                                  <asp:Label runat="server" ID="txtT3" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True"></asp:Label>
-                                                  <asp:Label runat="server" ID="txtUnite" Text="0" ForeColor="Black" Font-Bold="True" AutoPostBack="True"></asp:Label>
+                                                  <asp:Label runat="server" ID="txtT1" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label>
+                                                  <asp:Label runat="server" ID="txtT2" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label>
+                                                  <asp:Label runat="server" ID="txtT3" Text="0" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label>
+                                                  <asp:Label runat="server" ID="txtUnite" Text="0" ForeColor="Black" Font-Bold="True" AutoPostBack="True" Visible="false"></asp:Label>
                                              </div>
                                              <div class="col-lg-6 col-md-6">
                                                  <label>Option d'Etude</label>
@@ -210,25 +210,27 @@
                                             
 
                                      </div>
-                                       <hr style="border:1px solid red; width:100%; margin:20px auto;">
-                                         <center><asp:Label runat="server" ID="txtMessage" Text="Tous les payements de cette année" ForeColor="Red" Font-Size="Large" Font-Bold="True" AutoPostBack="True"></asp:Label></center>
+                                       <hr style="border:1px solid black; width:100%; margin:20px auto;">
+                                         <center><asp:Label runat="server" ID="txtMessage" Text="Tous les payements de cette année" ForeColor="black" Font-Size="Large" Font-Bold="True" AutoPostBack="True"></asp:Label></center>
 
                         <asp:Repeater ID="Data1" runat="server" OnItemCommand="Data1_ItemCommand">
                                    <HeaderTemplate>
                                  <table class="table table-condansed table-striped" border="2" style="overflow:auto; border:medium ridge black;" >
                                   <thead>
                                     <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
+                                      <%--<th> # </th>--%>
                                       <th> Date </th>
                                       <th> Frais Payé </th>
                                       <th> Montant </th>
                                       <th> Unité </th>
-                                      <th> Matricule </th>
                                       <th> Nom </th>
                                       <th> Prénom </th>
                                       <th> Sexe</th>
                                       <th> Classe </th>
                                       <th> Option </th>
                                       <th> Niveau </th>
+                                      <th> N°Reçu </th>
+                                        <th> Action </th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -236,17 +238,19 @@
 
                                    <ItemTemplate>
                                     <tr>
-                                      <td style="border:1px solid black;"> <%#Eval("date_payement ") %></td>
+                                      <%--<td style="border:1px solid black;"> <%#Eval("id_Payement") %></td>--%>
+                                        <td style="border:1px solid black;"> <%#Eval("date_payement ") %></td>
                                         <td style="border:1px solid black;"> <%#Eval("DFrais ") %></td>
                                         <td style="border:1px solid black;"> <%#Eval("montantPaye ") %></td>
                                         <td style="border:1px solid black;"> <%#Eval("unite ") %></td>
-                                      <td style="border:1px solid black;"> <%#Eval("matricule ") %></td>
                                       <td style="border:1px solid black;"> <%#Eval("nom") %></td>
                                     <td style="border:1px solid black;"> <%#Eval("prenom") %></td>
                                       <td style="border:1px solid black;"> <%#Eval("sexe ") %></td>
                                       <td style="border:1px solid black;"> <%#Eval("classe") %></td>
                                         <td style="border:1px solid black;"> <%#Eval("option") %></td>
                                       <td style="border:1px solid black;"> <%#Eval("idEcole ") %></td>
+                                        <td style="border:1px solid black;"> <%#Eval("idRecu ") %></td>
+                                        <td style="border:1px solid black;"><a  id="btnImprimer" class="btn btn-primary" style="color:white;font-size: large;font-style: normal;border-color:black;font-weight: bold;background: #085ecf ;" href="AdminRechImprimerRecu.aspx?id=<%#Eval("idRecu")%>">Imprimer Reçu</a></td>
                                     </tr>
                                    </ItemTemplate>
 

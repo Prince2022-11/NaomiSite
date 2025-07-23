@@ -127,7 +127,7 @@
                                              <label>SORTIES FINANCIERES</label> <br />
                                              <a href="#"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
                                              <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
+                                             <a href="AdminFinDepense.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
                                              <a href="AdminSituationCaisse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Situation de la caisse Scolaire...</h4></a><br /><br />
                                          </div>
                               </ContentTemplate>

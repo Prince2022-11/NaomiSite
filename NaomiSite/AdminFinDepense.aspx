@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminAgentChargeHoraire.aspx.cs" Inherits="NaomiSite.AdminAgentChargeHoraire" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminFinDepense.aspx.cs" Inherits="NaomiSite.AdminFinDepense" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,77 +94,69 @@
         <div class="modal-content" style="width: 100%;">
             <div class="modal-header">
               <button aria-hidden="true" data-dismiss="modal" class="close" type="button" onclick="redirectToAdminAgentAjout()">X</button>
-                <h5 class="modal-title"><center><b>FORMULAIRE D'ATTRIBUTION DES CHARGES HORAIRES </b></center></h5>
+                <h5 class="modal-title"><center><b>EFFECTUER UNE DEPENSE </b></center></h5>
             </div>
             <div class="modal-body">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                  <ContentTemplate>
+                                          <asp:TextBox runat="server" ID="txtIdEcole" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
+                                          <asp:label runat="server" ID="Label1" ForeColor="Red" Text="Agent N° " AutoPostBack="True"></asp:label>
                                           <asp:label runat="server" ID="txtmat" ForeColor="Red" Text="matr" AutoPostBack="True" Font-Size="Medium" Font-Bold="True"></asp:label>
-                                         <asp:label runat="server" ID="lblLundi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label> 
-                                         <asp:label runat="server" ID="lblMardi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label> 
-                                         <asp:label runat="server" ID="lblMercredi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label> 
-                                         <asp:label runat="server" ID="lblJeudi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label> 
-                                         <asp:label runat="server" ID="lblVendredi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label> 
-                                           <asp:label runat="server" ID="lblSamedi" ForeColor="Red" Text="Non" AutoPostBack="True" Font-Size="Medium" Font-Bold="True" Visible="false"></asp:label>  <br />
+                                      <asp:TextBox runat="server" ID="txtMatricule" ForeColor="black" Text="" AutoPostBack="true" Visible="true" Font-Bold="True" Font-Size="Medium" BackColor="Transparent" BorderColor="Transparent" OnTextChanged="txtMatricule_TextChanged"></asp:TextBox>
+                                       <asp:label runat="server" ID="txtDernierMat" ForeColor="Red" Text="matr" AutoPostBack="True" Visible="false"></asp:label> <br />
                                         
                                      <div class="col-lg-6 col-md-6">
                                          
-                                         <label>Attribuer à quel agent ?</label>
+                                         <label>Opération dans la caisse de l'école</label>
                                           <div class="form-group input-group" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
-                                              <asp:DropDownList ID="txtAgent" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True" OnSelectedIndexChanged="txtAgent_SelectedIndexChanged">
+                                              <asp:DropDownList ID="txtEcole" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True" OnSelectedIndexChanged="txtEcole_SelectedIndexChanged">
+                                                        <asp:ListItem>MATERNELLE</asp:ListItem>
+                                                        <asp:ListItem>PRIMAIRE</asp:ListItem>
+                                                        <asp:ListItem>SECONDAIRE</asp:ListItem>
                                                    </asp:DropDownList>
 	                                      </div>
-                                         <label>Quels sont les cours à lui attribuer ?</label>
+                                         <label>Libellé de l'opération (Motif Dépense)</label>
                                           <div class="form-group input-group" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                          <asp:TextBox runat="server" ID="txtCours" class="form-control" placeholder="Saisir les cours de l'agent ici" required AutoPostBack="True"></asp:TextBox>
+	                                          <asp:TextBox runat="server" ID="txtMotif" class="form-control" placeholder="Saisir le nom et le post-nom ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div> 
+                                         <label>Unité</label>
+                                          <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtUnite" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True">
+                                                        <asp:ListItem>USD</asp:ListItem>
+                                                        <asp:ListItem>CDF</asp:ListItem>
+                                                   </asp:DropDownList>
 	                                      </div>
-                                         <label>Calcul automatique des Heures/Semaine</label>
+                                         <label>Montant</label>
                                           <div class="form-group input-group" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                          <asp:TextBox runat="server" ID="txtHeure" class="form-control" placeholder="Saisir les cours de l'agent ici" required AutoPostBack="True"></asp:TextBox>
-	                                      </div>  
-                                          
+	                                          <asp:TextBox runat="server" ID="txtMontant" class="form-control" placeholder="Saisir le prénom ici" required AutoPostBack="True"></asp:TextBox>
+	                                      </div> 
                                      </div>
-                                     <div class="col-lg-6 col-md-6"> 
-                                          <label>Cochez les jours de prestation de l'agent par semaine et attribuez les heures aux jours cochés</label>
-                                          <div class="col-lg-4 col-md-4">
-                                              <div class="form-group input-group" >
-                                                  <asp:CheckBox ID="btnLundi" runat="server" Text=" Lundi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue"  OnCheckedChanged="btnLundi_CheckedChanged"/>
-	                                          <asp:TextBox runat="server" ID="txtLundi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
-	                                          </div>
-                                              <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnMardi" runat="server" Text=" Mardi" AutoPostBack="true" Checked="True"  Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
-	                                            <asp:TextBox runat="server" ID="txtMardi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
-	                                          </div>
-                                              <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnMercredi" runat="server" Text=" Mercredi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
-                                                <asp:TextBox runat="server" ID="txtMercredi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
-	                                          </div>
-                                          </div>
-                                          <div class="col-lg-5 col-md-5">
-                                              <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnJeudi" runat="server" Text=" Jeudi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
-	                                          <asp:TextBox runat="server" ID="txtJeudi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
-	                                          </div>
-                                              <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnVendredi" runat="server" Text=" Vendredi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue" OnCheckedChanged="btnLundi_CheckedChanged"/>
-	                                            <asp:TextBox runat="server" ID="txtVendredi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox>
-	                                          </div>
-                                              <div class="form-group input-group" >
-                                                <asp:CheckBox ID="btnSamedi" runat="server" Text=" Samedi" AutoPostBack="true" Checked="True" Font-Size="Small" ForeColor="Blue"  OnCheckedChanged="btnLundi_CheckedChanged"/>
-	                                            <asp:TextBox runat="server" ID="txtSamedi" class="form-control" placeholder="Combien d'heure ?"  AutoPostBack="True" OnTextChanged="txtLundi_TextChanged"></asp:TextBox><br />
-	                                          </div>
-                                          </div>
-                                                
-                                            
+                                     <div class="col-lg-6 col-md-6"><br />
+
                                      </div>  
-                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Un de vos champs est vide ou vous n'avez pas coché un des jours de prestation et compléter les heures" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
-                                                    <CENTER><asp:Label runat="server" ID="txtSuccess" Text="Attribution faite avec succès..." ForeColor="green" Font-Bold="True" AutoPostBack="True" Visible="False" Font-Size="Medium"></asp:Label></CENTER>
-                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button></CENTER>
-                              </ContentTemplate>
+                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Un de vos champs est vide" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
+                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER>
+                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnModification" Text="Mettre à jour" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnModification_Click" ></asp:Button><span></span></CENTER><br><br />
+                                           
+                         <script type="text/javascript">
+                             function setmatricule(num) {
+                                 // Récupérer le contrôle TextBox par son ID et lui assigner la valeur du numéro matricule
+                                 document.getElementById('<%= txtMatricule.ClientID %>').value = num;
+                             }
+
+                        </script>
+                        <script type="text/javascript">
+                             function redirectToAdminAgentAjout() {
+                                 // Actualisé la page
+                                 window.location.href = 'AdminAgentAjout.aspx';
+                             }
+                        </script>
+                      </ContentTemplate>
                      </asp:UpdatePanel>
                     
 
@@ -179,7 +171,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- CHARGES HORAIRES ANNUELLES</h2>
+		<h2 class="page-title">ESPACE ADMIN --- GESTION DES DEPENSES SCOLAIRES</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -199,7 +191,7 @@
         <div class="modal-body row" style="overflow:auto">
          <asp:UpdatePanel ID="UpdatePanel2" runat="server">
              <ContentTemplate>
-                 <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">+ Attribuer une charge Horaire </h4></a>
+                 <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Ajouter un agent + </h4></a>
                 <div class="input-group">
                    <span class="input-group-addon"> <span class="fa fa-name"></span><asp:Label ID="Label10" runat="server" Text="Recherche " Visible="true"></asp:Label></span>
                         <asp:TextBox runat="server" ID="txtRecherche" class="form-control"  AutoPostBack="true" placeholder="Par nom de l'agent, domaine,niveau,ecole,..." OnTextChanged="txtRecherche_TextChanged"></asp:TextBox>
@@ -212,18 +204,11 @@
                      <table class="table table-condansed table-striped" border="2" style="border:medium ridge black;" >
                       <thead>
                         <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
-                          <th> # </th>
+                          <th> Matricule </th>
                           <th> Nom et Post-nom </th>
                           <th> Prénom </th>
-                          <th> Cours </th>
-                            <th> TotHeure </th>
-                          <th> Lundi </th>
-                            <th> Mardi </th>
-                            <th> Mercredi </th>
-                            <th> Jeudi </th>
-                            <th> Vendredi </th>
-                            <th> Samedi </th>
-                          <th> Action</th>
+                          <th> Sexe</th>
+                          <th> Niveau </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -231,18 +216,11 @@
 
                        <ItemTemplate>
                         <tr>
-                          <td style="border:1px solid black;"> <%#Eval("idAttribution") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("matricule ") %></td>
                           <td style="border:1px solid black;"> <%#Eval("nom") %></td>
                         <td style="border:1px solid black;"> <%#Eval("prenom") %></td>
-                          <td style="border:1px solid black;"> <%#Eval("coursAttribue") %></td>
-                            <td style="border:1px solid black;"> <%#Eval("totalHeure")+ "H /Semaine" %></td>
-                            <td style="border:1px solid black;"> <%#Eval("Lundi ") + "-" %><%#Eval("nbHlundi ") + "H" %></td>
-                            <td style="border:1px solid black;"> <%#Eval("Mardi ") + "-" %><%#Eval("nbHmardi ") + "H" %></td>
-                            <td style="border:1px solid black;"> <%#Eval("Mercredi")+ "-" %><%#Eval("nbHmercredi") + "H" %></td>
-                            <td style="border:1px solid black;"> <%#Eval("Jeudi") + "-" %><%#Eval("nbHjeudi") + "H" %></td>
-                            <td style="border:1px solid black;"> <%#Eval("Vendredi ") + "-" %><%#Eval("nbHvendredi ") + "H" %></td>
-                            <td style="border:1px solid black;"> <%#Eval("Samedi ") + "-" %><%#Eval("nbHsamedi") + "H" %></td>
-                          <td style="border:1px solid black;"><a  id="btnUpdate" class="mdi mdi-select btn btn-success" style="color:white;font-size: large;font-style: normal;border-color:black;font-weight: bold;" href="AdminAgentChargeHoraireModifer.aspx?id=<%#Eval("idAttribution") %>">Modifier</a></td>
+                            <td style="border:1px solid black;"> <%#Eval("nomEcole") %></td>
+                          <td style="border:1px solid black;"><a data-scroll href="#myModal" data-toggle="modal" onclick="setmatricule('<%# Eval("matricule") %>')" class="mdi mdi-pencil btn btn-primary animation animated-item-3" style="color:white;font-size: large;font-style: normal;border-color:black;font-weight: bold;">Modifier</a></td>
                         </tr>
                        </ItemTemplate>
 
@@ -282,3 +260,4 @@
 
 </body>
 </html>
+

@@ -86,10 +86,13 @@
     <Content Include="AdminAgentAjout.aspx" />
     <Content Include="AdminAgentChargeHoraire.aspx" />
     <Content Include="AdminAgentChargeHoraireModifer.aspx" />
+    <Content Include="AdminAgentFinCours.aspx" />
+    <Content Include="AdminAgentPresence.aspx" />
     <Content Include="AdminAnneeScolaire.aspx" />
     <Content Include="AdminChangeClasse.aspx" />
     <Content Include="AdminChangeClasseExecute.aspx" />
     <Content Include="AdminFinance.aspx" />
+    <Content Include="AdminFinDepense.aspx" />
     <Content Include="AdminFinPayeFraisExecute.aspx" />
     <Content Include="AdminFinPayementFrais.aspx" />
     <Content Include="AdminFinStructurerFrais.aspx" />
@@ -97,6 +100,7 @@
     <Content Include="AdminModifFrais.aspx" />
     <Content Include="AdminModifierInscription.aspx" />
     <Content Include="AdminNiveauPaye.aspx" />
+    <Content Include="AdminRechImprimerRecu.aspx" />
     <Content Include="AdminRechPayementFrais.aspx" />
     <Content Include="AdminSituationCaisse.aspx" />
     <Content Include="AdminUpdateAnnee.aspx" />
@@ -167,6 +171,20 @@
     <Compile Include="AdminAgentChargeHoraireModifer.aspx.designer.cs">
       <DependentUpon>AdminAgentChargeHoraireModifer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminAgentFinCours.aspx.cs">
+      <DependentUpon>AdminAgentFinCours.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAgentFinCours.aspx.designer.cs">
+      <DependentUpon>AdminAgentFinCours.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminAgentPresence.aspx.cs">
+      <DependentUpon>AdminAgentPresence.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAgentPresence.aspx.designer.cs">
+      <DependentUpon>AdminAgentPresence.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminAnneeScolaire.aspx.cs">
       <DependentUpon>AdminAnneeScolaire.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,6 +212,13 @@
     </Compile>
     <Compile Include="AdminFinance.aspx.designer.cs">
       <DependentUpon>AdminFinance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinDepense.aspx.cs">
+      <DependentUpon>AdminFinDepense.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinDepense.aspx.designer.cs">
+      <DependentUpon>AdminFinDepense.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminFinPayeFraisExecute.aspx.cs">
       <DependentUpon>AdminFinPayeFraisExecute.aspx</DependentUpon>
@@ -243,6 +268,13 @@
     </Compile>
     <Compile Include="AdminNiveauPaye.aspx.designer.cs">
       <DependentUpon>AdminNiveauPaye.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminRechImprimerRecu.aspx.cs">
+      <DependentUpon>AdminRechImprimerRecu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminRechImprimerRecu.aspx.designer.cs">
+      <DependentUpon>AdminRechImprimerRecu.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminRechPayementFrais.aspx.cs">
       <DependentUpon>AdminRechPayementFrais.aspx</DependentUpon>
