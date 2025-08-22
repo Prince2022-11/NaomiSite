@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>EspaceAdmin</title>
+	<title>C.S.NAOMI</title>
 
 	<!-- Main Styles -->
 	<link rel="stylesheet" href="../assets/styles/style.min.css">
@@ -53,6 +53,7 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+             <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -66,19 +67,19 @@
 				<li class="current">
 					<a class="waves-effect" href="EspaceAdmin.aspx"><i class="menu-icon mdi mdi-view-dashboard"></i><span>ACCUEIL</span></a>
 				</li>
-                <li>
+                <li id="ctrlAnnee" runat="server">
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
-				<li>
+				<li id="ctrlInscription" runat="server">
 					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
-				<li>
+				<li id="ctrlAgent" runat="server">
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
 				</li>
-                <li>
+                <li id="ctrlFinance" runat="server">
 					<a class="waves-effect" href="AdminFinance.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION FINANCIERE</span></a>
 				</li>
-				<li>
+				<li id="ctrlUtilisateur" runat="server">
 					<a class="waves-effect" href="AdminUtilisateur.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES UTILISATEURS</span></a>
 				</li>
 			</ul>
@@ -94,7 +95,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h1 class="page-title">ESPACE ADMIN --- PERSONNEL PROGRAMME AUJOURD'HUI/SECONDAIRE</h1>
+		<h1 class="page-title"> --- COLTURE DES PRESENCES DU PERSONNEL PROGRAMME AUJOURD'HUI/SECONDAIRE --- </h1>
 		<!-- /.page-title -->
 	</div>
 
@@ -120,7 +121,8 @@
                                         <div class="col-lg-6 col-md-6">
                                         <CENTER>
                                             <asp:Label runat="server" ID="txtMessage" Text="NB:Assurez-vous que l'heure et la date de votre ordinateur sont à jours avant de pointer" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="true" Font-Size="medium"></asp:Label><br />
-                                            <asp:Button runat="server" class="btn btn-primary" ID="btnSituationPresence" Text="Situation des Présences" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnSituationPresence_Click"></asp:Button>
+                                            <asp:Button runat="server" class="btn btn-primary" ID="btnSituationPresence" Text="Registre des Présences en PDF" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnSituationPresence_Click"></asp:Button><br /><br />
+                                            <asp:Button runat="server" class="btn btn-primary" ID="btnPresNonCloturee" Text="Voir les Présences antérieures non cloturées" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnPresNonCloturee_Click"></asp:Button>
                                         </CENTER>
                                         </div>
                                         <div class="col-lg-6 col-md-6">
@@ -132,7 +134,7 @@
                                             <span></span>
                                           </div>
                                         </div><br /><br />
-                                             <asp:Label runat="server" ID="txtM" Text="Le personnel présent pour lequel la cloture la présence n'est pas encore faite aujourd'hui " ForeColor="black" Font-Bold="True" AutoPostBack="True" Visible="true" Font-Size="medium"></asp:Label>
+                                             <asp:Label runat="server" ID="txtM" Text="Le personnel présent pour lequel la cloture de la présence n'a pas encore été faite aujourd'hui " ForeColor="black" Font-Bold="True" AutoPostBack="True" Visible="true" Font-Size="medium"></asp:Label>
                                              <asp:Label runat="server" ID="txtJour" Text="L" ForeColor="blue" Font-Bold="True" AutoPostBack="True" Visible="true" Font-Size="medium"></asp:Label>
                                              <asp:Label runat="server" ID="txtJourAnglais" Text="L" ForeColor="blue" Font-Bold="True" AutoPostBack="True" Visible="false" Font-Size="medium"></asp:Label>
                                              <asp:Label runat="server" ID="txtDate" Text="L" ForeColor="blue" Font-Bold="True" AutoPostBack="True" Visible="true" Font-Size="medium"></asp:Label>
@@ -151,6 +153,7 @@
                                               <thead>
                                                 <tr style="background-color:lightgreen; border:2px dashed black; color: #FFFFFF;">
                                                   <th> Nom et Post-nom </th>
+                                                    <th> Mois de</th>
                                                     <th> Motif</th>
                                                     <th> Heures Prévues</th>
                                                     <th> Pointer à</th>
@@ -165,13 +168,14 @@
                                                <ItemTemplate>
                                                 <tr>
                                                   <td style="border:1px solid black;"> <%#Eval("nom") +"-"%><%#Eval("prenom") %></td>
+                                                     <td style="border:1px solid black;"> <%#Eval("moisEnseigne") %></td>
                                                     <td style="border:1px solid black;"> <%#Eval("motif") %></td>
                                                     <td style="border:1px solid black;"> <%#Eval("nbHeure")+"H" %></td>
                                                     <td style="border:1px solid black;"> <%#Eval("heure_arriver") %></td>
                                                     <td style="border:1px solid black;"> <%#Eval("heureDepart") %></td>
                                                      <td style="border:1px solid black;"> <%#Eval("nbHenseigne")+ "H" %></td>
                                                     <td style="border:1px solid black;">
-                                                      <asp:Button runat="server" class="btn btn-primary" ID="btnCloture" Text="Cloturer ?" type="submit" style="background:#085ecf;" AutoPostBack="True" OnClick="btnCloture_Click" CommandArgument= '<%#Eval("Matricule") %>'></asp:Button>
+                                                      <asp:Button runat="server" class="btn btn-primary" ID="btnCloture" Text="Cloturer ?" type="submit" style="background:#085ecf;" AutoPostBack="True" OnClick="btnCloture_Click" CommandArgument= '<%#Eval("Matricule") +","+Eval("nbHeure") %>'></asp:Button>
                                                   </td>
                                                 </tr>
                                                </ItemTemplate>
@@ -182,6 +186,9 @@
                                                </FooterTemplate>
                                             </asp:Repeater>
                               </ContentTemplate>
+                                    <Triggers>
+                                        <asp:PostBackTrigger ControlID="btnSituationPresence" />
+                                    </Triggers>
                 </asp:UpdatePanel>
 	    </div>
 		<!-- /.isotope-filter js__filter_isotope -->		

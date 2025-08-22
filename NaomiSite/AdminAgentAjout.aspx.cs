@@ -36,6 +36,49 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -81,14 +124,26 @@ namespace NaomiSite
         public void AfficherAgent()
         {
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole ORDER BY nom ASC", con);
-            cmdB1.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
-            da.Fill(dt);
-            Data1.DataSource = dt;
-            Data1.DataBind();
-            con.Close();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole ORDER BY nom ASC", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
+            else
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole AND t_agent.idEcole='"+txtIdEcoleAffectationUser.Text+"' ORDER BY nom ASC", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
             con.Close();
         }
         public void recherche(string recherche)
@@ -97,15 +152,30 @@ namespace NaomiSite
             {
                 con.Close();
                 con.Open();
-                MySqlCommand cmdD = con.CreateCommand();
-                cmdD.CommandType = CommandType.Text;
-                cmdD.CommandText = ("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole AND CONCAT(t_agent.matricule,t_agent.nom,t_agent.prenom,t_agent.sexe,t_agent.domaine,t_agent.fonction,t_agent.niveau,ecole.nomEcole) LIKE '%" + recherche + "%' ORDER BY nom ASC ");
-                cmdD.ExecuteNonQuery();
-                DataTable dtD = new DataTable();
-                MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
-                daD.Fill(dtD);
-                Data1.DataSource = dtD;
-                Data1.DataBind();
+                if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+                {
+                    MySqlCommand cmdD = con.CreateCommand();
+                    cmdD.CommandType = CommandType.Text;
+                    cmdD.CommandText = ("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole AND CONCAT(t_agent.matricule,t_agent.nom,t_agent.prenom,t_agent.sexe,t_agent.domaine,t_agent.fonction,t_agent.niveau,ecole.nomEcole) LIKE '%" + recherche + "%' ORDER BY nom ASC ");
+                    cmdD.ExecuteNonQuery();
+                    DataTable dtD = new DataTable();
+                    MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
+                    daD.Fill(dtD);
+                    Data1.DataSource = dtD;
+                    Data1.DataBind();
+                }
+                else
+                {
+                    MySqlCommand cmdD = con.CreateCommand();
+                    cmdD.CommandType = CommandType.Text;
+                    cmdD.CommandText = ("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole AND t_agent.idEcole='"+txtIdEcoleAffectationUser.Text+"' AND CONCAT(t_agent.matricule,t_agent.nom,t_agent.prenom,t_agent.sexe,t_agent.domaine,t_agent.fonction,t_agent.niveau,ecole.nomEcole) LIKE '%" + recherche + "%' ORDER BY nom ASC ");
+                    cmdD.ExecuteNonQuery();
+                    DataTable dtD = new DataTable();
+                    MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
+                    daD.Fill(dtD);
+                    Data1.DataSource = dtD;
+                    Data1.DataBind();
+                }
                 con.Close();
             }
             catch
@@ -157,13 +227,25 @@ namespace NaomiSite
         {
             con.Close();
             con.Open();
-            MySqlCommand cmdB = con.CreateCommand();
-            cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
-            MySqlDataReader dr = cmdB.ExecuteReader();
-            while (dr.Read())
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
             {
-                txtIdEcole.Text = dr["idEcole"].ToString();
+                lblEcole.Visible = true;
+                txtEcole.Visible = true;
+                MySqlCommand cmdB = con.CreateCommand();
+                cmdB.CommandType = CommandType.Text;
+                cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+                MySqlDataReader dr = cmdB.ExecuteReader();
+                while (dr.Read())
+                {
+                    txtIdEcole.Text = dr["idEcole"].ToString();
+                }
+            }
+            else
+            {
+                ctrlEcole.Visible = false;
+                txtEcole.Visible = false;
+                lblEcole.Visible = false;
+                txtIdEcole.Text = txtIdEcoleAffectationUser.Text;
             }
             con.Close();
         }
@@ -182,35 +264,75 @@ namespace NaomiSite
         }
         public void CreerCompteAgent()
         {
-            con.Open();
-            MySqlCommand cmd1a = con.CreateCommand();
-            cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into compte_agent values(default,'" + txtmat.Text + "','0','0','0','0','0','0','0','0','0','0','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
-            cmd1a.ExecuteNonQuery();
-            con.Close();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                con.Open();
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "insert into compte_agent values(default,'" + txtmat.Text + "','0','0','0','0','0','0','0','0','0','0','0','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+            }
+            else
+            {
+                con.Open();
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "insert into compte_agent values(default,'" + txtmat.Text + "','0','0','0','0','0','0','0','0','0','0','0','" + txtIdAnnee.Text + "','" + txtIdEcoleAffectationUser.Text + "')";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+            }
+          
         }
 
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
             con.Open();
-            MySqlCommand cmd1a = con.CreateCommand();
-            cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into t_agent values('" + txtmat.Text + "','" + txtNom.Text + "','" + txtPrenom.Text + "','" + txtSexe.SelectedValue + "','" + txtNiveau.SelectedValue + "','" + txtDomaine.Text + "','" + txtFonction.SelectedValue + "','" + txtEtatCivil.SelectedValue + "','" + txtPhone.Text + "','" + txtAdresse.Text + "','" + txtIdEcole.Text + "')";
-            cmd1a.ExecuteNonQuery();
-            con.Close();
-            CreerCompteAgent();
-            Response.Redirect("AdminAgentAjout.aspx");
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "insert into t_agent values('" + txtmat.Text + "','" + txtNom.Text + "','" + txtPrenom.Text + "','" + txtSexe.SelectedValue + "','" + txtNiveau.SelectedValue + "','" + txtDomaine.Text + "','" + txtFonction.SelectedValue + "','" + txtEtatCivil.SelectedValue + "','" + txtPhone.Text + "','" + txtAdresse.Text + "','" + txtIdEcole.Text + "')";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+                CreerCompteAgent();
+                Response.Redirect("AdminAgentAjout.aspx");
+            }
+            else
+            {
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "insert into t_agent values('" + txtmat.Text + "','" + txtNom.Text + "','" + txtPrenom.Text + "','" + txtSexe.SelectedValue + "','" + txtNiveau.SelectedValue + "','" + txtDomaine.Text + "','" + txtFonction.SelectedValue + "','" + txtEtatCivil.SelectedValue + "','" + txtPhone.Text + "','" + txtAdresse.Text + "','" + txtIdEcoleAffectationUser.Text + "')";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+                CreerCompteAgent();
+                Response.Redirect("AdminAgentAjout.aspx");
+            }
         }
         protected void btnModification_Click(object sender, EventArgs e)
         {
             con.Open();
-            string dateInscription = DateTime.Today.Date.ToShortDateString();
-            MySqlCommand cmd1a = con.CreateCommand();
-            cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "UPDATE t_agent SET nom='" + txtNom.Text + "',prenom='" + txtPrenom.Text + "',sexe='" + txtSexe.SelectedValue + "',niveau='" + txtNiveau.SelectedValue + "',domaine='" + txtDomaine.Text + "',fonction='" + txtFonction.SelectedValue + "',etat_civil='" + txtEtatCivil.Text + "',adresse='" + txtAdresse.Text + "',idEcole='" + txtIdEcole.Text + "' WHERE matricule='" + txtMatricule.Text + "'";
-            cmd1a.ExecuteNonQuery();
-            con.Close();
-            Response.Redirect("AdminAgentAjout.aspx");
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                string dateInscription = DateTime.Today.Date.ToShortDateString();
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "UPDATE t_agent SET nom='" + txtNom.Text + "',prenom='" + txtPrenom.Text + "',sexe='" + txtSexe.SelectedValue + "',niveau='" + txtNiveau.SelectedValue + "',domaine='" + txtDomaine.Text + "',fonction='" + txtFonction.SelectedValue + "',etat_civil='" + txtEtatCivil.Text + "',adresse='" + txtAdresse.Text + "',idEcole='" + txtIdEcole.Text + "' WHERE matricule='" + txtMatricule.Text + "'";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+                Response.Redirect("AdminAgentAjout.aspx");
+            }
+            else
+            {
+                string dateInscription = DateTime.Today.Date.ToShortDateString();
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "UPDATE t_agent SET nom='" + txtNom.Text + "',prenom='" + txtPrenom.Text + "',sexe='" + txtSexe.SelectedValue + "',niveau='" + txtNiveau.SelectedValue + "',domaine='" + txtDomaine.Text + "',fonction='" + txtFonction.SelectedValue + "',etat_civil='" + txtEtatCivil.Text + "',adresse='" + txtAdresse.Text + "',idEcole='" + txtIdEcoleAffectationUser.Text + "' WHERE matricule='" + txtMatricule.Text + "'";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+                Response.Redirect("AdminAgentAjout.aspx");
+            }
+           
         }
         protected void btnRefresh_Click(object sender, EventArgs e)
         {

@@ -49,6 +49,15 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Label txtIdAnnee;
         
         /// <summary>
+        /// txtIdEcoleAffectationUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtIdEcoleAffectationUser;
+        
+        /// <summary>
         /// ScriptManager1 control.
         /// </summary>
         /// <remarks>
@@ -91,7 +100,7 @@ namespace NaomiSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFonction;
+        protected global::System.Web.UI.WebControls.DropDownList txtFonction;
         
         /// <summary>
         /// txtEcole control.
@@ -100,7 +109,16 @@ namespace NaomiSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEcole;
+        protected global::System.Web.UI.WebControls.DropDownList txtEcole;
+        
+        /// <summary>
+        /// txtIdEcole control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdEcole;
         
         /// <summary>
         /// txtMessage control.

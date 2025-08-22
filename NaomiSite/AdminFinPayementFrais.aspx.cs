@@ -36,6 +36,49 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -53,8 +96,12 @@ namespace NaomiSite
                     }
                     con.Close();
                     txtRecherche.Text = "";
-                    AfficherInscription();
                     TrouverIdEcole();
+                    TrouverSection();
+                    TrouverIdSection();
+                    TrouverClasser();
+                    TrouverIdClasse();
+                    AfficherInscription();
                 }
                 else
                 {
@@ -72,7 +119,6 @@ namespace NaomiSite
             da.Fill(dt);
             Data1.DataSource = dt;
             Data1.DataBind();
-            con.Close();
             con.Close();
         }
         public void recherche(string recherche)
@@ -101,13 +147,38 @@ namespace NaomiSite
         {
             con.Close();
             con.Open();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles"|| txtRole.Text == "Comptable")
+            {
+                lblEcole.Visible = true;
+                txtEcole.Visible = true;
+                MySqlCommand cmdB = con.CreateCommand();
+                cmdB.CommandType = CommandType.Text;
+                cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+                MySqlDataReader dr = cmdB.ExecuteReader();
+                while (dr.Read())
+                {
+                    txtIdEcole.Text = dr["idEcole"].ToString();
+                }
+            }
+            else
+            {
+                txtIdEcole.Text = txtIdEcoleAffectationUser.Text;
+                TrouverEcole();
+            }
+            con.Close();
+        }
+        public void TrouverEcole()
+        {
+            con.Close();
+            con.Open();
+            txtEcole.Items.Clear();
             MySqlCommand cmdB = con.CreateCommand();
             cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+            cmdB.CommandText = ("SELECT nomEcole from ecole WHERE idEcole='" + txtIdEcoleAffectationUser.Text + "'");
             MySqlDataReader dr = cmdB.ExecuteReader();
             while (dr.Read())
             {
-                txtIdEcole.Text = dr["idEcole"].ToString();
+                txtEcole.Items.Add(dr["nomEcole"].ToString());
             }
             con.Close();
         }

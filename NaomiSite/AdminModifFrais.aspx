@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>EspaceAdmin</title>
+	<title>C.S.NAOMI</title>
 
 	<!-- Main Styles -->
 	<link rel="stylesheet" href="../assets/styles/style.min.css">
@@ -51,6 +51,7 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+             <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -64,19 +65,19 @@
 				<li class="current">
 					<a class="waves-effect" href="EspaceAdmin.aspx"><i class="menu-icon mdi mdi-view-dashboard"></i><span>ACCUEIL</span></a>
 				</li>
-                <li>
+                <li id="ctrlAnnee" runat="server">
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
-				<li>
+				<li id="ctrlInscription" runat="server">
 					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
-				<li>
+				<li id="ctrlAgent" runat="server">
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
 				</li>
-                <li>
+                <li id="ctrlFinance" runat="server">
 					<a class="waves-effect" href="AdminFinance.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION FINANCIERE</span></a>
 				</li>
-				<li>
+				<li id="ctrlUtilisateur" runat="server">
 					<a class="waves-effect" href="AdminUtilisateur.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES UTILISATEURS</span></a>
 				</li>
 			</ul>
@@ -92,7 +93,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h1 class="page-title">ESPACE ADMIN --- MODIFICATION D'UN FRAIS SCOLAIRE POUR LA CLASSE</h1>
+		<h1 class="page-title">--- MODIFICATION D'UN FRAIS SCOLAIRE POUR LA CLASSE ---</h1>
 		<!-- /.page-title -->
 	</div>
 

@@ -47,6 +47,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\EasyHTMLReports.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=8.0.8.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.8.0.8\lib\net35\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.8.0.0\lib\net35\EPPlus.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\itextsharp.dll</HintPath>
@@ -64,6 +72,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\MySql.Web.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -80,6 +91,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminAgent.aspx" />
@@ -88,15 +100,25 @@
     <Content Include="AdminAgentChargeHoraireModifer.aspx" />
     <Content Include="AdminAgentFinCours.aspx" />
     <Content Include="AdminAgentPresence.aspx" />
+    <Content Include="AdminAgentPresenceNonCloturee.aspx" />
     <Content Include="AdminAnneeScolaire.aspx" />
     <Content Include="AdminChangeClasse.aspx" />
     <Content Include="AdminChangeClasseExecute.aspx" />
     <Content Include="AdminFinance.aspx" />
+    <Content Include="AdminFinAvanceOct.aspx" />
+    <Content Include="AdminFinAvanceSal.aspx" />
+    <Content Include="AdminFinAvanceSalMenu.aspx" />
+    <Content Include="AdminFinCompteAgent.aspx" />
     <Content Include="AdminFinDepense.aspx" />
     <Content Include="AdminFinPayeFraisExecute.aspx" />
+    <Content Include="AdminFinPayementAgent.aspx" />
     <Content Include="AdminFinPayementFrais.aspx" />
+    <Content Include="AdminFinPayerSalaire.aspx" />
+    <Content Include="AdminFinRechPayement.aspx" />
     <Content Include="AdminFinStructurerFrais.aspx" />
+    <Content Include="AdminImportationExcel.aspx" />
     <Content Include="AdminInscription.aspx" />
+    <Content Include="AdminListeEleves.aspx" />
     <Content Include="AdminModifFrais.aspx" />
     <Content Include="AdminModifierInscription.aspx" />
     <Content Include="AdminNiveauPaye.aspx" />
@@ -133,7 +155,9 @@
     <Content Include="obj\Debug\PrototypeGestionRecettesETD.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\PrototypeGestionRecettesETD.dll" />
     <Content Include="obj\Debug\PrototypeGestionRecettesETD.pdb" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceuil.aspx.cs">
@@ -185,6 +209,13 @@
     <Compile Include="AdminAgentPresence.aspx.designer.cs">
       <DependentUpon>AdminAgentPresence.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminAgentPresenceNonCloturee.aspx.cs">
+      <DependentUpon>AdminAgentPresenceNonCloturee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminAgentPresenceNonCloturee.aspx.designer.cs">
+      <DependentUpon>AdminAgentPresenceNonCloturee.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminAnneeScolaire.aspx.cs">
       <DependentUpon>AdminAnneeScolaire.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -213,6 +244,34 @@
     <Compile Include="AdminFinance.aspx.designer.cs">
       <DependentUpon>AdminFinance.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminFinAvanceOct.aspx.cs">
+      <DependentUpon>AdminFinAvanceOct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinAvanceOct.aspx.designer.cs">
+      <DependentUpon>AdminFinAvanceOct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinAvanceSal.aspx.cs">
+      <DependentUpon>AdminFinAvanceSal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinAvanceSal.aspx.designer.cs">
+      <DependentUpon>AdminFinAvanceSal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinAvanceSalMenu.aspx.cs">
+      <DependentUpon>AdminFinAvanceSalMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinAvanceSalMenu.aspx.designer.cs">
+      <DependentUpon>AdminFinAvanceSalMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinCompteAgent.aspx.cs">
+      <DependentUpon>AdminFinCompteAgent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinCompteAgent.aspx.designer.cs">
+      <DependentUpon>AdminFinCompteAgent.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminFinDepense.aspx.cs">
       <DependentUpon>AdminFinDepense.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -227,12 +286,33 @@
     <Compile Include="AdminFinPayeFraisExecute.aspx.designer.cs">
       <DependentUpon>AdminFinPayeFraisExecute.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminFinPayementAgent.aspx.cs">
+      <DependentUpon>AdminFinPayementAgent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinPayementAgent.aspx.designer.cs">
+      <DependentUpon>AdminFinPayementAgent.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminFinPayementFrais.aspx.cs">
       <DependentUpon>AdminFinPayementFrais.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminFinPayementFrais.aspx.designer.cs">
       <DependentUpon>AdminFinPayementFrais.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinPayerSalaire.aspx.cs">
+      <DependentUpon>AdminFinPayerSalaire.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinPayerSalaire.aspx.designer.cs">
+      <DependentUpon>AdminFinPayerSalaire.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFinRechPayement.aspx.cs">
+      <DependentUpon>AdminFinRechPayement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFinRechPayement.aspx.designer.cs">
+      <DependentUpon>AdminFinRechPayement.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminFinStructurerFrais.aspx.cs">
       <DependentUpon>AdminFinStructurerFrais.aspx</DependentUpon>
@@ -241,12 +321,26 @@
     <Compile Include="AdminFinStructurerFrais.aspx.designer.cs">
       <DependentUpon>AdminFinStructurerFrais.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminImportationExcel.aspx.cs">
+      <DependentUpon>AdminImportationExcel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminImportationExcel.aspx.designer.cs">
+      <DependentUpon>AdminImportationExcel.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminInscription.aspx.cs">
       <DependentUpon>AdminInscription.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminInscription.aspx.designer.cs">
       <DependentUpon>AdminInscription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminListeEleves.aspx.cs">
+      <DependentUpon>AdminListeEleves.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminListeEleves.aspx.designer.cs">
+      <DependentUpon>AdminListeEleves.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminModifFrais.aspx.cs">
       <DependentUpon>AdminModifFrais.aspx</DependentUpon>
@@ -327,9 +421,11 @@
     <Folder Include="assets\" />
     <Folder Include="bin\roslyn\" />
     <Folder Include="css\" />
+    <Folder Include="Export\" />
     <Folder Include="img\" />
     <Folder Include="include\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -349,7 +445,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49739</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49739/</IISUrl>
+          <IISUrl>http://localhost:5000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

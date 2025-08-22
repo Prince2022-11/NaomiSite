@@ -36,6 +36,51 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+                        txtIdUser.Text = dr["id"].ToString();
+
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -52,24 +97,9 @@ namespace NaomiSite
                         txtDesignationAnnee.Text = dr1["designation"].ToString();
                     }
                     con.Close();
-                    AfficherAgent();
-                    numMat();
+                    AfficherDepense();
                     TrouverIdEcole();
-
-                    if (txtMatricule.Text != "")
-                    {
-                        TrouverAgent();
-                        btnAddStructure.Visible = false;
-                        txtmat.Visible = false;
-                        btnModification.Visible = true;
-                        TrouverEcoleModification();
-                    }
-                    else
-                    {
-                        btnAddStructure.Visible = true;
-                        txtmat.Visible = true;
-                        btnModification.Visible = false;
-                    }
+                    SituationCaisse();
                 }
 
             }
@@ -78,17 +108,29 @@ namespace NaomiSite
                 Response.Redirect("Acceuil.aspx");
             }
         }
-        public void AfficherAgent()
+        public void AfficherDepense()
         {
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole ORDER BY nom ASC", con);
-            cmdB1.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
-            da.Fill(dt);
-            Data1.DataSource = dt;
-            Data1.DataBind();
-            con.Close();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM depense,utilisateur WHERE depense.idOperateur=utilisateur.id AND depense.anneeScolaire='" + txtIdAnnee.Text + "' ORDER BY idDepense DESC", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
+            else
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM depense,utilisateur WHERE depense.idOperateur=utilisateur.id AND depense.anneeScolaire='" + txtIdAnnee.Text + "' AND depense.idEcole='" + txtIdEcoleAffectationUser.Text + "' ORDER BY idDepense DESC", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
             con.Close();
         }
         public void recherche(string recherche)
@@ -97,73 +139,72 @@ namespace NaomiSite
             {
                 con.Close();
                 con.Open();
-                MySqlCommand cmdD = con.CreateCommand();
-                cmdD.CommandType = CommandType.Text;
-                cmdD.CommandText = ("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole AND CONCAT(t_agent.matricule,t_agent.nom,t_agent.prenom,t_agent.sexe,t_agent.domaine,t_agent.fonction,t_agent.niveau,ecole.nomEcole) LIKE '%" + recherche + "%' ORDER BY nom ASC ");
-                cmdD.ExecuteNonQuery();
-                DataTable dtD = new DataTable();
-                MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
-                daD.Fill(dtD);
-                Data1.DataSource = dtD;
-                Data1.DataBind();
-                con.Close();
-            }
-            catch
-            {
-
-            }
-        }
-        public void numMat()
-        {
-            try
-            {
-                con.Open();
-                MySqlCommand cmd = new MySqlCommand("select count(matricule) as Ordre from t_agent", con);
-                MySqlDataReader dr = cmd.ExecuteReader();
-
-                //Attribution du NumMat par défaut
-                int val2, val3;
-                val2 = 1;
-                int a, b, c;// g;
-                string d;
-                a = int.Parse(DateTime.Today.Year.ToString());
-                b = a - 2000;
-                c = b - 1;
-                d = c.ToString() + "-" + b;
-                string result = string.Format("{0:D4}", val2);
-                string dec = (result + "/" + d);
-                txtmat.Text = dec;
-
-                while (dr.Read())
+                if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
                 {
-                    //Vérifier le grand NumMat pour l'incrémenter et avoir un nouveau numMat
-                    txtDernierMat.Text = dr["Ordre"].ToString();
-                    val2 = int.Parse(txtDernierMat.Text) + 1;
-                    txtDernierMat.Text = val2.ToString();
-                    val3 = int.Parse(txtDernierMat.Text);
-                    string result2 = string.Format("{0:D4}", val3);
-                    string dec2 = (result2 + "/" + d);
-                    txtmat.Text = dec2;
+                    MySqlCommand cmdD = con.CreateCommand();
+                    cmdD.CommandType = CommandType.Text;
+                    cmdD.CommandText = ("SELECT * FROM depense,utilisateur WHERE depense.idOperateur=utilisateur.id AND depense.anneeScolaire='" + txtIdAnnee.Text + "' AND CONCAT(depense.designation,depense.dateDepense,depense.montant,utilisateur.login) LIKE '%" + recherche + "%' ORDER BY idDepense DESC ");
+                    cmdD.ExecuteNonQuery();
+                    DataTable dtD = new DataTable();
+                    MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
+                    daD.Fill(dtD);
+                    Data1.DataSource = dtD;
+                    Data1.DataBind();
+                }
+                else
+                {
+                    MySqlCommand cmdD = con.CreateCommand();
+                    cmdD.CommandType = CommandType.Text;
+                    cmdD.CommandText = ("SELECT * FROM depense,utilisateur WHERE depense.idOperateur=utilisateur.id AND depense.anneeScolaire='" + txtIdAnnee.Text + "' AND depense.idEcole='" + txtIdEcoleAffectationUser.Text + "' AND CONCAT(depense.designation,depense.dateDepense,depense.montant,utilisateur.login) LIKE '%" + recherche + "%' ORDER BY idDepense DESC ");
+                    cmdD.ExecuteNonQuery();
+                    DataTable dtD = new DataTable();
+                    MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
+                    daD.Fill(dtD);
+                    Data1.DataSource = dtD;
+                    Data1.DataBind();
                 }
                 con.Close();
-
             }
             catch
             {
-                //MessageBox.Show("Erreur dans l'attribution du numéro matricule","Erreur survenue",MessageBoxButtons.OK,MessageBoxIcon.Error);
+
             }
         }
         public void TrouverIdEcole()
         {
             con.Close();
             con.Open();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                txtEcole.Visible = true;
+                MySqlCommand cmdB = con.CreateCommand();
+                cmdB.CommandType = CommandType.Text;
+                cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+                MySqlDataReader dr = cmdB.ExecuteReader();
+                while (dr.Read())
+                {
+                    txtIdEcole.Text = dr["idEcole"].ToString();
+                }
+            }
+            else
+            {
+                txtIdEcole.Text = txtIdEcoleAffectationUser.Text;
+                TrouverEcole();
+            }
+            con.Close();
+        }
+        public void TrouverEcole()
+        {
+            con.Close();
+            con.Open();
+            txtEcole.Items.Clear();
             MySqlCommand cmdB = con.CreateCommand();
             cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+            cmdB.CommandText = ("SELECT nomEcole from ecole WHERE idEcole='" + txtIdEcoleAffectationUser.Text + "'");
             MySqlDataReader dr = cmdB.ExecuteReader();
             while (dr.Read())
             {
-                txtIdEcole.Text = dr["idEcole"].ToString();
+                txtEcole.Items.Add(dr["nomEcole"].ToString());
             }
             con.Close();
         }
@@ -180,26 +221,77 @@ namespace NaomiSite
             }
             con.Close();
         }
-        public void CreerCompteAgent()
+        public void SituationCaisse()
         {
+            con.Close();
             con.Open();
-            MySqlCommand cmd1a = con.CreateCommand();
-            cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into compte_agent values(default,'" + txtmat.Text + "','0','0','0','0','0','0','0','0','0','0','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
-            cmd1a.ExecuteNonQuery();
+            MySqlCommand cmd = new MySqlCommand("", con);
+            MySqlCommand cmde = con.CreateCommand();
+            cmde.CommandType = CommandType.Text;
+            cmd.CommandText = "select *from t_caisse WHERE libelle='" + txtUnite.Text + "' AND idEcole=+'" + txtIdEcole.Text + "'";
+            MySqlDataReader dr = cmd.ExecuteReader();
+
+            txtDispo.Text = "0";
+            txtSortie.Text = "0";
+            while (dr.Read())
+            {
+                txtDispo.Text = dr["Solde"].ToString();
+                txtSortie.Text = dr["Sortie"].ToString();
+            }
+
             con.Close();
         }
+        public void ActualiserLaCaisseEnEntree()
+        {
+            //Actualiser la caisse
+            //L'ajout de ces 2 lignes et de ces bibliothèques font l'utilisation du point au décimal
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
+            double b, sort, Disp;
+            MySqlConnection conx1 = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+            conx1.Open();
+            //Actualisation de la caisse s'il n'y a pas eu de conversion de l'argent de l'élève
+            b = Convert.ToDouble(txtMontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+            sort = Convert.ToDouble(txtSortie.Text.Replace(',', '.'), CultureInfo.InvariantCulture) + b;
+            Disp = Convert.ToDouble(txtDispo.Text.Replace(',', '.'), CultureInfo.InvariantCulture) - b;
+
+            string command = ("UPDATE t_caisse SET Sortie ='" + sort.ToString(CultureInfo.InvariantCulture) + "', Solde ='" + Disp.ToString(CultureInfo.InvariantCulture) + "' WHERE libelle='" + txtUnite.Text + "' AND idEcole=+'" + txtIdEcole.Text + "'");
+            MySqlCommand cmde = new MySqlCommand(command, conx1);
+            cmde.ExecuteNonQuery();
+
+        }
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
-            //con.Open();
-            //MySqlCommand cmd1a = con.CreateCommand();
-            //cmd1a.CommandType = CommandType.Text;
-            //cmd1a.CommandText = "insert into t_agent values('" + txtmat.Text + "','" + txtNom.Text + "','" + txtPrenom.Text + "','" + txtSexe.SelectedValue + "','" + txtNiveau.SelectedValue + "','" + txtDomaine.Text + "','" + txtFonction.SelectedValue + "','" + txtEtatCivil.SelectedValue + "','" + txtPhone.Text + "','" + txtAdresse.Text + "','" + txtIdEcole.Text + "')";
-            //cmd1a.ExecuteNonQuery();
-            //con.Close();
-            //CreerCompteAgent();
-            //Response.Redirect("AdminAgentAjout.aspx");
+            try
+            {
+                double MontantDepense, Disp;
+                MontantDepense = Convert.ToDouble(txtMontant.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                Disp = Convert.ToDouble(txtDispo.Text.Replace(',', '.'), CultureInfo.InvariantCulture);
+                txtMessage.Visible = false;
+                if (MontantDepense >= Disp)
+                {
+                    txtMessage.Visible = true;
+                }
+                else
+                {
+                    con.Open();
+                    string dateInscription = DateTime.Today.Date.ToShortDateString();
+                    MySqlCommand cmd1a = con.CreateCommand();
+                    cmd1a.CommandType = CommandType.Text;
+                    cmd1a.CommandText = "insert into depense values(default,'" + dateInscription.ToString() + "','" + txtMotif.Text + "','" + txtMontant.Text + "','" + txtUnite.SelectedValue + "','" + txtIdAnnee.Text + "','" + txtIdUser.Text + "','" + txtIdEcole.Text + "')";
+                    cmd1a.ExecuteNonQuery();
+                    con.Close();
+                    ActualiserLaCaisseEnEntree();
+                    Response.Redirect("AdminFinDepense.aspx");
+                }
+            }
+            catch
+            {
+                txtMessage.Visible = true;
+                txtMessage.Text = "Quelque chose a mal tourné, vérifiez si vous avez saisi nombre valide, si c'est un décimal, n'oubliez pas d'utiliser un point-virgule (,)";
+            }
+           
         }
         protected void btnModification_Click(object sender, EventArgs e)
         {
@@ -224,28 +316,10 @@ namespace NaomiSite
         protected void txtEcole_SelectedIndexChanged(object sender, EventArgs e)
         {
             TrouverIdEcole();
+            SituationCaisse();
         }
         public void TrouverAgent()
         {
-            //con.Open();
-            //MySqlCommand cmdB = con.CreateCommand();
-            //cmdB.CommandType = CommandType.Text;
-            //cmdB.CommandText = ("SELECT *from t_agent WHERE matricule='" + txtMatricule.Text + "'");
-            //MySqlDataReader dr = cmdB.ExecuteReader();
-            //while (dr.Read())
-            //{
-            //    txtNom.Text = dr["nom"].ToString();
-            //    txtPrenom.Text = dr["prenom"].ToString();
-            //    txtSexe.Text = dr["sexe"].ToString();
-            //    txtIdEcole.Text = dr["idEcole"].ToString();
-            //    txtNiveau.Text = dr["niveau"].ToString();
-            //    txtDomaine.Text = dr["domaine"].ToString();
-            //    txtFonction.Text = dr["fonction"].ToString();
-            //    txtEtatCivil.Text = dr["etat_civil"].ToString();
-            //    txtPhone.Text = dr["telephone"].ToString();
-            //    txtAdresse.Text = dr["adresse"].ToString();
-            //}
-            //con.Close();
         }
 
         protected void txtRecherche_TextChanged(object sender, EventArgs e)
@@ -256,7 +330,7 @@ namespace NaomiSite
         {
             Random rnd = new Random();
             Document dc = new Document();
-            String chemin = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/ " + rnd.Next() * 1000 + "ListeAgent.pdf";
+            String chemin = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/ " + rnd.Next() * 1000 + "DépenseEcole.pdf";
             FileStream fs = File.Create(chemin);
             PdfWriter.GetInstance(dc, fs);
             dc.Open();
@@ -268,22 +342,22 @@ namespace NaomiSite
             dc.Add(new Paragraph("                                                                          Contacts :  0971368721\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
             dc.Add(new Paragraph("                    ------------------------------------------------------------------------------------------------------------------\n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
 
-            dc.Add(new Paragraph("                                                                              LISTE DES AGENTS DE L'ECOLE, Année Scolaire: " + txtDesignationAnnee.Text + "\n \n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.BLACK)));
+            dc.Add(new Paragraph("                                                                              LES DEPENSES DE L'ECOLE EFFECTUEES, Année Scolaire: " + txtDesignationAnnee.Text + "\n \n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.BLACK)));
 
             PdfPTable table = new PdfPTable(5);
-            PdfPCell cell = new PdfPCell(new Paragraph("Nom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+            PdfPCell cell = new PdfPCell(new Paragraph("Date Dépense", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
             cell.HorizontalAlignment = Element.ALIGN_CENTER;
             cell.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell1 = new PdfPCell(new Paragraph("Prénom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Désignation", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
             cell1.HorizontalAlignment = Element.ALIGN_CENTER;
             cell1.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell2 = new PdfPCell(new Paragraph("Sexe", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Montant", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
             cell2.HorizontalAlignment = Element.ALIGN_CENTER;
             cell2.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell3 = new PdfPCell(new Paragraph("Niveau", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Unité", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
             cell3.HorizontalAlignment = Element.ALIGN_CENTER;
             cell3.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell4 = new PdfPCell(new Paragraph("Ecole", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+            PdfPCell cell4 = new PdfPCell(new Paragraph("Opérateur", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
             cell4.HorizontalAlignment = Element.ALIGN_CENTER;
             cell4.BackgroundColor = BaseColor.BLACK;
 
@@ -296,24 +370,24 @@ namespace NaomiSite
             //Recherche des élèves
             con.Close();
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM t_agent,ecole WHERE t_agent.idEcole=ecole.idEcole AND CONCAT(t_agent.matricule,t_agent.nom,t_agent.prenom,t_agent.sexe,t_agent.domaine,t_agent.fonction,t_agent.niveau,ecole.nomEcole) LIKE '%" + ImprimerRecherche1 + "%' ORDER BY nomEcole,nom ASC ", con);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM depense,utilisateur WHERE depense.idOperateur=utilisateur.id AND depense.anneeScolaire='" + txtIdAnnee.Text + "' AND CONCAT(depense.designation,depense.dateDepense,depense.montant,utilisateur.login) LIKE '%" + ImprimerRecherche1 + "%' ORDER BY idDepense DESC ", con);
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
                 //===========================================================================
-                PdfPCell cell5 = new PdfPCell(new Paragraph((string)dr["nom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                PdfPCell cell5 = new PdfPCell(new Paragraph((string)dr["dateDepense"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
                 cell5.HorizontalAlignment = Element.ALIGN_LEFT;
                 cell5.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell6 = new PdfPCell(new Paragraph((string)dr["prenom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                PdfPCell cell6 = new PdfPCell(new Paragraph((string)dr["designation"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
                 cell6.HorizontalAlignment = Element.ALIGN_LEFT;
                 cell6.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell7 = new PdfPCell(new Paragraph((string)dr["sexe"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                PdfPCell cell7 = new PdfPCell(new Paragraph((string)dr["montant"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
                 cell7.HorizontalAlignment = Element.ALIGN_CENTER;
                 cell7.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell8 = new PdfPCell(new Paragraph((string)dr["niveau"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                PdfPCell cell8 = new PdfPCell(new Paragraph((string)dr["unite"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
                 cell8.HorizontalAlignment = Element.ALIGN_LEFT;
                 cell8.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell9 = new PdfPCell(new Paragraph((string)dr["nomEcole"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                PdfPCell cell9 = new PdfPCell(new Paragraph((string)dr["login"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
                 cell9.HorizontalAlignment = Element.ALIGN_CENTER;
                 cell9.BackgroundColor = BaseColor.WHITE;
                 //============================================================================
@@ -330,27 +404,15 @@ namespace NaomiSite
             dc.Close();
             System.Diagnostics.Process.Start(chemin);
         }
-        protected void txtMatricule_TextChanged(object sender, EventArgs e)
-        {
-            if (txtMatricule.Text != "")
-            {
-                TrouverAgent();
-                btnAddStructure.Visible = false;
-                txtmat.Visible = false;
-                btnModification.Visible = true;
-                TrouverEcoleModification();
-            }
-            else
-            {
-                btnAddStructure.Visible = true;
-                txtmat.Visible = true;
-                btnModification.Visible = false;
-            }
-        }
 
         protected void btnRechApproFondie_Click(object sender, EventArgs e)
         {
             ImprimerRecherche1(txtRecherche.Text);
+        }
+
+        protected void txtUnite_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SituationCaisse();
         }
     }
 }

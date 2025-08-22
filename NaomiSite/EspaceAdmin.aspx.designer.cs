@@ -49,6 +49,69 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Label txtIdAnnee;
         
         /// <summary>
+        /// txtIdEcoleAffectationUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtIdEcoleAffectationUser;
+        
+        /// <summary>
+        /// ctrlAnnee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlAnnee;
+        
+        /// <summary>
+        /// ctrlInscription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlInscription;
+        
+        /// <summary>
+        /// ctrlAgent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlAgent;
+        
+        /// <summary>
+        /// ctrlFinance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlFinance;
+        
+        /// <summary>
+        /// ctrlUtilisateur control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlUtilisateur;
+        
+        /// <summary>
+        /// ctrlMat1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlMat1;
+        
+        /// <summary>
         /// txtTotalInscrit control.
         /// </summary>
         /// <remarks>
@@ -58,13 +121,13 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Label txtTotalInscrit;
         
         /// <summary>
-        /// txtTotalAgent control.
+        /// ctrlMat2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtTotalAgent;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlMat2;
         
         /// <summary>
         /// txtTotalUSD control.
@@ -76,12 +139,138 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Label txtTotalUSD;
         
         /// <summary>
-        /// txtTotalCDF control.
+        /// ctrlPrim1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtTotalCDF;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlPrim1;
+        
+        /// <summary>
+        /// txtInscritPrimaire control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtInscritPrimaire;
+        
+        /// <summary>
+        /// ctrlPrim2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlPrim2;
+        
+        /// <summary>
+        /// txtTotAnneePrimaire control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtTotAnneePrimaire;
+        
+        /// <summary>
+        /// ctrlSecond1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlSecond1;
+        
+        /// <summary>
+        /// txtInscritSecond control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtInscritSecond;
+        
+        /// <summary>
+        /// ctrlSecond2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlSecond2;
+        
+        /// <summary>
+        /// txtTotAnneeSecond control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtTotAnneeSecond;
+        
+        /// <summary>
+        /// ctrlTotAgent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlTotAgent;
+        
+        /// <summary>
+        /// txtTotalAgent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtTotalAgent;
+        
+        /// <summary>
+        /// ctrlTotEnseignant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlTotEnseignant;
+        
+        /// <summary>
+        /// txtEnseignantPresent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtEnseignantPresent;
+        
+        /// <summary>
+        /// txtJour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtJour;
+        
+        /// <summary>
+        /// txtJourAnglais control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtJourAnglais;
+        
+        /// <summary>
+        /// txtDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtDate;
     }
 }

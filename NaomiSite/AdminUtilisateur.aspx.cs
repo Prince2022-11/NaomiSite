@@ -51,6 +51,7 @@ namespace NaomiSite
                 }
                 con.Close();
                 AfficherUser();
+                TrouverIdEcole();
 
             }
             else
@@ -61,7 +62,7 @@ namespace NaomiSite
         public void AfficherUser()
         {
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT * from utilisateur ORDER BY login ASC", con);
+            MySqlCommand cmdB1 = new MySqlCommand("SELECT * from utilisateur,ecole WHERE utilisateur.service='Admin' UNION SELECT * from utilisateur,ecole WHERE utilisateur.idEcole=ecole.idEcole ORDER BY login ASC", con);
             cmdB1.ExecuteNonQuery();
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
@@ -71,15 +72,45 @@ namespace NaomiSite
             con.Close();
             con.Close();
         }
+        public void TrouverIdEcole()
+        {
+            con.Close();
+            con.Open();
+            MySqlCommand cmdB = con.CreateCommand();
+            cmdB.CommandType = CommandType.Text;
+            cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+            MySqlDataReader dr = cmdB.ExecuteReader();
+            while (dr.Read())
+            {
+                txtIdEcole.Text = dr["idEcole"].ToString();
+            }
+            con.Close();
+        }
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
             con.Open();
-            MySqlCommand cmd1a = con.CreateCommand();
-            cmd1a.CommandType = CommandType.Text;
-            cmd1a.CommandText = "insert into utilisateur values(default,'" + txtLoginUser.Text + "','" + txtPassword.Text + "','" + txtFonction.Text + "','" + txtEcole.Text + "','Inactif')";
-            cmd1a.ExecuteNonQuery();
-            con.Close();
-            Response.Redirect("AdminUtilisateur.aspx");
+            if (txtFonction.SelectedValue == "Admin")
+            {
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "insert into utilisateur values(default,'" + txtLoginUser.Text + "','" + txtPassword.Text + "','" + txtFonction.SelectedValue + "','Toutes les écoles','Actif')";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+                Response.Redirect("AdminUtilisateur.aspx");
+            }
+            else
+            {
+                MySqlCommand cmd1a = con.CreateCommand();
+                cmd1a.CommandType = CommandType.Text;
+                cmd1a.CommandText = "insert into utilisateur values(default,'" + txtLoginUser.Text + "','" + txtPassword.Text + "','" + txtFonction.SelectedValue + "','" + txtIdEcole.Text + "','Actif')";
+                cmd1a.ExecuteNonQuery();
+                con.Close();
+                Response.Redirect("AdminUtilisateur.aspx");
+            }
+        }
+        protected void txtEcole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TrouverIdEcole();
         }
         protected void Data1_ItemCommand(object source, RepeaterCommandEventArgs e)
         {

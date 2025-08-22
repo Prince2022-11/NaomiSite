@@ -39,6 +39,50 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -109,7 +153,7 @@ namespace NaomiSite
             con.Open();
             MySqlCommand cmdB = con.CreateCommand();
             cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT nomSection from section WHERE idEcole='" + txtIdEcole.Text + "'");
+            cmdB.CommandText = ("SELECT nomSection from section WHERE idSection='" + txtIdOption.Text + "' AND idEcole='" + txtIdEcole.Text + "'");
             MySqlDataReader dr = cmdB.ExecuteReader();
             while (dr.Read())
             {
@@ -122,7 +166,7 @@ namespace NaomiSite
             con.Open();
             MySqlCommand cmdB = con.CreateCommand();
             cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from t_classe WHERE id='" +txtIdClasse.Text + "'");
+            cmdB.CommandText = ("SELECT *from t_classe WHERE id='" +txtIdClasse.Text + "' AND idSection='" + txtIdOption.Text + "'");
             MySqlDataReader dr = cmdB.ExecuteReader();
             while (dr.Read())
             {
@@ -132,25 +176,33 @@ namespace NaomiSite
         }
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
-            con.Close();
-            con.Open();
-            double t1 = double.Parse(txtTranche1.Text);
-            double t2 = double.Parse(txtTranche1.Text);
-            double t3 = double.Parse(txtTranche1.Text);
-            double somme = t1 + t2 + t3;
-
-            if (somme > 0)
+            try
             {
-                MySqlCommand cmd1a = con.CreateCommand();
-                cmd1a.CommandType = CommandType.Text;
-                cmd1a.CommandText = "UPDATE frais_scolaire SET tranche1='" + txtTranche1.Text + "',tranche2='" + txtTranche2.Text + "',tranche3='" + txtTranche3.Text + "',unite='" + txtUnite.SelectedValue + "' WHERE idfrais='"+txtIdFrais.Text+"'";
-                cmd1a.ExecuteNonQuery();
                 con.Close();
-                Response.Redirect("AdminFinStructurerFrais.aspx");
+                con.Open();
+                double t1 = double.Parse(txtTranche1.Text);
+                double t2 = double.Parse(txtTranche1.Text);
+                double t3 = double.Parse(txtTranche1.Text);
+                double somme = t1 + t2 + t3;
+
+                if (somme > 0)
+                {
+                    MySqlCommand cmd1a = con.CreateCommand();
+                    cmd1a.CommandType = CommandType.Text;
+                    cmd1a.CommandText = "UPDATE frais_scolaire SET tranche1='" + txtTranche1.Text + "',tranche2='" + txtTranche2.Text + "',tranche3='" + txtTranche3.Text + "',unite='" + txtUnite.SelectedValue + "' WHERE idfrais='" + txtIdFrais.Text + "'";
+                    cmd1a.ExecuteNonQuery();
+                    con.Close();
+                    Response.Redirect("AdminFinStructurerFrais.aspx");
+                }
+                else
+                {
+                    txtMessage.Visible = true;
+                }
             }
-            else
+            catch
             {
                 txtMessage.Visible = true;
+                txtMessage.Text = "Quelque chose a mal tourné, vérifiez les valeurs placées dans les champs";
             }
 
         }

@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>EspaceAdmin</title>
+	<title>C.S.NAOMI</title>
 
 	<!-- Main Styles -->
 	<link rel="stylesheet" href="../assets/styles/style.min.css">
@@ -51,6 +51,7 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+             <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -64,19 +65,19 @@
 				<li class="current">
 					<a class="waves-effect" href="EspaceAdmin.aspx"><i class="menu-icon mdi mdi-view-dashboard"></i><span>ACCUEIL</span></a>
 				</li>
-                <li>
+                <li id="ctrlAnnee" runat="server">
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
-				<li>
+				<li id="ctrlInscription" runat="server">
 					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
-				<li>
+				<li id="ctrlAgent" runat="server">
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
 				</li>
-                <li>
+                <li id="ctrlFinance" runat="server">
 					<a class="waves-effect" href="AdminFinance.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION FINANCIERE</span></a>
 				</li>
-				<li>
+				<li id="ctrlUtilisateur" runat="server">
 					<a class="waves-effect" href="AdminUtilisateur.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES UTILISATEURS</span></a>
 				</li>
 			</ul>
@@ -93,7 +94,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- GESTION DES FINANCES</h2>
+		<h2 class="page-title"> --- GESTION DES FINANCES ---</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -118,17 +119,18 @@
                                     <ContentTemplate>
                                         <div class="col-lg-6 col-md-6">
                                              <label>ENTREES FINANCIERES</label> <br />
-                                             <a href="AdminFinStructurerFrais.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Structurer les Frais scolaires....... </h4></a><br /><br />
-                                             <a href="AdminFinPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des payements des frais</h4></a><br /><br />
-                                             <a href="AdminNiveauPaye.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Evaluer le Niveau de Payement..</h4></a><br /><br />
-                                             <a href="AdminRechPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherche dans les payements..</h4></a><br /><br />
+                                             <a id="FinStrucFrais" runat="server" href="AdminFinStructurerFrais.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Structurer les Frais scolaires....... </h4></a><br /><br />
+                                             <a id="FinPayFr" runat="server" href="AdminFinPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion Payements des frais Scol.</h4></a><br /><br />
+                                             <a id="FinNivPay" runat="server" href="AdminNiveauPaye.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Evaluer le Niveau de Payement..</h4></a><br /><br />
+                                             <a id="FinRechPay" runat="server" href="AdminRechPayementFrais.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherche sur payement des frais</h4></a><br /><br />
                                          </div>
                                          <div class="col-lg-6 col-md-6">
                                              <label>SORTIES FINANCIERES</label> <br />
-                                             <a href="#"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
-                                             <a href="AdminFinDepense.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
-                                             <a href="AdminSituationCaisse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Situation de la caisse Scolaire...</h4></a><br /><br />
+                                             <a id="FinAvancSal" runat="server" href="AdminFinAvanceSalMenu.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
+                                             <a id="FinPaySal" runat="server" href="AdminFinPayementAgent.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
+                                             <a id="FinDepense" runat="server" href="AdminFinDepense.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des dépenses Scolaires</h4></a><br /><br />
+                                            <a id="FinRechPaySal" runat="server" href="AdminFinRechPayement.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherche sur payement Salaire</h4></a><br /><br />
+                                             <a id="FinCaisse" runat="server" href="AdminSituationCaisse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Situation de la caisse Scolaire...</h4></a><br /><br />
                                          </div>
                               </ContentTemplate>
                 </asp:UpdatePanel>

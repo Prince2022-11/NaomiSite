@@ -17,3 +17,6 @@ D:\PROJET CS NAOMI\NaomiSite\NaomiSite\bin\Microsoft.CodeDom.Providers.DotNetCom
 D:\PROJET CS NAOMI\NaomiSite\NaomiSite\obj\Debug\NaomiSite.csprojResolveAssemblyReference.cache
 D:\PROJET CS NAOMI\NaomiSite\NaomiSite\obj\Debug\NaomiSite.dll
 D:\PROJET CS NAOMI\NaomiSite\NaomiSite\obj\Debug\NaomiSite.pdb
+D:\PROJET CS NAOMI\NaomiSite\NaomiSite\bin\EPPlus.dll
+D:\PROJET CS NAOMI\NaomiSite\NaomiSite\bin\EPPlus.Interfaces.dll
+D:\PROJET CS NAOMI\NaomiSite\NaomiSite\bin\EPPlus.xml

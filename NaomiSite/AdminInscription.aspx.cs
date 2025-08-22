@@ -20,77 +20,163 @@ namespace NaomiSite
         protected void Page_Load(object sender, EventArgs e)
         {
             //Vérification de la connexion de la varibale session
-            if (Session["autorisation"] != null && (bool)Session["autorisation"] == true)
+            try
             {
-                if (!IsPostBack)
+                if (Session["autorisation"] != null && (bool)Session["autorisation"] == true)
                 {
-                    txtLogin.Text = Session["login"].ToString();
+                    if (!IsPostBack)
+                    {
+                        txtLogin.Text = Session["login"].ToString();
 
-                    // Vérifier l'admin connecté
-                    con.Open();
-                    MySqlCommand cmd = new MySqlCommand("", con);
-                    MySqlCommand cmde = con.CreateCommand();
-                    cmde.CommandType = CommandType.Text;
-                    cmd.CommandText = ("select * from utilisateur WHERE login='" + txtLogin.Text + "'");
-                    MySqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        txtRole.Text = dr["service"].ToString();
-                    }
-                    con.Close();
+                        // Vérifier l'admin connecté
+                        con.Open();
+                        MySqlCommand cmd = new MySqlCommand("", con);
+                        MySqlCommand cmde = con.CreateCommand();
+                        cmde.CommandType = CommandType.Text;
+                        cmd.CommandText = ("select * from utilisateur WHERE login='" + txtLogin.Text + "'");
+                        MySqlDataReader dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            txtRole.Text = dr["service"].ToString();
 
-                    //Vérification de l'année Active
-                    con.Open();
-                    MySqlCommand cmd1 = new MySqlCommand("", con);
-                    MySqlCommand cmde1 = con.CreateCommand();
-                    cmde1.CommandType = CommandType.Text;
-                    cmd1.CommandText = ("select * from anneescol WHERE etat='Actif'");
-                    MySqlDataReader dr1 = cmd1.ExecuteReader();
-                    while (dr1.Read())
-                    {
-                        txtIdAnnee.Text = dr1["anneeScolaire"].ToString();
-                        txtDesignationAnnee.Text = dr1["designation"].ToString();
-                    }
-                    con.Close();
-                    AfficherInscription();
-                    numMat();
-                    TrouverIdEcole();
+                            //Controle sur ce qui doit s'afficher selon les restructions
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = false;
+                            ctrlFinance.Visible = false;
+                            ctrlInscription.Visible = false;
+                            ctrlUtilisateur.Visible = false;
 
-                    if (txtMatricule.Text != "")
-                    {
-                        TrouverEleve();
-                        btnAddStructure.Visible = false;
-                        txtmat.Visible = false;
-                        btnModification.Visible = true;
-                        TrouverEcoleModification();
-                        TrouverSectionModification();
-                        TrouverClasserModification();
+                            ctrlInscrire.Visible = true;
+                            ctrlImporte.Visible = true;
+                            ctrlChangeClasse.Visible = true;
+                            ctrlListeEleve.Visible = true;
+
+                            if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                            {
+                                ctrlAnnee.Visible = true;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = true;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                                ctrlInscrire.Visible = true;
+                                ctrlImporte.Visible = true;
+                                ctrlChangeClasse.Visible = true;
+                                ctrlListeEleve.Visible = true;
+                            }
+                            if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                            {
+                                ctrlAnnee.Visible = false;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = false;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                                ctrlInscrire.Visible = true;
+                                ctrlImporte.Visible = true;
+                                ctrlChangeClasse.Visible = true;
+                                ctrlListeEleve.Visible = true;
+                            }
+                            if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                            {
+                                ctrlAnnee.Visible = false;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = false;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                                ctrlInscrire.Visible = true;
+                                ctrlImporte.Visible = true;
+                                ctrlChangeClasse.Visible = true;
+                                ctrlListeEleve.Visible = true;
+                            }
+                            if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                            {
+                                ctrlAnnee.Visible = false;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = false;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                                ctrlInscrire.Visible = true;
+                                ctrlImporte.Visible = false;
+                                ctrlChangeClasse.Visible = false;
+                                ctrlListeEleve.Visible = true;
+                            }
+                        }
+                        con.Close();
+
+                        //Vérification de l'année Active
+                        con.Open();
+                        MySqlCommand cmd1 = new MySqlCommand("", con);
+                        MySqlCommand cmde1 = con.CreateCommand();
+                        cmde1.CommandType = CommandType.Text;
+                        cmd1.CommandText = ("select * from anneescol WHERE etat='Actif'");
+                        MySqlDataReader dr1 = cmd1.ExecuteReader();
+                        while (dr1.Read())
+                        {
+                            txtIdAnnee.Text = dr1["anneeScolaire"].ToString();
+                            txtDesignationAnnee.Text = dr1["designation"].ToString();
+                        }
+                        con.Close();
+                        AfficherInscription();
+                        numMat();
+                        TrouverIdEcole();
+                        TrouverSection();
+                        TrouverIdSection();
+                        TrouverClasser();
+                        TrouverIdClasse();
+
+                        if (txtMatricule.Text != "")
+                        {
+                            TrouverEleve();
+                            btnAddStructure.Visible = false;
+                            txtmat.Visible = false;
+                            btnModification.Visible = true;
+                            TrouverEcoleModification();
+                            TrouverSectionModification();
+                            TrouverClasserModification();
+                        }
+                        else
+                        {
+                            btnAddStructure.Visible = true;
+                            txtmat.Visible = true;
+                            btnModification.Visible = false;
+                        }
                     }
-                    else
-                    {
-                        btnAddStructure.Visible = true;
-                        txtmat.Visible = true;
-                        btnModification.Visible = false;
-                    }
+
                 }
-
+                else
+                {
+                    Response.Redirect("Acceuil.aspx");
+                }
             }
-            else
-            {
-                Response.Redirect("Acceuil.aspx");
-            }
+            catch { }
         }
         public void AfficherInscription()
         {
+
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole AND t_eleve.anneescol='"+txtIdAnnee.Text+"' ORDER BY dateInscription ASC", con);
-            cmdB1.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
-            da.Fill(dt);
-            Data1.DataSource = dt;
-            Data1.DataBind();
-            con.Close();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles" || txtRole.Text == "Comptable")
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole AND t_eleve.anneescol='" + txtIdAnnee.Text + "' ORDER BY matricule DESC, nom ASC", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
+            else
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole AND t_eleve.anneescol='" + txtIdAnnee.Text + "' AND t_eleve.idEcole='" + txtIdEcoleAffectationUser.Text + "' ORDER BY matricule DESC, nom ASC", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
             con.Close();
         }
         public void recherche(string recherche)
@@ -99,15 +185,30 @@ namespace NaomiSite
             {
                 con.Close();
                 con.Open();
-                MySqlCommand cmdD = con.CreateCommand();
-                cmdD.CommandType = CommandType.Text;
-                cmdD.CommandText = ("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole AND CONCAT(t_eleve.dateInscription,t_eleve.matricule,t_eleve.nom,t_eleve.prenom,t_eleve.sexe,t_classe.classe,section.nomSection,ecole.nomEcole,t_eleve.nom_du_pere,t_eleve.nom_de_la_mere,t_eleve.adresse) LIKE '%" + recherche + "%' ORDER BY dateInscription ASC ");
-                cmdD.ExecuteNonQuery();
-                DataTable dtD = new DataTable();
-                MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
-                daD.Fill(dtD);
-                Data1.DataSource = dtD;
-                Data1.DataBind();
+                if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+                {
+                    MySqlCommand cmdD = con.CreateCommand();
+                    cmdD.CommandType = CommandType.Text;
+                    cmdD.CommandText = ("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole AND CONCAT(t_eleve.dateInscription,t_eleve.matricule,t_eleve.nom,t_eleve.prenom,t_eleve.sexe,t_classe.classe,section.nomSection,ecole.nomEcole,t_eleve.nom_du_pere,t_eleve.nom_de_la_mere,t_eleve.adresse) LIKE '%" + recherche + "%' ORDER BY dateInscription ASC ");
+                    cmdD.ExecuteNonQuery();
+                    DataTable dtD = new DataTable();
+                    MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
+                    daD.Fill(dtD);
+                    Data1.DataSource = dtD;
+                    Data1.DataBind();
+                }
+                else
+                {
+                    MySqlCommand cmdD = con.CreateCommand();
+                    cmdD.CommandType = CommandType.Text;
+                    cmdD.CommandText = ("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole AND t_eleve.idEcole='" + txtIdEcoleAffectationUser.Text + "' AND CONCAT(t_eleve.dateInscription,t_eleve.matricule,t_eleve.nom,t_eleve.prenom,t_eleve.sexe,t_classe.classe,section.nomSection,ecole.nomEcole,t_eleve.nom_du_pere,t_eleve.nom_de_la_mere,t_eleve.adresse) LIKE '%" + recherche + "%' ORDER BY dateInscription ASC ");
+                    cmdD.ExecuteNonQuery();
+                    DataTable dtD = new DataTable();
+                    MySqlDataAdapter daD = new MySqlDataAdapter(cmdD);
+                    daD.Fill(dtD);
+                    Data1.DataSource = dtD;
+                    Data1.DataBind();
+                }
                 con.Close();
             }
             catch
@@ -159,15 +260,29 @@ namespace NaomiSite
         {
             con.Close();
             con.Open();
-            MySqlCommand cmdB = con.CreateCommand();
-            cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
-            MySqlDataReader dr = cmdB.ExecuteReader();
-            while (dr.Read())
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles" || txtRole.Text == "Comptable")
             {
-                txtIdEcole.Text = dr["idEcole"].ToString();
+                lblEcole.Visible = true;
+                txtEcole.Visible = true;
+                MySqlCommand cmdB = con.CreateCommand();
+                cmdB.CommandType = CommandType.Text;
+                cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+                MySqlDataReader dr = cmdB.ExecuteReader();
+                while (dr.Read())
+                {
+                    txtIdEcole.Text = dr["idEcole"].ToString();
+                }
+            }
+            else
+            {
+                lblEcole.Visible = false;
+                txtEcole.Visible = false;
+                ctrlEcole.Visible = false;
+                txtIdEcole.Text = txtIdEcoleAffectationUser.Text;
+                
             }
             con.Close();
+
         }
         public void TrouverSection()
         {
@@ -403,86 +518,100 @@ namespace NaomiSite
 
         protected void btnImprim_Click(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            Document dc = new Document();
-            String chemin = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/ " + rnd.Next() * 1000 + "PayementRechApprofondie.pdf";
-            FileStream fs = File.Create(chemin);
-            PdfWriter.GetInstance(dc, fs);
-            dc.Open();
-            dc.Add(new Paragraph("                                                      REPUBLIQUE DEMOCRATIQUE DU CONGO \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                      MINISTERE DE L'ENSEIGNEMENT PRIMAIRE,SECONDAIRE ET TECHNIQUE \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                                           COMPLEXE SCOLAIRE NAOMI \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 13, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                                                        Province du Sud-Kivu\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                               Arrêté MINISTERIEL No MINEPSP/CAB MIN/086/2006\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                                                          Contacts :  0971368721\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                    ------------------------------------------------------------------------------------------------------------------\n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-
-            dc.Add(new Paragraph("                                                     LISTE DES ELEVES INSCRITS TRIES SUR CRITERE :  " + (txtRecherche.Text).ToUpper() + ", Année Scolaire: " + txtDesignationAnnee.Text + "\n \n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.BLACK)));
-
-            PdfPTable table = new PdfPTable(5);
-            PdfPCell cell = new PdfPCell(new Paragraph("Nom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
-            cell.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell1 = new PdfPCell(new Paragraph("Prénom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
-            cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell1.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell2 = new PdfPCell(new Paragraph("Sexe", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
-            cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell2.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell3 = new PdfPCell(new Paragraph("Classe", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
-            cell3.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell3.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell4 = new PdfPCell(new Paragraph("Option", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
-            cell4.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell4.BackgroundColor = BaseColor.BLACK;
-
-            table.AddCell(cell);
-            table.AddCell(cell1);
-            table.AddCell(cell2);
-            table.AddCell(cell3);
-            table.AddCell(cell4);
-
-            //Recherche des élèves
-            con.Close();
-            con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole ORDER BY dateInscription ASC", con);
-            MySqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
+            try
             {
-                //===========================================================================
-                PdfPCell cell5 = new PdfPCell(new Paragraph((string)dr["nom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell5.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell5.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell6 = new PdfPCell(new Paragraph((string)dr["prenom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell6.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell6.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell7 = new PdfPCell(new Paragraph((string)dr["sexe"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell7.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell7.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell8 = new PdfPCell(new Paragraph((string)dr["classe"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell8.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell8.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell9 = new PdfPCell(new Paragraph((string)dr["option"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell9.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell9.BackgroundColor = BaseColor.WHITE;
+                Random rnd = new Random();
+                Document dc = new Document();
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    PdfWriter.GetInstance(dc, ms);
+                    dc.Open();
+                    //Le code
+                    dc.Add(new Paragraph("                                                      REPUBLIQUE DEMOCRATIQUE DU CONGO \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                    dc.Add(new Paragraph("                      MINISTERE DE L'ENSEIGNEMENT PRIMAIRE,SECONDAIRE ET TECHNIQUE \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                    dc.Add(new Paragraph("                                                           COMPLEXE SCOLAIRE NAOMI \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 13, BaseColor.BLACK)));
+                    dc.Add(new Paragraph("                                                                        Province du Sud-Kivu\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                    dc.Add(new Paragraph("                                               Arrêté MINISTERIEL No MINEPSP/CAB MIN/086/2006\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                    dc.Add(new Paragraph("                                                                          Contacts :  0971368721\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                    dc.Add(new Paragraph("                    ------------------------------------------------------------------------------------------------------------------\n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+
+                    dc.Add(new Paragraph("                                                     LISTE DES ELEVES INSCRITS TRIES SUR CRITERE :  " + (txtRecherche.Text).ToUpper() + ", Année Scolaire: " + txtDesignationAnnee.Text + "\n \n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.BLACK)));
+
+                    PdfPTable table = new PdfPTable(5);
+                    PdfPCell cell = new PdfPCell(new Paragraph("Nom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.BackgroundColor = BaseColor.BLACK;
+                    PdfPCell cell1 = new PdfPCell(new Paragraph("Prénom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+                    cell1.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell1.BackgroundColor = BaseColor.BLACK;
+                    PdfPCell cell2 = new PdfPCell(new Paragraph("Sexe", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+                    cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell2.BackgroundColor = BaseColor.BLACK;
+                    PdfPCell cell3 = new PdfPCell(new Paragraph("Classe", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+                    cell3.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell3.BackgroundColor = BaseColor.BLACK;
+                    PdfPCell cell4 = new PdfPCell(new Paragraph("Option", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 11, BaseColor.WHITE)));
+                    cell4.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell4.BackgroundColor = BaseColor.BLACK;
+
+                    table.AddCell(cell);
+                    table.AddCell(cell1);
+                    table.AddCell(cell2);
+                    table.AddCell(cell3);
+                    table.AddCell(cell4);
+
+                    //Recherche des élèves
+                    con.Close();
+                    con.Open();
+                    MySqlCommand cmd = new MySqlCommand("SELECT t_eleve.dateInscription as dateInscription,t_eleve.matricule as matricule,t_eleve.nom as nom,t_eleve.prenom as prenom,t_eleve.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole,t_eleve.nom_du_pere as nom_du_pere,t_eleve.nom_de_la_mere as nom_de_la_mere,t_eleve.lieuNaiss as lieuNaiss,t_eleve.dateNaiss as dateNaiss,t_eleve.adresse as adresse FROM t_eleve,t_classe,section,ecole WHERE t_eleve.classe=t_classe.id and t_eleve.option=section.idSection AND t_eleve.idEcole=ecole.idEcole ORDER BY dateInscription ASC", con);
+                    MySqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        //===========================================================================
+                        PdfPCell cell5 = new PdfPCell(new Paragraph((string)dr["nom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                        cell5.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell5.BackgroundColor = BaseColor.WHITE;
+                        PdfPCell cell6 = new PdfPCell(new Paragraph((string)dr["prenom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                        cell6.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell6.BackgroundColor = BaseColor.WHITE;
+                        PdfPCell cell7 = new PdfPCell(new Paragraph((string)dr["sexe"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                        cell7.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell7.BackgroundColor = BaseColor.WHITE;
+                        PdfPCell cell8 = new PdfPCell(new Paragraph((string)dr["classe"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                        cell8.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell8.BackgroundColor = BaseColor.WHITE;
+                        PdfPCell cell9 = new PdfPCell(new Paragraph((string)dr["option"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                        cell9.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell9.BackgroundColor = BaseColor.WHITE;
 
 
-                //============================================================================
+                        //============================================================================
 
-                table.AddCell(cell5);
-                table.AddCell(cell6);
-                table.AddCell(cell7);
-                table.AddCell(cell8);
-                table.AddCell(cell9);
+                        table.AddCell(cell5);
+                        table.AddCell(cell6);
+                        table.AddCell(cell7);
+                        table.AddCell(cell8);
+                        table.AddCell(cell9);
+                    }
+
+                    dc.Add(table);
+
+                    dc.Add(new Paragraph("\n"));
+                    dc.Add(new Paragraph("                              Fait à Bukavu le: " + System.DateTime.Now + "\n\n"));
+                    dc.Add(new Paragraph("                              Imprimé par " + (txtLogin.Text), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 14, BaseColor.BLACK)));
+                    dc.Close();
+
+                    Response.Clear();
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("content-disposition", "attachment;filename=InscriptionEleves.pdf");
+                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                    Response.BinaryWrite(ms.ToArray());
+                    Response.End();
+                }
+                dc.Close();
             }
-
-            dc.Add(table);
-
-            dc.Add(new Paragraph("\n"));
-            dc.Add(new Paragraph("                              Fait à Bukavu le: " + System.DateTime.Now + "\n\n"));
-            dc.Add(new Paragraph("                              Imprimé par " + (txtLogin.Text), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 14, BaseColor.BLACK)));
-            dc.Close();
-            System.Diagnostics.Process.Start(chemin);
+            catch {
+            }
         }
 
         protected void txtMatricule_TextChanged(object sender, EventArgs e)

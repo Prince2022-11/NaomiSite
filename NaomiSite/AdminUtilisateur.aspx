@@ -51,6 +51,7 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+             <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -114,16 +115,26 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6"> 
                                             <label>Fonction dans le système</label>
-								            <div class="form-group input-group" >
-					                                <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                                <asp:TextBox runat="server" ID="txtFonction" class="form-control" placeholder="Saisir la fonction de l'utilisateur ici" required AutoPostBack="True"></asp:TextBox>
-	                                        </div>
+                                            <div class="form-group input-group" >
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtFonction" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True">
+                                                         <asp:ListItem>Préfet Secondaire</asp:ListItem>
+                                                        <asp:ListItem>Directeur</asp:ListItem>
+                                                        <asp:ListItem>Comptable</asp:ListItem>
+                                                        <asp:ListItem>Admin</asp:ListItem>
+                                                   </asp:DropDownList>
+	                                      </div>
                                             <label>Ecole d'affectation </label>
 								            <div class="form-group input-group" >
-					                                <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                                <asp:TextBox runat="server" ID="txtEcole" class="form-control" placeholder="Saisir l'école d'affectation ici" required AutoPostBack="True"></asp:TextBox>
-	                                        </div>
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
+                                              <asp:DropDownList ID="txtEcole" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True" OnSelectedIndexChanged="txtEcole_SelectedIndexChanged">
+                                                        <asp:ListItem>MATERNELLE</asp:ListItem>
+                                                        <asp:ListItem>PRIMAIRE</asp:ListItem>
+                                                        <asp:ListItem>SECONDAIRE</asp:ListItem>
+                                                   </asp:DropDownList>
+	                                      </div>
                                         </div>
+                                                  <asp:TextBox runat="server" ID="txtIdEcole" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
                                                   <CENTER><asp:Label runat="server" ID="txtMessage" Text="Un de vos champs est vide" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
                                                   <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER><br>
                                            
@@ -185,7 +196,7 @@
                           <td style="border:1px solid black;"> <%#Eval("login ") %></td>
                           <td style="border:1px solid black;"> <%#Eval("password") %></td>
                              <td style="border:1px solid black;"> <%#Eval("service") %></td>
-                             <td style="border:1px solid black;"> <%#Eval("idEcole") %></td>
+                             <td style="border:1px solid black;"> <%#Eval("nomEcole") %></td>
                             <td style="border:1px solid black;"> <%#Eval("etat") %></td>
                           <td style="border:1px solid black;"><a  id="btnUpdate" class="fa fa-edit" style="color:red;font-size: large;font-style: normal;border-color:black;font-weight: bold;" href="AdminUpdateUser.aspx?id=<%#Eval("id") %>">Changer Etat</a></td>
                         </tr>

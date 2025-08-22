@@ -34,6 +34,96 @@ namespace NaomiSite
                 while (dr.Read())
                 {
                     txtRole.Text = dr["service"].ToString();
+
+                    //Controle sur ce qui doit s'afficher selon les restructions
+                    ctrlAnnee.Visible = false;
+                    ctrlAgent.Visible = false;
+                    ctrlFinance.Visible = false;
+                    ctrlInscription.Visible = false;
+                    ctrlUtilisateur.Visible = false;
+
+                    FinAvancSal.Visible = false;
+                    FinCaisse.Visible = false;
+                    FinDepense.Visible = false;
+                    FinNivPay.Visible = false;
+                    FinPayFr.Visible = false;
+                    FinPaySal.Visible = false;
+                    FinRechPay.Visible = false;
+                    FinRechPaySal.Visible = false;
+                    FinStrucFrais.Visible = false;
+
+                    if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                    {
+                        ctrlAnnee.Visible = true;
+                        ctrlAgent.Visible = true;
+                        ctrlFinance.Visible = true;
+                        ctrlInscription.Visible = true;
+                        ctrlUtilisateur.Visible = true;
+                        txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        FinAvancSal.Visible = true;
+                        FinCaisse.Visible = true;
+                        FinDepense.Visible = true;
+                        FinNivPay.Visible = true;
+                        FinPayFr.Visible = true;
+                        FinPaySal.Visible = true;
+                        FinRechPay.Visible = true;
+                        FinRechPaySal.Visible = true;
+                        FinStrucFrais.Visible = true;
+                    }
+                    if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                    {
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = true;
+                        ctrlFinance.Visible = true;
+                        ctrlInscription.Visible = true;
+                        ctrlUtilisateur.Visible = false;
+                        txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        FinAvancSal.Visible = true;
+                        FinCaisse.Visible = true;
+                        FinDepense.Visible = true;
+                        FinNivPay.Visible = true;
+                        FinPayFr.Visible = true;
+                        FinPaySal.Visible = true;
+                        FinRechPay.Visible = true;
+                        FinRechPaySal.Visible = true;
+                        FinStrucFrais.Visible = true;
+                    }
+                    if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                    {
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = true;
+                        ctrlFinance.Visible = true;
+                        ctrlInscription.Visible = true;
+                        ctrlUtilisateur.Visible = false;
+                        txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        FinAvancSal.Visible = true;
+                        FinCaisse.Visible = true;
+                        FinDepense.Visible = true;
+                        FinNivPay.Visible = true;
+                        FinPayFr.Visible = true;
+                        FinPaySal.Visible = true;
+                        FinRechPay.Visible = true;
+                        FinRechPaySal.Visible = true;
+                        FinStrucFrais.Visible = true;
+                    }
+                    if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                    {
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = true;
+                        ctrlFinance.Visible = true;
+                        ctrlInscription.Visible = true;
+                        ctrlUtilisateur.Visible = false;
+                        txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        FinAvancSal.Visible = true;
+                        FinCaisse.Visible = true;
+                        FinDepense.Visible = true;
+                        FinNivPay.Visible = false;
+                        FinPayFr.Visible = true;
+                        FinPaySal.Visible = false;
+                        FinRechPay.Visible = true;
+                        FinRechPaySal.Visible = false;
+                        FinStrucFrais.Visible = false;
+                    }
                 }
                 con.Close();
 

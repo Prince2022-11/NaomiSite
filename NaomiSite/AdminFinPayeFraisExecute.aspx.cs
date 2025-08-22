@@ -39,6 +39,50 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -672,8 +716,7 @@ namespace NaomiSite
             MySqlDataReader dr = cmd.ExecuteReader();
 
             txtDispo.Text = "0";
-            txtDispo.Text = "0";
-            txtDispo.Text = "0";
+            txtEntree.Text = "0";
             while (dr.Read())
             {
                 txtDispo.Text = dr["Solde"].ToString();
@@ -851,7 +894,6 @@ namespace NaomiSite
                     //Enregistrement si on a converti le montant que l'élève est venu avec à la caisse
                     if (txtUnite.Text == "USD")
                     {
-                        string unite = "CDF";
                         string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','CDF','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "','" + txtIdRecu.Text + "')";
                         MySqlCommand commande = new MySqlCommand(cmd, conx);
 
@@ -912,7 +954,6 @@ namespace NaomiSite
                     }
                     if (txtUnite.Text == "CDF")
                     {
-                        string unite = "USD";
                         string cmd = "insert into t_payement_frais values(default,'" + txtMatricule.Text + "','" + txtIdFrais.Text + "','" + txtMontantVenuAvec.Text.Replace(',', '.') + "','USD','" + TakeDate.ToString() + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "','" + txtLogin.Text + "','" + txtIdRecu.Text + "')";
                         MySqlCommand commande = new MySqlCommand(cmd, conx);
 
@@ -978,7 +1019,8 @@ namespace NaomiSite
             }
             catch
             {
-
+                txtMessage.Visible = true;
+                txtMessage.Text = "Quelque chose a mal tourné, vérifiez si vous avez saisi nombre valide, si c'est un décimal, n'oubliez pas d'utiliser un point-virgule (,)";
             }
 
         }

@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>EspaceAdmin</title>
+	<title>C.S.NAOMI</title>
 
 	<!-- Main Styles -->
 	<link rel="stylesheet" href="../assets/styles/style.min.css">
@@ -51,6 +51,8 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+            <h5 class="position"><asp:Label ID="txtIdUser" runat="server" Text="0" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+             <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -64,19 +66,19 @@
 				<li class="current">
 					<a class="waves-effect" href="EspaceAdmin.aspx"><i class="menu-icon mdi mdi-view-dashboard"></i><span>ACCUEIL</span></a>
 				</li>
-                <li>
+                <li id="ctrlAnnee" runat="server">
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
-				<li>
+				<li id="ctrlInscription" runat="server">
 					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
-				<li>
+				<li id="ctrlAgent" runat="server">
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
 				</li>
-                <li>
+                <li id="ctrlFinance" runat="server">
 					<a class="waves-effect" href="AdminFinance.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION FINANCIERE</span></a>
 				</li>
-				<li>
+				<li id="ctrlUtilisateur" runat="server">
 					<a class="waves-effect" href="AdminUtilisateur.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES UTILISATEURS</span></a>
 				</li>
 			</ul>
@@ -93,7 +95,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content" style="width: 100%;">
             <div class="modal-header">
-              <button aria-hidden="true" data-dismiss="modal" class="close" type="button" onclick="redirectToAdminAgentAjout()">X</button>
+              <button aria-hidden="true" data-dismiss="modal" class="close" type="button" onclick="redirectToAdminFinDepense()">X</button>
                 <h5 class="modal-title"><center><b>EFFECTUER UNE DEPENSE </b></center></h5>
             </div>
             <div class="modal-body">
@@ -101,13 +103,9 @@
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                  <ContentTemplate>
                                           <asp:TextBox runat="server" ID="txtIdEcole" ForeColor="Red" Text="" AutoPostBack="True" Visible="false"></asp:TextBox>
-                                          <asp:label runat="server" ID="Label1" ForeColor="Red" Text="Agent N° " AutoPostBack="True"></asp:label>
-                                          <asp:label runat="server" ID="txtmat" ForeColor="Red" Text="matr" AutoPostBack="True" Font-Size="Medium" Font-Bold="True"></asp:label>
-                                      <asp:TextBox runat="server" ID="txtMatricule" ForeColor="black" Text="" AutoPostBack="true" Visible="true" Font-Bold="True" Font-Size="Medium" BackColor="Transparent" BorderColor="Transparent" OnTextChanged="txtMatricule_TextChanged"></asp:TextBox>
-                                       <asp:label runat="server" ID="txtDernierMat" ForeColor="Red" Text="matr" AutoPostBack="True" Visible="false"></asp:label> <br />
-                                        
+                                         <asp:Label runat="server" ID="txtDispo" ForeColor="Red" Text="0" AutoPostBack="True" Visible="false"></asp:Label>
+                                             <asp:Label runat="server" ID="txtSortie" ForeColor="Red" Text="0" AutoPostBack="True" Visible="false"></asp:Label>
                                      <div class="col-lg-6 col-md-6">
-                                         
                                          <label>Opération dans la caisse de l'école</label>
                                           <div class="form-group input-group" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
@@ -117,43 +115,34 @@
                                                         <asp:ListItem>SECONDAIRE</asp:ListItem>
                                                    </asp:DropDownList>
 	                                      </div>
-                                         <label>Libellé de l'opération (Motif Dépense)</label>
+                                         <label>Libellé ou Motif de la dépense</label>
                                           <div class="form-group input-group" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                          <asp:TextBox runat="server" ID="txtMotif" class="form-control" placeholder="Saisir le nom et le post-nom ici" required AutoPostBack="True"></asp:TextBox>
+	                                          <asp:TextBox runat="server" ID="txtMotif" class="form-control" placeholder="Saisir le motif de la dépense ici" required AutoPostBack="True"></asp:TextBox>
 	                                      </div> 
-                                         <label>Unité</label>
+                                     </div>
+                                     <div class="col-lg-6 col-md-6"><br />
+                                          <label>Unité</label>
                                           <div class="form-group input-group" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
-                                              <asp:DropDownList ID="txtUnite" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True">
+                                              <asp:DropDownList ID="txtUnite" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" OnSelectedIndexChanged="txtUnite_SelectedIndexChanged" required AutoPostBack="True">
                                                         <asp:ListItem>USD</asp:ListItem>
                                                         <asp:ListItem>CDF</asp:ListItem>
                                                    </asp:DropDownList>
 	                                      </div>
-                                         <label>Montant</label>
+                                         <label>Montant (NB: Pour le décimal, utilisez la virgule (,) pas un .</label>
                                           <div class="form-group input-group" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon-money"></span></span> 
-	                                          <asp:TextBox runat="server" ID="txtMontant" class="form-control" placeholder="Saisir le prénom ici" required AutoPostBack="True"></asp:TextBox>
+	                                          <asp:TextBox runat="server" ID="txtMontant" class="form-control" placeholder="Saisir le montant de la dépense ici" required AutoPostBack="True"></asp:TextBox>
 	                                      </div> 
-                                     </div>
-                                     <div class="col-lg-6 col-md-6"><br />
-
                                      </div>  
-                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Un de vos champs est vide" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
-                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER>
-                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnModification" Text="Mettre à jour" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnModification_Click" ></asp:Button><span></span></CENTER><br><br />
-                                           
-                         <script type="text/javascript">
-                             function setmatricule(num) {
-                                 // Récupérer le contrôle TextBox par son ID et lui assigner la valeur du numéro matricule
-                                 document.getElementById('<%= txtMatricule.ClientID %>').value = num;
-                             }
-
+                                                  <CENTER><asp:Label runat="server" ID="txtMessage" Text="Le montant de la dépense est supérieur au disponible dans la caisse de l'école sélectionnée" ForeColor="Red" Font-Bold="True" AutoPostBack="True" Visible="False"></asp:Label></CENTER>
+                                                  <CENTER><asp:Button runat="server" class="btn btn-primary" ID="btnAddStructure" Text="Soumettre" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnAddStructure_Click" ></asp:Button><span></span></CENTER><br><br />
                         </script>
                         <script type="text/javascript">
-                             function redirectToAdminAgentAjout() {
+                            function redirectToAdminFinDepense() {
                                  // Actualisé la page
-                                 window.location.href = 'AdminAgentAjout.aspx';
+                                 window.location.href = 'AdminFinDepense.aspx';
                              }
                         </script>
                       </ContentTemplate>
@@ -171,7 +160,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- GESTION DES DEPENSES SCOLAIRES</h2>
+		<h2 class="page-title">--- GESTION DES DEPENSES SCOLAIRES ---</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -191,10 +180,10 @@
         <div class="modal-body row" style="overflow:auto">
          <asp:UpdatePanel ID="UpdatePanel2" runat="server">
              <ContentTemplate>
-                 <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Ajouter un agent + </h4></a>
+                 <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">+Effectuer une dépense </h4></a>
                 <div class="input-group">
                    <span class="input-group-addon"> <span class="fa fa-name"></span><asp:Label ID="Label10" runat="server" Text="Recherche " Visible="true"></asp:Label></span>
-                        <asp:TextBox runat="server" ID="txtRecherche" class="form-control"  AutoPostBack="true" placeholder="Par nom de l'agent, domaine,niveau,ecole,..." OnTextChanged="txtRecherche_TextChanged"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtRecherche" class="form-control"  AutoPostBack="true" placeholder="Par Libellé (Désignation), Date opération,montant,opérateur,..." OnTextChanged="txtRecherche_TextChanged"></asp:TextBox>
                         <span class="input-group-addon"> <span class="fa fa-name"></span><asp:Button runat="server" class="fa fa-download"  ID="btnRechApproFondie" Text="Exporter en PDF" ForeColor="White" type="submit" style="background: #085ecf ;" CausesValidation="false" AutoPostBack="True" OnClick="btnRechApproFondie_Click"/></span>
                       <span></span>
                   </div><br />
@@ -204,11 +193,12 @@
                      <table class="table table-condansed table-striped" border="2" style="border:medium ridge black;" >
                       <thead>
                         <tr style="background-color:#33CCFF; border:2px dashed black; color: #FFFFFF;">
-                          <th> Matricule </th>
-                          <th> Nom et Post-nom </th>
-                          <th> Prénom </th>
-                          <th> Sexe</th>
-                          <th> Niveau </th>
+                          <th> # </th>
+                          <th> DateOpération</th>
+                          <th> Designation </th>
+                          <th> Montant</th>
+                          <th> Unité</th>
+                          <th> Opérateur</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -216,11 +206,13 @@
 
                        <ItemTemplate>
                         <tr>
-                          <td style="border:1px solid black;"> <%#Eval("matricule ") %></td>
-                          <td style="border:1px solid black;"> <%#Eval("nom") %></td>
-                        <td style="border:1px solid black;"> <%#Eval("prenom") %></td>
-                            <td style="border:1px solid black;"> <%#Eval("nomEcole") %></td>
-                          <td style="border:1px solid black;"><a data-scroll href="#myModal" data-toggle="modal" onclick="setmatricule('<%# Eval("matricule") %>')" class="mdi mdi-pencil btn btn-primary animation animated-item-3" style="color:white;font-size: large;font-style: normal;border-color:black;font-weight: bold;">Modifier</a></td>
+                          <td style="border:1px solid black;"> <%#Eval("idDepense") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("dateDepense") %></td>
+                        <td style="border:1px solid black;"> <%#Eval("designation") %></td>
+                            <td style="border:1px solid black;"> <%#Eval("montant") %></td>
+                            <td style="border:1px solid black;"> <%#Eval("unite") %></td>
+                            <td style="border:1px solid black;"> <%#Eval("login") %></td>
+                          <%--<td style="border:1px solid black;"><a data-scroll href="#myModal" data-toggle="modal" onclick="setmatricule('<%# Eval("idDepense") %>')" class="mdi mdi-pencil btn btn-primary animation animated-item-3" style="color:white;font-size: large;font-style: normal;border-color:black;font-weight: bold;">Modifier</a></td>--%>
                         </tr>
                        </ItemTemplate>
 
@@ -236,7 +228,6 @@
 		<?php require_once("../include/footer.php");?>
 	</div>
 	<!-- /.main-content -->
-</div>
 </div><!--/#wrapper -->
 </form>
 <!-- Fin -->
@@ -258,6 +249,6 @@
 
 	<script src="../assets/scripts/main.min.js"></script>
 
-</body>
+  </body>
 </html>
 

@@ -49,6 +49,69 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.Label txtIdAnnee;
         
         /// <summary>
+        /// txtIdUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtIdUser;
+        
+        /// <summary>
+        /// txtIdEcoleAffectationUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtIdEcoleAffectationUser;
+        
+        /// <summary>
+        /// ctrlAnnee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlAnnee;
+        
+        /// <summary>
+        /// ctrlInscription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlInscription;
+        
+        /// <summary>
+        /// ctrlAgent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlAgent;
+        
+        /// <summary>
+        /// ctrlFinance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlFinance;
+        
+        /// <summary>
+        /// ctrlUtilisateur control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrlUtilisateur;
+        
+        /// <summary>
         /// Form1 control.
         /// </summary>
         /// <remarks>
@@ -85,40 +148,22 @@ namespace NaomiSite {
         protected global::System.Web.UI.WebControls.TextBox txtIdEcole;
         
         /// <summary>
-        /// Label1 control.
+        /// txtDispo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label txtDispo;
         
         /// <summary>
-        /// txtmat control.
+        /// txtSortie control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtmat;
-        
-        /// <summary>
-        /// txtMatricule control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMatricule;
-        
-        /// <summary>
-        /// txtDernierMat control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtDernierMat;
+        protected global::System.Web.UI.WebControls.Label txtSortie;
         
         /// <summary>
         /// txtEcole control.
@@ -173,15 +218,6 @@ namespace NaomiSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddStructure;
-        
-        /// <summary>
-        /// btnModification control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModification;
         
         /// <summary>
         /// UpdatePanel2 control.

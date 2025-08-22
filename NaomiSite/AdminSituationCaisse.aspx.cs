@@ -36,6 +36,49 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -63,13 +106,26 @@ namespace NaomiSite
         public void SituationCaisse()
         {
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_caisse,ecole WHERE t_caisse.idEcole=ecole.idEcole", con);
-            cmdB1.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
-            da.Fill(dt);
-            Data1.DataSource = dt;
-            Data1.DataBind();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_caisse,ecole WHERE t_caisse.idEcole=ecole.idEcole", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
+            else
+            {
+                MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_caisse,ecole WHERE t_caisse.idEcole=ecole.idEcole AND t_caisse.idEcole='"+txtIdEcoleAffectationUser.Text+"'", con);
+                cmdB1.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
+                da.Fill(dt);
+                Data1.DataSource = dt;
+                Data1.DataBind();
+            }
             con.Close();
         }
     }

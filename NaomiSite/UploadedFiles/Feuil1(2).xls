@@ -1,0 +1,21 @@
+<div>
+	<table cellspacing="0" rules="all" class="table table-condansed table-striped" border="2" background-color="blue" border="1" id="DataGrid" style="border-style:Solid;border-collapse:collapse;border:medium ridge deepskyblue;overflow:auto;">
+		<tr>
+			<th scope="col">Matricule</th><th scope="col">NomEleve</th><th scope="col">PrenomEleve</th><th scope="col">Sexe</th><th scope="col">IdClasse</th><th scope="col">IdOption</th><th scope="col">IdAnnee</th><th scope="col">IdEcole</th>
+		</tr><tr>
+			<td>0097/24-25</td><td>AKITOWA MUHINDO</td><td>DIDIER</td><td>Masculin</td><td>2</td><td>1</td><td>3</td><td>1</td>
+		</tr><tr>
+			<td>0096/24-25</td><td>ELISHA MUNEKE</td><td>Josu&amp;#233;</td><td>Masculin</td><td>2</td><td>1</td><td>3</td><td>1</td>
+		</tr><tr>
+			<td>0098/24-25</td><td>ENINE BAHATI</td><td>ELIEZER</td><td>Masculin</td><td>2</td><td>1</td><td>3</td><td>1</td>
+		</tr><tr>
+			<td>0099/24-25</td><td>IRAGI BADERA</td><td>DIEUDONNE</td><td>Masculin</td><td>2</td><td>1</td><td>3</td><td>1</td>
+		</tr><tr>
+			<td>0095/24-26</td><td>KETIA LUSAGILA</td><td>MAISHA</td><td>F&amp;#233;minin</td><td>2</td><td>1</td><td>3</td><td>1</td>
+		</tr><tr>
+			<td>0094/24-25</td><td>LUSABYA MILENGE</td><td>JANVIER</td><td>Masculin</td><td>2</td><td>1</td><td>3</td><td>1</td>
+		</tr><tr>
+			<td>0093/24-25</td><td>MUSHEGERA BARABIRA</td><td>YOSHUA</td><td>Masculin</td><td>2</td><td>1</td><td>3</td><td>1</td>
+		</tr>
+	</table>
+</div>

@@ -36,6 +36,50 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -67,7 +111,7 @@ namespace NaomiSite
         public void AfficherAgent()
         {
             con.Open();
-            MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_agent,attribution_horaire WHERE attribution_horaire.Matricule=t_agent.matricule AND attribution_horaire.idEcole='3' ORDER BY nom ASC", con);
+            MySqlCommand cmdB1 = new MySqlCommand("SELECT * FROM t_agent,attribution_horaire WHERE attribution_horaire.Matricule=t_agent.matricule AND attribution_horaire.idEcole='3' AND attribution_horaire.anneeScolaire='"+txtIdAnnee.Text+"' ORDER BY nom ASC", con);
             cmdB1.ExecuteNonQuery();
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
@@ -273,21 +317,30 @@ namespace NaomiSite
 
         protected void btnAddStructure_Click(object sender, EventArgs e)
         {
-            if (txtmat.Text != "0" && txtHeure.Text != "0" && txtHeure.Text != "" && txtCours.Text != "0" && txtCours.Text != "" && (txtLundi.Text != "0" || txtMardi.Text != "0" || txtMercredi.Text != "0" || txtJeudi.Text != "0" || txtVendredi.Text != "0" || txtSamedi.Text != "0") && (txtLundi.Text != "" && txtMardi.Text != "" && txtMercredi.Text != "" && txtJeudi.Text != "" && txtVendredi.Text != "" && txtSamedi.Text != ""))
+            try
             {
-                con.Open();
-                CalculerHeures();
-                MySqlCommand cmd1a = con.CreateCommand();
-                cmd1a.CommandType = CommandType.Text;
-                cmd1a.CommandText = "insert into attribution_horaire values(default,'" + txtCours.Text + "','" + txtHeure.Text + "','" + txtmat.Text + "','" + lblLundi.Text + "','" + lblMardi.Text + "','" + lblMercredi.Text + "','" + lblJeudi.Text + "','" + lblVendredi.Text + "','" + lblSamedi.Text + "','" + txtLundi.Text + "','" + txtMardi.Text + "','" + txtMercredi.Text + "','" + txtJeudi.Text + "','" + txtVendredi.Text + "','" + txtSamedi.Text + "','" + txtIdAnnee.Text + "','3')";
-                cmd1a.ExecuteNonQuery();
-                con.Close();
-                ViderChamps();
-                txtSuccess.Visible = true;
+                if (txtmat.Text != "0" && txtHeure.Text != "0" && txtHeure.Text != "" && txtCours.Text != "0" && txtCours.Text != "" && (txtLundi.Text != "0" || txtMardi.Text != "0" || txtMercredi.Text != "0" || txtJeudi.Text != "0" || txtVendredi.Text != "0" || txtSamedi.Text != "0") && (txtLundi.Text != "" && txtMardi.Text != "" && txtMercredi.Text != "" && txtJeudi.Text != "" && txtVendredi.Text != "" && txtSamedi.Text != ""))
+                {
+                    con.Open();
+                    CalculerHeures();
+                    MySqlCommand cmd1a = con.CreateCommand();
+                    cmd1a.CommandType = CommandType.Text;
+                    cmd1a.CommandText = "insert into attribution_horaire values(default,'" + txtCours.Text + "','" + txtHeure.Text + "','" + txtmat.Text + "','" + lblLundi.Text + "','" + lblMardi.Text + "','" + lblMercredi.Text + "','" + lblJeudi.Text + "','" + lblVendredi.Text + "','" + lblSamedi.Text + "','" + txtLundi.Text + "','" + txtMardi.Text + "','" + txtMercredi.Text + "','" + txtJeudi.Text + "','" + txtVendredi.Text + "','" + txtSamedi.Text + "','" + txtIdAnnee.Text + "','3')";
+                    cmd1a.ExecuteNonQuery();
+                    con.Close();
+                    ViderChamps();
+                    txtSuccess.Visible = true;
+                    Response.Redirect("AdminAgentChargeHoraire.aspx");
+                }
+                else
+                {
+                    txtMessage.Visible = true;
+                }
             }
-            else
+            catch
             {
                 txtMessage.Visible = true;
+                txtMessage.Text = "Quelque chose a mal tourné, n'utilisez pas des caractères spéciaux comme : la virgule, l'apostrophe, le guillemets, les points, ...";
             }
         }
 

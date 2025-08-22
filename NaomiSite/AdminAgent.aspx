@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>EspaceAdmin</title>
+	<title>C.S.NAOMI</title>
 
 	<!-- Main Styles -->
 	<link rel="stylesheet" href="../assets/styles/style.min.css">
@@ -51,6 +51,7 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+             <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -64,19 +65,19 @@
 				<li class="current">
 					<a class="waves-effect" href="EspaceAdmin.aspx"><i class="menu-icon mdi mdi-view-dashboard"></i><span>ACCUEIL</span></a>
 				</li>
-                <li>
+                <li id="ctrlAnnee" runat="server">
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
-				<li>
+				<li id="ctrlInscription" runat="server">
 					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
-				<li>
+				<li id="ctrlAgent" runat="server">
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
 				</li>
-                <li>
+                <li id="ctrlFinance" runat="server">
 					<a class="waves-effect" href="AdminFinance.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION FINANCIERE</span></a>
 				</li>
-				<li>
+				<li id="ctrlUtilisateur" runat="server">
 					<a class="waves-effect" href="AdminUtilisateur.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES UTILISATEURS</span></a>
 				</li>
 			</ul>
@@ -93,7 +94,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- GESTION DES AGENTS DE L'ECOLE</h2>
+		<h2 class="page-title"> --- GESTION DES AGENTS DE L'ECOLE ---</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -118,17 +119,17 @@
                                     <ContentTemplate>
                                         <div class="col-lg-6 col-md-6">
                                              <label>DU COTE PRESTATION</label> <br />
-                                             <a href="AdminAgentAjout.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Ajout des agents dans le système.............</h4></a><br /><br />
-                                             <a href="AdminAgentChargeHoraire.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Attribution des charges horaires annuelles</h4></a><br /><br />
-                                             <a href="AdminAgentPresence.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Commencer les cours en pointant Présent</h4></a><br /><br />
-                                             <a href="AdminAgentFinCours.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Cloturer les cours des enseignants présents</h4></a><br /><br />
+                                             <a id="ctrlAjoutAgent" runat="server" href="AdminAgentAjout.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Ajout des agents dans le système.............</h4></a><br /><br />
+                                             <a id="ctrlChargeHor" runat="server" href="AdminAgentChargeHoraire.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Attribution des charges horaires annuelles</h4></a><br /><br />
+                                             <a id="ctrlPresence" runat="server" href="AdminAgentPresence.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Commencer les cours en pointant Présent</h4></a><br /><br />
+                                             <a id="ctrlFinCours" runat="server" href="AdminAgentFinCours.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Cloturer les cours des enseignants présents</h4></a><br /><br />
                                          </div>
                                          <div class="col-lg-6 col-md-6">
                                              <label>DU COTE REMUNERATION</label> <br />
-                                             <a href="#"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
-                                             <a href="#" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Compte de payement de l'agent</h4></a><br /><br />
-                                             <a href="AdminSituationCaisse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Des recherches approfondies....</h4></a><br /><br />
+                                             <a id="ctrlPayeAgent" runat="server" href="AdminFinAvanceSalMenu.aspx"  class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Avances Sur salaire </h4></a><br /><br />
+                                             <a id="ctrAjoutAgent2" runat="server" href="AdminFinPayementAgent.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Gestion des Payements salaires</h4></a><br /><br />
+                                             <a id="ctrlCompte" runat="server" href="AdminFinCompteAgent.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Compte de payement de l'agent</h4></a><br /><br />
+                                             <a id="ctrlRechPayement" runat="server" href="AdminFinRechPayement.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Recherches sur payement Salaire</h4></a><br /><br />
                                          </div>
                               </ContentTemplate>
                 </asp:UpdatePanel>

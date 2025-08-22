@@ -10,7 +10,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>EspaceAdmin</title>
+	<title>C.S.NAOMI</title>
 
 	<!-- Main Styles -->
 	<link rel="stylesheet" href="../assets/styles/style.min.css">
@@ -52,6 +52,7 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="annee" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+            <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -65,19 +66,19 @@
 				<li class="current">
 					<a class="waves-effect" href="EspaceAdmin.aspx"><i class="menu-icon mdi mdi-view-dashboard"></i><span>ACCUEIL</span></a>
 				</li>
-                <li>
+                <li id="ctrlAnnee" runat="server">
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
-				<li>
+				<li id="ctrlInscription" runat="server">
 					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
-				<li>
+				<li id="ctrlAgent" runat="server">
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
 				</li>
-                <li>
+                <li id="ctrlFinance" runat="server">
 					<a class="waves-effect" href="AdminFinance.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION FINANCIERE</span></a>
 				</li>
-				<li>
+				<li id="ctrlUtilisateur" runat="server">
 					<a class="waves-effect" href="AdminUtilisateur.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES UTILISATEURS</span></a>
 				</li>
 			</ul>
@@ -92,7 +93,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE DE L'ADMINISTRATEUR</h2>
+		<h2 class="page-title">BIENVENUE A VOTRE ESPACE-UNE VUE GLOBALE</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -111,11 +112,11 @@
 		<div class="isotope-filter js__filter_isotope">
 			<br>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3" id="ctrlMat1" runat="server">
                 <div class="card-box-a">
                     <div class="card card-primary">
                         <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
-                            <strong>TOTAL DES INSCRITS</strong>
+                            <strong>INSCRITS MATERNELLE</strong>
                         </div>
                         <div class="card-body" style="margin-top: -60px;">
                             <h1 style="text-align:center; font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotalInscrit" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
@@ -123,7 +124,70 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            
+            <div class="col-md-3" id="ctrlMat2" runat="server">
+                <div class="card-box-a">
+                    <div class="card card-primary">
+                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
+							<strong> TOTAL MATERNELLE ANNEE</strong>
+                        </div>
+                        <div class="card-body" style="margin-top: -60px;">
+                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotalUSD" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-3" id="ctrlPrim1" runat="server">
+                <div class="card-box-a">
+                    <div class="card card-primary">
+                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
+                            <strong>INSCRITS PRIMAIRE</strong>
+                        </div>
+                        <div class="card-body" style="margin-top: -60px;">
+                            <h1 style="text-align:center; font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtInscritPrimaire" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3" id="ctrlPrim2" runat="server">
+                <div class="card-box-a">
+                    <div class="card card-primary">
+                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
+							<strong> TOTAL PRIMAIRE ANNEE</strong>
+                        </div>
+                        <div class="card-body" style="margin-top: -60px;">
+                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotAnneePrimaire" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-3" id="ctrlSecond1" runat="server">
+                <div class="card-box-a">
+                    <div class="card card-primary">
+                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
+                            <strong>INSCRITS SECONDAIRE</strong>
+                        </div>
+                        <div class="card-body" style="margin-top: -60px;">
+                            <h1 style="text-align:center; font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtInscritSecond" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3" id="ctrlSecond2" runat="server">
+                <div class="card-box-a">
+                    <div class="card card-primary">
+                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
+							<strong> TOTAL SECONDAIRE ANNEE</strong>
+                        </div>
+                        <div class="card-body" style="margin-top: -60px;">
+                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotAnneeSecond" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="ctrlTotAgent" runat="server">
                 <div class="card-box-a">
                     <div class="card card-primary">
                         <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
@@ -135,31 +199,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="ctrlTotEnseignant" runat="server">
                 <div class="card-box-a">
                     <div class="card card-primary">
                         <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
-							<strong>DISPONIBLE USD</strong>
+							<strong>ENSEIGNANTS PRESENTS</strong>
                         </div>
                         <div class="card-body" style="margin-top: -60px;">
-                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"> <asp:Label ID="txtTotalUSD" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
+                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"><asp:Label ID="txtEnseignantPresent" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card-box-a">
-                    <div class="card card-primary">
-                        <div class="card-heading" style="background: #085ecf;color:#fff;padding:10px;text-align:center">
-							<strong>DISPONIBLE CDF</strong>
-                        </div>
-                        <div class="card-body" style="margin-top: -60px;">
-                            <h1 style="text-align:center;font-size: 100px;background: #085ecf;color:#fff;"><asp:Label ID="txtTotalCDF" runat="server" Text="." class="centered" ForeColor="WHITE"></asp:Label> </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <asp:Label runat="server" ID="txtJour" Text="Le personnel Programmé ce " ForeColor="blue" Font-Bold="True" AutoPostBack="True" Visible="false" Font-Size="medium"></asp:Label>
+             <asp:Label runat="server" ID="txtJourAnglais" Text="Le personnel Programmé ce " ForeColor="blue" Font-Bold="True" AutoPostBack="True" Visible="false" Font-Size="medium"></asp:Label>
+             <asp:Label runat="server" ID="txtDate" Text="Le personnel Programmé ce " ForeColor="blue" Font-Bold="True" AutoPostBack="True" Visible="false" Font-Size="medium"></asp:Label>
 			</div>
 		<!-- /.isotope-filter js__filter_isotope -->		
 		<?php require_once("../include/footer.php");?>

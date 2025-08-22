@@ -35,7 +35,7 @@ namespace NaomiSite
             }
             
         }
-        public void ConnexionAdmin()
+        public void ConnexionAgent()
         {
             Session["autorisation"] = true;
             con.Close();
@@ -44,7 +44,7 @@ namespace NaomiSite
             //con.Open();
             MySqlCommand cmde = con.CreateCommand();
             cmde.CommandType = CommandType.Text;
-            cmd.CommandText = ("select *from utilisateur where service='Admin' and login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' AND etat='Actif' ");
+            cmd.CommandText = ("select *from utilisateur where login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' AND etat='Actif' ");
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
@@ -61,91 +61,10 @@ namespace NaomiSite
                 txtMessage.Visible = true;
             }
         }
-        public void ConnexionAgentTerrain()
-        {
-            Session["autorisation"] = true;
-            con.Close();
-            con.Open();
-            MySqlCommand cmd = new MySqlCommand("", con);
-            //con.Open();
-            MySqlCommand cmde = con.CreateCommand();
-            cmde.CommandType = CommandType.Text;
-            cmd.CommandText = ("select *from agent where fonction='Agent terrain' AND login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' AND etat='Actif' ");
-            MySqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                if (dr["login"].ToString() == txtLogin.Text && dr["password"].ToString() == txtPassword.Text)
-                {
-                    Session["login"] = dr["login"].ToString();
-                    Response.Redirect("AgentTerrainEspace.aspx");
-                }
-                else
-                {
-                    txtMessage.Visible = true;
-                    Session["autorisation"] = false;
-                }
-                txtMessage.Visible = true;
-            }
-        }
-        public void ConnexionAgentComptable()
-        {
-            Session["autorisation"] = true;
-            con.Close();
-            con.Open();
-            MySqlCommand cmd = new MySqlCommand("", con);
-            //con.Open();
-            MySqlCommand cmde = con.CreateCommand();
-            cmde.CommandType = CommandType.Text;
-            cmd.CommandText = ("select *from agent where fonction='Agent comptable' AND login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' AND etat='Actif'");
-            MySqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                if (dr["login"].ToString() == txtLogin.Text && dr["password"].ToString() == txtPassword.Text)
-                {
-                    Session["login"] = dr["login"].ToString();
-                    Response.Redirect("AgentComptableEspace.aspx");
-                }
-                else
-                {
-                    txtMessage.Visible = true;
-                    Session["autorisation"] = false;
-                }
-                txtMessage.Visible = true;
-            }
-        }
-        public void ConnexionAgentGestionnaire()
-        {
-            Session["autorisation"] = true;
-            con.Close();
-            con.Open();
-            MySqlCommand cmd = new MySqlCommand("", con);
-            //con.Open();
-            MySqlCommand cmde = con.CreateCommand();
-            cmde.CommandType = CommandType.Text;
-            cmd.CommandText = ("select *from agent where fonction='Gestionnaire ETD' AND login='" + txtLogin.Text + "' and password='" + txtPassword.Text + "' AND etat='Actif'");
-            MySqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                if (dr["login"].ToString() == txtLogin.Text && dr["password"].ToString() == txtPassword.Text)
-                {
-                    Session["login"] = dr["login"].ToString();
-                    Response.Redirect("AgentGestionnaireETD.aspx");
-                }
-                else
-                {
-                    txtMessage.Visible = true;
-                    Session["autorisation"] = false;
-                }
-                txtMessage.Visible = true;
-            }
-        }
 
         protected void btnConnexion_Click(object sender, EventArgs e)
         {
-            ConnexionAdmin();
-            //ConnexionAgentTerrain();
-            //ConnexionAgentComptable();
-            //ConnexionAgentGestionnaire();
+            ConnexionAgent();
         }
     }
 }

@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>EspaceAdmin</title>
+	<title>C.S.NAOMI</title>
 
 	<!-- Main Styles -->
 	<link rel="stylesheet" href="../assets/styles/style.min.css">
@@ -51,6 +51,7 @@
 			<h5 class="position"><asp:Label ID="txtRole" runat="server" Text="Label" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtDesignationAnnee" runat="server" Text="Pas d'année" class="centered" ForeColor="#0099FF"></asp:Label><br /></h5>
             <h5 class="position"><asp:Label ID="txtIdAnnee" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
+             <h5 class="position"><asp:Label ID="txtIdEcoleAffectationUser" runat="server" Text="id" class="centered" ForeColor="#0099FF" Visible="false"></asp:Label><br /></h5>
 		</div>
 		<!-- /.user -->
 	</header>
@@ -64,19 +65,19 @@
 				<li class="current">
 					<a class="waves-effect" href="EspaceAdmin.aspx"><i class="menu-icon mdi mdi-view-dashboard"></i><span>ACCUEIL</span></a>
 				</li>
-                <li>
+                <li id="ctrlAnnee" runat="server">
 					<a class="waves-effect" href="AdminAnneeScolaire.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>ANNEES SCOLAIRES</span></a>
 				</li>
-				<li>
+				<li id="ctrlInscription" runat="server">
 					<a class="waves-effect" href="AdminInscription.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES ELEVES</span></a>
 				</li>
-				<li>
+				<li id="ctrlAgent" runat="server">
 					<a class="waves-effect" href="AdminAgent.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES AGENTS</span></a>
 				</li>
-                <li>
+                <li id="ctrlFinance" runat="server">
 					<a class="waves-effect" href="AdminFinance.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION FINANCIERE</span></a>
 				</li>
-				<li>
+				<li id="ctrlUtilisateur" runat="server">
 					<a class="waves-effect" href="AdminUtilisateur.aspx"><i class="menu-icon mdi mdi-account-circle"></i><span>GESTION DES UTILISATEURS</span></a>
 				</li>
 			</ul>
@@ -127,8 +128,8 @@
                                                         <asp:ListItem>Féminin</asp:ListItem>
                                                    </asp:DropDownList>
 	                                      </div>
-                                         <label>Ecole-Niveau</label>
-                                          <div class="form-group input-group" >
+                                         <label id="lblEcole" runat="server">Ecole-Niveau</label>
+                                          <div class="form-group input-group" id="ctrlEcole" runat="server" >
                                               <span class="input-group-addon"><span class="glyphicon glyphicon"></span></span> 
                                               <asp:DropDownList ID="txtEcole" runat="server"  class="form-control" placeholder="Sélectionnez un sexe" required AutoPostBack="True" OnSelectedIndexChanged="txtEcole_SelectedIndexChanged">
                                                         <asp:ListItem>MATERNELLE</asp:ListItem>
@@ -211,8 +212,6 @@
                         </script>
                       </ContentTemplate>
                      </asp:UpdatePanel>
-                    
-
             </div>
           </div>
         </div>
@@ -224,7 +223,7 @@
 <div class="fixed-navbar">
 	<div class="pull-left">
 		<button type="button" style="margin-left: -80px;" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-		<h2 class="page-title">ESPACE ADMIN --- GESTION DES INSCRIPTIONS</h2>
+		<h2 class="page-title">--- GESTION DES INSCRIPTIONS ---</h2>
 		<!-- /.page-title -->
 	</div>
 
@@ -244,12 +243,14 @@
         <div class="modal-body row" style="overflow:auto">
          <asp:UpdatePanel ID="UpdatePanel2" runat="server">
              <ContentTemplate>
-                 <a data-scroll href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Inscrire un élève </h4></a>
-                 <a data-scroll href="AdminChangeClasse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Changement des classe </h4></a>
+                 <a data-scroll id="ctrlInscrire" runat="server" href="#myModal" data-toggle="modal" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Inscrire un élève </h4></a>
+                 <a data-scroll id="ctrlListeEleve" runat="server" href="AdminListeEleves.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Liste des élèves </h4></a>
+                 <a data-scroll id="ctrlChangeClasse" runat="server" href="AdminChangeClasse.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Changement des classe </h4></a>
+                 <a data-scroll id="ctrlImporte" runat="server" href="AdminImportationExcel.aspx" class="btn btn-primary animation animated-item-3" style="background: #085ecf ;"><h4 style="color: white;">Importer d'Excel </h4></a>
                 <div class="input-group">
                    <span class="input-group-addon"> <span class="fa fa-name"></span><asp:Label ID="Label10" runat="server" Text="Recherche approfondie des inscriptions " Visible="true"></asp:Label></span>
                     <asp:TextBox runat="server" ID="txtRecherche" class="form-control"  AutoPostBack="true" placeholder="Par Nom de l'élève, Sexe, Adresse, Classe, section, date d'inscription, famille..." OnTextChanged="txtRecherche_TextChanged"></asp:TextBox>
-                    <span class="input-group-addon"><span class="fa fa-download"></span><asp:Button runat="server" class="btn btn-primary fa fa-download" ID="btnImprim" Text="Exporter en PDF le Résultat" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnImprim_Click"></asp:Button></span>   
+                    <span class="input-group-addon"><span class="fa fa-download"></span><asp:Button runat="server" class="btn btn-primary fa fa-download" ID="btnImprim" Text=">>>En PDF" type="submit" style="background: #085ecf ;" AutoPostBack="True" OnClick="btnImprim_Click"></asp:Button></span>   
                </div> <br/>
             <%--Affichage des inscriptions--%>
             <asp:Repeater ID="Data1" runat="server" OnItemCommand="Data1_ItemCommand">
@@ -301,7 +302,10 @@
                        </FooterTemplate>
                     </asp:Repeater>
             </ContentTemplate>
-         </asp:UpdatePanel>
+             
+         </asp:UpdatePanel><Triggers>
+                   <asp:PostBackTrigger ControlID="btnImprim" />
+              </Triggers>
 	    </div>
 		<!-- /.isotope-filter js__filter_isotope -->		
 		<?php require_once("../include/footer.php");?>

@@ -39,6 +39,50 @@ namespace NaomiSite
                     while (dr.Read())
                     {
                         txtRole.Text = dr["service"].ToString();
+
+                        //Controle sur ce qui doit s'afficher selon les restructions
+                        ctrlAnnee.Visible = false;
+                        ctrlAgent.Visible = false;
+                        ctrlFinance.Visible = false;
+                        ctrlInscription.Visible = false;
+                        ctrlUtilisateur.Visible = false;
+
+                        if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                        {
+                            ctrlAnnee.Visible = true;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = true;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
+                        if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                        {
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = true;
+                            ctrlFinance.Visible = true;
+                            ctrlInscription.Visible = true;
+                            ctrlUtilisateur.Visible = false;
+                            txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                        }
                     }
                     con.Close();
 
@@ -130,112 +174,123 @@ namespace NaomiSite
         }
         protected void btnSituationPresence_Click(object sender, EventArgs e)
         {
-            Random rnd = new Random();
+            new Random();
             Document dc = new Document();
-            String chemin = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/ " + rnd.Next() * 1000 + "EleveEnOrdreTranche1.pdf";
-            FileStream fs = File.Create(chemin);
-            PdfWriter.GetInstance(dc, fs);
-            dc.Open();
-            dc.Add(new Paragraph("                                                      REPUBLIQUE DEMOCRATIQUE DU CONGO \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                      MINISTERE DE L'ENSEIGNEMENT PRIMAIRE,SECONDAIRE ET TECHNIQUE \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                                           COMPLEXE SCOLAIRE NAOMI \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 13, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                                                        Province du Sud-Kivu\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                               Arrêté MINISTERIEL No MINEPSP/CAB MIN/086/2006\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                                                                          Contacts :  0971368721\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("                    ------------------------------------------------------------------------------------------------------------------\n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-            dc.Add(new Paragraph("              Situation des présences et absences en  : " + (txtDesignationAnnee.Text).ToUpper() + "\n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
-
-            PdfPTable table = new PdfPTable(8);
-            PdfPCell cell0 = new PdfPCell(new Paragraph("Date", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell0.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell0.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell = new PdfPCell(new Paragraph("Matricule", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell1 = new PdfPCell(new Paragraph("Nom,PostNom & Prénom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell1.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell2 = new PdfPCell(new Paragraph("Motif", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell2.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell3 = new PdfPCell(new Paragraph("Heures Prévues", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell3.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell3.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell3a = new PdfPCell(new Paragraph("Arrivée à", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell3a.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell3a.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell3b = new PdfPCell(new Paragraph("Cloturé à", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell3b.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell3b.BackgroundColor = BaseColor.BLACK;
-            PdfPCell cell3c = new PdfPCell(new Paragraph("Heure Enseignées", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
-            cell3c.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell3c.BackgroundColor = BaseColor.BLACK;
-
-            table.AddCell(cell0);
-            table.AddCell(cell);
-            table.AddCell(cell1);
-            table.AddCell(cell2);
-            table.AddCell(cell3);
-            table.AddCell(cell3a);
-            table.AddCell(cell3b);
-            table.AddCell(cell3c);
-
-            MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
-            con.Open();
-            string cmd = "SELECT * FROM t_agent,t_presence WHERE t_presence.matricule=t_agent.matricule AND t_presence.annee='" + txtIdAnnee.Text + "' ORDER BY datep,nom ASC";
-            MySqlCommand cmde = new MySqlCommand(cmd, con);
-            MySqlDataReader dr = cmde.ExecuteReader();
-            while (dr.Read())
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
             {
-                //===========================================================================
-                PdfPCell cell4 = new PdfPCell(new Paragraph(@Convert.ToString(dr["datep"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell4.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell4.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell5 = new PdfPCell(new Paragraph((string)dr["matricule"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell5.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell5.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell6 = new PdfPCell(new Paragraph((string)dr["nom"] + "-" + dr["prenom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell6.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell6.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell7 = new PdfPCell(new Paragraph(@Convert.ToString(dr["motif"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell7.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell7.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell7a = new PdfPCell(new Paragraph(@Convert.ToString(dr["nbHeure"] + "H"), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell7a.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell7a.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell7b = new PdfPCell(new Paragraph(@Convert.ToString(dr["heure_arriver"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell7b.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell7b.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell7c = new PdfPCell(new Paragraph(@Convert.ToString(dr["heureDepart"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell7c.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell7c.BackgroundColor = BaseColor.WHITE;
-                PdfPCell cell7d = new PdfPCell(new Paragraph(@Convert.ToString(dr["nbHenseigne"] + "H"), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
-                cell7d.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell7d.BackgroundColor = BaseColor.WHITE;
-                //============================================================================
+                PdfWriter.GetInstance(dc, ms);
+                dc.Open();
+                //Le code
+                dc.Add(new Paragraph("                                                      REPUBLIQUE DEMOCRATIQUE DU CONGO \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                dc.Add(new Paragraph("                      MINISTERE DE L'ENSEIGNEMENT PRIMAIRE,SECONDAIRE ET TECHNIQUE \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                dc.Add(new Paragraph("                                                           COMPLEXE SCOLAIRE NAOMI \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 13, BaseColor.BLACK)));
+                dc.Add(new Paragraph("                                                                        Province du Sud-Kivu\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                dc.Add(new Paragraph("                                               Arrêté MINISTERIEL No MINEPSP/CAB MIN/086/2006\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                dc.Add(new Paragraph("                                                                          Contacts :  0971368721\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                dc.Add(new Paragraph("                    ------------------------------------------------------------------------------------------------------------------\n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
+                dc.Add(new Paragraph("              Situation des présences et absences en  : " + (txtDesignationAnnee.Text).ToUpper() + "\n\n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK)));
 
-                table.AddCell(cell4);
-                table.AddCell(cell5);
-                table.AddCell(cell6);
-                table.AddCell(cell7);
-                table.AddCell(cell7a);
-                table.AddCell(cell7b);
-                table.AddCell(cell7c);
-                table.AddCell(cell7d);
+                PdfPTable table = new PdfPTable(8);
+                PdfPCell cell0 = new PdfPCell(new Paragraph("Date", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell0.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell0.BackgroundColor = BaseColor.BLACK;
+                PdfPCell cell = new PdfPCell(new Paragraph("Matricule", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.BackgroundColor = BaseColor.BLACK;
+                PdfPCell cell1 = new PdfPCell(new Paragraph("Nom,PostNom & Prénom", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell1.BackgroundColor = BaseColor.BLACK;
+                PdfPCell cell2 = new PdfPCell(new Paragraph("Motif", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell2.BackgroundColor = BaseColor.BLACK;
+                PdfPCell cell3 = new PdfPCell(new Paragraph("Heures Prévues", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell3.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell3.BackgroundColor = BaseColor.BLACK;
+                PdfPCell cell3a = new PdfPCell(new Paragraph("Arrivée à", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell3a.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell3a.BackgroundColor = BaseColor.BLACK;
+                PdfPCell cell3b = new PdfPCell(new Paragraph("Cloturé à", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell3b.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell3b.BackgroundColor = BaseColor.BLACK;
+                PdfPCell cell3c = new PdfPCell(new Paragraph("Heure Enseignées", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.WHITE)));
+                cell3c.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell3c.BackgroundColor = BaseColor.BLACK;
 
+                table.AddCell(cell0);
+                table.AddCell(cell);
+                table.AddCell(cell1);
+                table.AddCell(cell2);
+                table.AddCell(cell3);
+                table.AddCell(cell3a);
+                table.AddCell(cell3b);
+                table.AddCell(cell3c);
+
+                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                con.Open();
+                string cmd = "SELECT * FROM t_agent,t_presence WHERE t_presence.matricule=t_agent.matricule AND t_presence.annee='" + txtIdAnnee.Text + "' ORDER BY t_presence.id_presence ASC";
+                MySqlCommand cmde = new MySqlCommand(cmd, con);
+                MySqlDataReader dr = cmde.ExecuteReader();
+                while (dr.Read())
+                {
+                    //===========================================================================
+                    PdfPCell cell4 = new PdfPCell(new Paragraph(@Convert.ToString(dr["datep"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell4.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell4.BackgroundColor = BaseColor.WHITE;
+                    PdfPCell cell5 = new PdfPCell(new Paragraph((string)dr["matricule"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell5.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell5.BackgroundColor = BaseColor.WHITE;
+                    PdfPCell cell6 = new PdfPCell(new Paragraph((string)dr["nom"] + "-" + dr["prenom"], FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell6.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell6.BackgroundColor = BaseColor.WHITE;
+                    PdfPCell cell7 = new PdfPCell(new Paragraph(@Convert.ToString(dr["motif"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell7.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell7.BackgroundColor = BaseColor.WHITE;
+                    PdfPCell cell7a = new PdfPCell(new Paragraph(@Convert.ToString(dr["nbHeure"] + "H"), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell7a.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell7a.BackgroundColor = BaseColor.WHITE;
+                    PdfPCell cell7b = new PdfPCell(new Paragraph(@Convert.ToString(dr["heure_arriver"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell7b.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell7b.BackgroundColor = BaseColor.WHITE;
+                    PdfPCell cell7c = new PdfPCell(new Paragraph(@Convert.ToString(dr["heureDepart"]), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell7c.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell7c.BackgroundColor = BaseColor.WHITE;
+                    PdfPCell cell7d = new PdfPCell(new Paragraph(@Convert.ToString(dr["nbHenseigne"] + "H"), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK)));
+                    cell7d.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell7d.BackgroundColor = BaseColor.WHITE;
+                    //============================================================================
+
+                    table.AddCell(cell4);
+                    table.AddCell(cell5);
+                    table.AddCell(cell6);
+                    table.AddCell(cell7);
+                    table.AddCell(cell7a);
+                    table.AddCell(cell7b);
+                    table.AddCell(cell7c);
+                    table.AddCell(cell7d);
+
+                }
+                con.Close();
+
+                dc.Add(table);
+                dc.Add(new Paragraph("\n"));
+                dc.Add(new Paragraph("                                                                                   Fait à Bukavu le: " + System.DateTime.Now));
+                dc.Close();
+                Response.Clear();
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=RegistrePresence.pdf");
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.BinaryWrite(ms.ToArray());
+                Response.End();
             }
-            con.Close();
-
-            dc.Add(table);
-            dc.Add(new Paragraph("\n"));
-            dc.Add(new Paragraph("                                                                                   Fait à Bukavu le: " + System.DateTime.Now));
             dc.Close();
-            System.Diagnostics.Process.Start(chemin);
         }
         protected void btnCloture_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            string matricule = btn.CommandArgument;//Recupérer le matricule
+            string[] args = btn.CommandArgument.Split(',');//Séparer les valeurs venues dans la commande
+
+            string matricule = args[0];//Recupérer le matricule
+            string HeurPrevue = args[1];//Recupérer l'heure prévue
 
             //Vérification si la présence n'est pas encore pointé
             con.Close();
@@ -255,6 +310,7 @@ namespace NaomiSite
                 btnCloturerCours.Visible = true;
                 Label10.Visible = true;
                 txtMatricule.Text = dr["matricule"].ToString();
+                txtHeurePrestee.Text = dr["nbHeure"].ToString();
                 txtNomEnseignant.Text ="Cloturer pour ' "+dr["nom"].ToString()+" '";
             }
         }
@@ -279,6 +335,10 @@ namespace NaomiSite
                 Response.Redirect("AdminAgentFinCours.aspx");
             }
             con.Close();
+        }
+        protected void btnPresNonCloturee_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AdminAgentPresenceNonCloturee.aspx");
         }
 
     }

@@ -22,46 +22,94 @@ namespace NaomiSite
         {
             //id = Convert.ToInt32(Request.QueryString["id"].ToString());
             //Vérification de la connexion de la varibale session
-            if (Session["autorisation"] != null && (bool)Session["autorisation"] == true)
+            try
             {
-
-                if (!IsPostBack) //Pour que la page ait le pouvoir de modifier le rendue
+                if (Session["autorisation"] != null && (bool)Session["autorisation"] == true)
                 {
-                    txtLogin.Text = Session["login"].ToString();
 
-                    // Vérifier l'admin connecté
-                    con.Open();
-                    MySqlCommand cmd = new MySqlCommand("", con);
-                    MySqlCommand cmde = con.CreateCommand();
-                    cmde.CommandType = CommandType.Text;
-                    cmd.CommandText = ("select * from utilisateur WHERE login='" + txtLogin.Text + "'");
-                    MySqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
+                    if (!IsPostBack) //Pour que la page ait le pouvoir de modifier le rendue
                     {
-                        txtRole.Text = dr["service"].ToString();
-                    }
-                    con.Close();
+                        txtLogin.Text = Session["login"].ToString();
 
-                    //Vérification de l'année Active
-                    con.Open();
-                    MySqlCommand cmd1 = new MySqlCommand("", con);
-                    MySqlCommand cmde1 = con.CreateCommand();
-                    cmde1.CommandType = CommandType.Text;
-                    cmd1.CommandText = ("select * from anneescol WHERE etat='Actif'");
-                    MySqlDataReader dr1 = cmd1.ExecuteReader();
-                    while (dr1.Read())
-                    {
-                        txtIdAnnee.Text = dr1["anneeScolaire"].ToString();
-                        txtDesignationAnnee.Text = dr1["designation"].ToString();
-                        txtAnneeEncours.Text= dr1["designation"].ToString();
+                        // Vérifier l'admin connecté
+                        con.Open();
+                        MySqlCommand cmd = new MySqlCommand("", con);
+                        MySqlCommand cmde = con.CreateCommand();
+                        cmde.CommandType = CommandType.Text;
+                        cmd.CommandText = ("select * from utilisateur WHERE login='" + txtLogin.Text + "'");
+                        MySqlDataReader dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            txtRole.Text = dr["service"].ToString();
+                            //Controle sur ce qui doit s'afficher selon les restructions
+                            ctrlAnnee.Visible = false;
+                            ctrlAgent.Visible = false;
+                            ctrlFinance.Visible = false;
+                            ctrlInscription.Visible = false;
+                            ctrlUtilisateur.Visible = false;
+
+                            if (dr["service"].ToString() == "Admin" && dr["idEcole"].ToString() == "Toutes les écoles")
+                            {
+                                ctrlAnnee.Visible = true;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = true;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                            }
+                            if (dr["service"].ToString() == "Préfet Secondaire" && dr["idEcole"].ToString() == "3")
+                            {
+                                ctrlAnnee.Visible = false;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = false;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                            }
+                            if (dr["service"].ToString() == "Directeur" && (dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                            {
+                                ctrlAnnee.Visible = false;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = false;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                            }
+                            if (dr["service"].ToString() == "Comptable" && (dr["idEcole"].ToString() == "3" || dr["idEcole"].ToString() == "2" || dr["idEcole"].ToString() == "1"))
+                            {
+                                ctrlAnnee.Visible = false;
+                                ctrlAgent.Visible = true;
+                                ctrlFinance.Visible = true;
+                                ctrlInscription.Visible = true;
+                                ctrlUtilisateur.Visible = false;
+                                txtIdEcoleAffectationUser.Text = dr["idEcole"].ToString();
+                            }
+                        }
+                        con.Close();
+
+                        //Vérification de l'année Active
+                        con.Open();
+                        MySqlCommand cmd1 = new MySqlCommand("", con);
+                        MySqlCommand cmde1 = con.CreateCommand();
+                        cmde1.CommandType = CommandType.Text;
+                        cmd1.CommandText = ("select * from anneescol WHERE etat='Actif'");
+                        MySqlDataReader dr1 = cmd1.ExecuteReader();
+                        while (dr1.Read())
+                        {
+                            txtIdAnnee.Text = dr1["anneeScolaire"].ToString();
+                            txtDesignationAnnee.Text = dr1["designation"].ToString();
+                            txtAnneeEncours.Text = dr1["designation"].ToString();
+                        }
+                        TrouverIdEcole();
+                        con.Close();
                     }
-                    con.Close();
+                }
+                else
+                {
+                    Response.Redirect("Acceuil.aspx");
                 }
             }
-            else
-            {
-                Response.Redirect("Acceuil.aspx");
-            }
+            catch { }
         }
         public void Effacer()
         {
@@ -77,14 +125,37 @@ namespace NaomiSite
         {
             con.Close();
             con.Open();
+            if (txtIdEcoleAffectationUser.Text == "Toutes les écoles")
+            {
+                txtEcole.Visible = true;
+                MySqlCommand cmdB = con.CreateCommand();
+                cmdB.CommandType = CommandType.Text;
+                cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+                MySqlDataReader dr = cmdB.ExecuteReader();
+                while (dr.Read())
+                {
+                    txtIdEcole.Text = dr["idEcole"].ToString();
+                }
+            }
+            else
+            {
+                txtIdEcole.Text = txtIdEcoleAffectationUser.Text;
+                TrouverEcole();
+            }
+            con.Close();
+        }
+        public void TrouverEcole()
+        {
+            con.Close();
+            con.Open();
+            txtEcole.Items.Clear();
             MySqlCommand cmdB = con.CreateCommand();
             cmdB.CommandType = CommandType.Text;
-            cmdB.CommandText = ("SELECT *from ecole WHERE nomEcole='" + txtEcole.SelectedValue + "'");
+            cmdB.CommandText = ("SELECT nomEcole from ecole WHERE idEcole='" + txtIdEcoleAffectationUser.Text + "'");
             MySqlDataReader dr = cmdB.ExecuteReader();
-            txtIdEcole.Text = "";
             while (dr.Read())
             {
-                txtIdEcole.Text = dr["idEcole"].ToString();
+                txtEcole.Items.Add(dr["nomEcole"].ToString());
             }
             con.Close();
         }
