@@ -17,7 +17,7 @@ namespace NaomiSite
 {
     public partial class AdminFinCompteAgent : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         int id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -183,7 +183,7 @@ namespace NaomiSite
                 string[] args = btn.CommandArgument.Split(',');//Séparer les valeurs venues dans la commande
                 string matricule = args[0];
 
-                MySqlConnection con9 = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+                MySqlConnection con9 = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
                 con9.Open();
                 MySqlCommand cmd9 = con9.CreateCommand();
                 cmd9.CommandType = CommandType.Text;
@@ -252,7 +252,7 @@ namespace NaomiSite
                     table.AddCell(cell2b);
                     table.AddCell(cell3a);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     con.Open();
                     MySqlCommand cmd = new MySqlCommand("select t_salaire.id_salaire,t_salaire.mois_payer,t_agent.matricule,t_salaire.salBase,((t_salaire.salBase)/(t_salaire.nombreHeure/4)) as SalHoraire,t_salaire.salbase, t_salaire.nombreHeure/4 as NbrHeure,t_salaire.avance,t_salaire.rembourser,t_salaire.avance-t_salaire.rembourser as Reste_Emp,t_salaire.net_payer,t_salaire.mois_payer, t_salaire.datepaye FROM t_agent,t_salaire WHERE t_salaire.matricule=t_agent.matricule AND t_salaire.matricule='" + matricule.ToString() + "' AND t_salaire.annee='" + txtIdAnnee.Text + "'", con);
                     MySqlDataReader dr = cmd.ExecuteReader();
@@ -302,7 +302,7 @@ namespace NaomiSite
                         table.AddCell(cell9a);
 
                     }
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("select sum(salbase) as Total FROM t_agent,t_salaire WHERE t_salaire.matricule=t_agent.matricule AND t_salaire.matricule='" + matricule.ToString() + "' AND t_salaire.annee='" + txtIdAnnee.Text + "'", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();

@@ -192,7 +192,8 @@
                               <asp:BoundField HeaderText="Niveau" DataField="idEcole" />
                               <asp:TemplateField HeaderText="Action">
                                   <ItemTemplate>
-                                      <button type="button" onclick="setmatricule('<%# Eval("matricule") %>')" class="mdi mdi-select btn btn-success" Widh="8px">Select</button>
+                                     <%-- <button type="button" onclick="setmatricule('<%# Eval("matricule") %>')" class="mdi mdi-select btn btn-success" Widh="8px">Select</button>--%>
+                                      <asp:Button runat="server" class="btn btn-primary" ID="btnSelection" Text="Selectionner" type="submit" style="background:#085ecf;" AutoPostBack="True" OnClick="btnSelection_Click" CommandArgument= '<%#Eval("Matricule") +","+Eval("nbHeure") %>'></asp:Button>
                                   </ItemTemplate>
                               </asp:TemplateField>
                           </Columns>
@@ -204,7 +205,7 @@
                      }
                 </script>
         <!--MON ANCIEN DATATABLE-->
-            <%--<asp:Repeater ID="Data1" runat="server" OnItemCommand="Data1_ItemCommand">
+            <asp:Repeater ID="Data1" runat="server" OnItemCommand="Data1_ItemCommand">
                        <HeaderTemplate>
                      <table class="table table-condansed table-striped" border="2" style="overflow:auto; border:medium ridge black;" >
                       <thead>
@@ -228,11 +229,14 @@
                           <td style="border:1px solid black;"> <%#Eval("matricule ") %></td>
                           <td style="border:1px solid black;"> <%#Eval("nom") %></td>
                         <td style="border:1px solid black;"> <%#Eval("prenom") %></td>
-                          <td style="border:1px solid black;"> <%#Eval("sexe ") %></td>
+                          <td style="border:1px solid black;"> <%#Eval("sexe") %></td>
                           <td style="border:1px solid black;"> <%#Eval("classe") %></td>
                             <td style="border:1px solid black;"> <%#Eval("option") %></td>
                           <td style="border:1px solid black;"> <%#Eval("idEcole ") %></td>
-                          <td style="border:1px solid black;">  <a  id="btnUpdate" class="fa fa-edit" style="color:blue;font-size: large;font-style: normal;border-color:black;font-weight: bold;" <asp:TextBox runat="server" ID="txtMatricule" ForeColor="black" Text="" AutoPostBack="True" Visible="true"></asp:TextBox>?txtMatricule=<%#Eval("matricule") %> > Sélectionner</a></td>
+                         <td style="border:1px solid black;">
+                             <asp:Button runat="server" class="btn btn-primary" ID="btnSelection" Text="Selectionner" type="submit" style="background:#085ecf;" AutoPostBack="True" OnClick="btnSelection_Click" CommandArgument= '<%#Eval("matricule") +","+Eval("nom")+","+Eval("prenom")+","+Eval("sexe") %>'></asp:Button>
+                        </td>
+
                         </tr>
                        </ItemTemplate>
 
@@ -240,7 +244,7 @@
                         </tbody>
                         </table>
                        </FooterTemplate>
-                    </asp:Repeater>--%>
+                    </asp:Repeater>
             </ContentTemplate>
          </asp:UpdatePanel>
 	    </div>

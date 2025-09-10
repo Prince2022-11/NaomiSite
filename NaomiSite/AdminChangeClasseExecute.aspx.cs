@@ -16,7 +16,7 @@ namespace NaomiSite
 {
 	public partial class AdminChangeClasseExecute : System.Web.UI.Page
 	{
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         string id;
         protected void Page_Load(object sender, EventArgs e)
 		{

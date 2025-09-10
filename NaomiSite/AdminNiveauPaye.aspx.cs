@@ -16,7 +16,7 @@ namespace NaomiSite
 {
     public partial class AdminNiveauPaye : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         int id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -163,7 +163,7 @@ namespace NaomiSite
         {
             try
             {
-                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                 con.Open();
                 string cmd = "SELECT count(*) from change_classe WHERE anneeScolaire='" + txtIdAnnee.Text + "' AND idEcole='" + txtIdEcole.Text + "' AND etat='Actif'";
                 MySqlCommand cmde = new MySqlCommand(cmd, con);

@@ -16,8 +16,8 @@ namespace NaomiSite
 {
     public partial class AdminFinStructurerFrais : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
-        MySqlConnection con2 = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
+        MySqlConnection con2 = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         protected void Page_Load(object sender, EventArgs e)
         {
             //Vérification de la connexion de la varibale session

@@ -19,7 +19,7 @@ namespace NaomiSite
     public partial class AdminImportationExcel : System.Web.UI.Page
     {
         private static DataTable dtTempData = new DataTable();
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         
         int id;
         protected void Page_Load(object sender, EventArgs e)
@@ -156,7 +156,7 @@ namespace NaomiSite
                 tableAnnee.AddCell(cell0AN);
                 tableAnnee.AddCell(cellAN);
 
-                MySqlConnection conAN = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                MySqlConnection conAN = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                 conAN.Open();
                 string cmdAN = "SELECT * FROM anneescol ORDER BY anneeScolaire ASC";
                 MySqlCommand cmdeAN = new MySqlCommand(cmdAN, conAN);
@@ -207,7 +207,7 @@ namespace NaomiSite
                 table.AddCell(cell1N);
 
 
-                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                 con.Open();
                 string cmd = "SELECT *FROM t_classe,section,ecole WHERE t_classe.idSection=section.idSection AND t_classe.idEcole=ecole.idEcole ORDER BY t_classe.id";
                 MySqlCommand cmde = new MySqlCommand(cmd, con);

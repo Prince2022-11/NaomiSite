@@ -16,7 +16,7 @@ namespace NaomiSite
 {
     public partial class AdminRechPayementFrais : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -221,7 +221,7 @@ namespace NaomiSite
                     table.AddCell(cell2);
                     table.AddCell(cell3);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT DISTINCT situation_paye.Matricule,change_classe.nomEleve, change_classe.prenom,situation_paye.tranche1,situation_paye.tranche2,situation_paye.tranche3 FROM change_classe,situation_paye WHERE situation_paye.Matricule=change_classe.matricule AND situation_paye.idfrais='" + txtIdFrais.Text + "' AND change_classe.classe='" + txtIdClasse.Text + "' AND change_classe.optionEtude='" + txtIdOption.Text + "' AND situation_paye.anneescolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "' AND situation_paye.tranche1='" + txtT1.Text + "'";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -253,7 +253,7 @@ namespace NaomiSite
                     con.Close();
 
                     //Prélever le total payé en Unité
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("SELECT SUM(situation_paye.tranche1) as Total FROM situation_paye,frais_scolaire WHERE situation_paye.idFrais=frais_scolaire.idfrais AND situation_paye.tranche1=frais_scolaire.tranche1 AND situation_paye.idFrais='" + txtIdFrais.Text + "' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND situation_paye.anneeScolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "'", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -321,7 +321,7 @@ namespace NaomiSite
                     table.AddCell(cell2);
                     table.AddCell(cell3);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT DISTINCT situation_paye.Matricule,change_classe.nomEleve, change_classe.prenom,situation_paye.tranche1,situation_paye.tranche2,situation_paye.tranche3 FROM change_classe,situation_paye WHERE situation_paye.Matricule=change_classe.matricule AND situation_paye.idfrais='" + txtIdFrais.Text + "' AND change_classe.classe='" + txtIdClasse.Text + "' AND change_classe.optionEtude='" + txtIdOption.Text + "' AND situation_paye.anneescolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "' AND situation_paye.tranche2='" + txtT2.Text + "'";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -353,7 +353,7 @@ namespace NaomiSite
                     con.Close();
 
                     //Prélever le total payé en Unité
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("SELECT SUM(situation_paye.tranche2) as Total FROM situation_paye,frais_scolaire WHERE situation_paye.idFrais=frais_scolaire.idfrais AND situation_paye.tranche2=frais_scolaire.tranche2 AND situation_paye.idFrais='" + txtIdFrais.Text + "' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND situation_paye.anneeScolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "'", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -422,7 +422,7 @@ namespace NaomiSite
                     table.AddCell(cell2);
                     table.AddCell(cell3);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT DISTINCT situation_paye.Matricule,change_classe.nomEleve, change_classe.prenom,situation_paye.tranche1,situation_paye.tranche2,situation_paye.tranche3 FROM change_classe,situation_paye WHERE situation_paye.Matricule=change_classe.matricule AND situation_paye.idfrais='" + txtIdFrais.Text + "' AND change_classe.classe='" + txtIdClasse.Text + "' AND change_classe.optionEtude='" + txtIdOption.Text + "' AND situation_paye.anneescolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "' AND situation_paye.tranche3='" + txtT3.Text + "'";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -454,7 +454,7 @@ namespace NaomiSite
                     con.Close();
 
                     //Prélever le total payé en Unité
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("SELECT SUM(situation_paye.tranche3) as Total FROM situation_paye,frais_scolaire WHERE situation_paye.idFrais=frais_scolaire.idfrais AND situation_paye.tranche3=frais_scolaire.tranche3 AND situation_paye.idFrais='" + txtIdFrais.Text + "' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND situation_paye.anneeScolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "'", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -527,7 +527,7 @@ namespace NaomiSite
                     table.AddCell(cell2);
                     table.AddCell(cell3);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT DISTINCT situation_paye.Matricule,change_classe.nomEleve, change_classe.prenom,situation_paye.tranche1,situation_paye.tranche2,situation_paye.tranche3 FROM change_classe,situation_paye WHERE situation_paye.Matricule=change_classe.matricule AND situation_paye.idfrais='" + txtIdFrais.Text + "' AND change_classe.classe='" + txtIdClasse.Text + "' AND change_classe.optionEtude='" + txtIdOption.Text + "' AND situation_paye.anneescolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "' AND situation_paye.tranche1<'" + txtT1.Text + "'";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -559,7 +559,7 @@ namespace NaomiSite
                     con.Close();
 
                     //Prélever le total payé en Unité
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("SELECT SUM(situation_paye.tranche1) as Total FROM situation_paye,frais_scolaire WHERE situation_paye.idFrais=frais_scolaire.idfrais AND situation_paye.tranche1<>frais_scolaire.tranche1 AND situation_paye.idFrais='" + txtIdFrais.Text + "' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND situation_paye.anneeScolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "'", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -627,7 +627,7 @@ namespace NaomiSite
                     table.AddCell(cell2);
                     table.AddCell(cell3);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT DISTINCT situation_paye.Matricule,change_classe.nomEleve, change_classe.prenom,situation_paye.tranche1,situation_paye.tranche2,situation_paye.tranche3 FROM change_classe,situation_paye WHERE situation_paye.Matricule=change_classe.matricule AND situation_paye.idfrais='" + txtIdFrais.Text + "' AND change_classe.classe='" + txtIdClasse.Text + "' AND change_classe.optionEtude='" + txtIdOption.Text + "' AND situation_paye.anneescolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "' AND situation_paye.tranche2<'" + txtT2.Text + "'";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -659,7 +659,7 @@ namespace NaomiSite
                     con.Close();
 
                     //Prélever le total payé en Unité
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("SELECT SUM(situation_paye.tranche2) as Total FROM situation_paye,frais_scolaire WHERE situation_paye.idFrais=frais_scolaire.idfrais AND situation_paye.tranche2<>frais_scolaire.tranche2 AND situation_paye.idFrais='" + txtIdFrais.Text + "' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND situation_paye.anneeScolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "'", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -727,7 +727,7 @@ namespace NaomiSite
                     table.AddCell(cell2);
                     table.AddCell(cell3);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT DISTINCT situation_paye.Matricule,change_classe.nomEleve, change_classe.prenom,situation_paye.tranche1,situation_paye.tranche2,situation_paye.tranche3 FROM change_classe,situation_paye WHERE situation_paye.Matricule=change_classe.matricule AND situation_paye.idfrais='" + txtIdFrais.Text + "' AND change_classe.classe='" + txtIdClasse.Text + "' AND change_classe.optionEtude='" + txtIdOption.Text + "' AND situation_paye.anneescolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "' AND situation_paye.tranche3<'" + txtT3.Text + "'";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -759,7 +759,7 @@ namespace NaomiSite
                     con.Close();
 
                     //Prélever le total payé en Unité
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("SELECT SUM(situation_paye.tranche3) as Total FROM situation_paye,frais_scolaire WHERE situation_paye.idFrais=frais_scolaire.idfrais AND situation_paye.tranche3<>frais_scolaire.tranche2 AND situation_paye.idFrais='" + txtIdFrais.Text + "' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND situation_paye.anneeScolaire='" + txtIdAnnee.Text + "' AND situation_paye.idEcole='" + txtIdEcole.Text + "'", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -1003,7 +1003,7 @@ namespace NaomiSite
                 }
                 else
                 {
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND CONCAT(change_classe.matricule,change_classe.nomEleve,change_classe.prenom,t_classe.classe,section.nomSection,ecole.nomEcole,t_payement_frais.date_payement,frais_scolaire.designation) LIKE '%" + afficherParDate + "%' ORDER BY date_payement ASC";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -1050,7 +1050,7 @@ namespace NaomiSite
                     }
 
                     //Prélever le total payé en USD
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("select sum(montant_payer) as Total FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND CONCAT(change_classe.matricule,change_classe.nomEleve,change_classe.prenom,t_classe.classe,section.nomSection,ecole.nomEcole,t_payement_frais.date_payement,frais_scolaire.designation) LIKE '%" + afficherParDate + "%' AND t_payement_frais.unite='USD' ORDER BY date_payement ASC", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -1070,7 +1070,7 @@ namespace NaomiSite
                     conN.Close();
 
                     //Prélever le total payé en CDF
-                    MySqlConnection conNN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conNN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conNN.Open();
                     MySqlCommand cmdNN = new MySqlCommand("select sum(montant_payer) as Total FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND CONCAT(change_classe.matricule,change_classe.nomEleve,change_classe.prenom,t_classe.classe,section.nomSection,ecole.nomEcole,t_payement_frais.date_payement,frais_scolaire.designation) LIKE '%" + afficherParDate + "%' AND t_payement_frais.unite='CDF'", conNN);
                     MySqlDataReader drNN = cmdNN.ExecuteReader();
@@ -1165,7 +1165,7 @@ namespace NaomiSite
                 table.AddCell(cell6);
                 table.AddCell(cell7);
 
-                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                 con.Open();
                 string cmd = "SELECT t_payement_frais.date_payement as date_payement,frais_scolaire.designation as DFrais,t_payement_frais.montant_payer as montantPaye,t_payement_frais.unite as unite,change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.anneescolaire='" + txtIdAnnee.Text + "' AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND t_payement_frais.date_payement BETWEEN '" + d1 + "' AND '" + d2 + "' ORDER BY date_payement ASC";
                 MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -1212,7 +1212,7 @@ namespace NaomiSite
                 }
 
                 //Prélever le total payé en USD
-                MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 conN.Open();
                 MySqlCommand cmdN = new MySqlCommand("Select sum(montant_payer) as Total FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.anneescolaire='" + txtIdAnnee.Text + "' AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND t_payement_frais.date_payement BETWEEN '" + d1 + "' AND '" + d2 + "' AND t_payement_frais.unite='USD' ORDER BY date_payement ASC", conN);
                 MySqlDataReader drN = cmdN.ExecuteReader();
@@ -1232,7 +1232,7 @@ namespace NaomiSite
                 conN.Close();
 
                 //Prélever le total payé en CDF
-                MySqlConnection conNN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection conNN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 conNN.Open();
                 MySqlCommand cmdNN = new MySqlCommand("Select sum(montant_payer) as Total FROM t_payement_frais,frais_scolaire,change_classe,t_classe,section,ecole WHERE t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.anneescolaire='" + txtIdAnnee.Text + "' AND t_payement_frais.idEcole=change_classe.idEcole AND change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND etat='Actif' AND t_payement_frais.date_payement BETWEEN '" + d1 + "' AND '" + d2 + "' AND t_payement_frais.unite='CDF'", conNN);
                 MySqlDataReader drNN = cmdNN.ExecuteReader();
@@ -1432,7 +1432,7 @@ namespace NaomiSite
                 tableF.AddCell(cell3F);
                 tableF.AddCell(cell4F);
 
-                MySqlConnection conF = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                MySqlConnection conF = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                 conF.Open();
                 string cmdF = "SELECT *from frais_scolaire WHERE classe='" + txtIdClasse.Text + "' AND optionConcerne='" + txtIdOption.Text + "' AND anneeScolaire='" + txtIdAnnee.Text + "' AND idEcole='" + txtIdEcole.Text + "' ORDER BY unite ASC";
                 MySqlCommand cmdeF = new MySqlCommand(cmdF, conF);
@@ -1467,7 +1467,7 @@ namespace NaomiSite
                 }
                 conF.Close();
                 //Prélever le total prevu en USD
-                MySqlConnection conNF = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection conNF = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 conNF.Open();
                 MySqlCommand cmdNF = new MySqlCommand("select sum(tranche1+tranche2+tranche3) as Total FROM frais_scolaire WHERE frais_scolaire.unite='USD' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND frais_scolaire.anneescolaire='" + txtIdAnnee.Text + "'AND frais_scolaire.idEcole='" + txtIdEcole.Text + "'", conNF);
                 MySqlDataReader drNF = cmdNF.ExecuteReader();
@@ -1482,7 +1482,7 @@ namespace NaomiSite
                 conNF.Close();
 
                 //Prélever le total prevu en CDF
-                MySqlConnection conNF1 = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection conNF1 = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 conNF1.Open();
                 MySqlCommand cmdNF1 = new MySqlCommand("select sum(tranche1+tranche2+tranche3) as Total FROM frais_scolaire WHERE frais_scolaire.unite='CDF' AND frais_scolaire.classe='" + txtIdClasse.Text + "' AND frais_scolaire.optionConcerne='" + txtIdOption.Text + "' AND frais_scolaire.anneescolaire='" + txtIdAnnee.Text + "'AND frais_scolaire.idEcole='" + txtIdEcole.Text + "'", conNF1);
                 MySqlDataReader drNF1 = cmdNF1.ExecuteReader();
@@ -1521,7 +1521,7 @@ namespace NaomiSite
                 table.AddCell(cell2);
                 table.AddCell(cell3);
 
-                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                 con.Open();
                 string cmd = "SELECT t_payement_frais.date_payement,frais_scolaire.designation,t_payement_frais.montant_payer,frais_scolaire.unite FROM t_payement_frais,change_classe,frais_scolaire WHERE t_payement_frais.matricule='" + txtMatricule.Text + "' AND t_payement_frais.motif=frais_scolaire.idfrais AND t_payement_frais.matricule=change_classe.matricule AND t_payement_frais.anneescolaire=change_classe.anneeScolaire AND t_payement_frais.anneescolaire='" + txtIdAnnee.Text + "' AND t_payement_frais.idEcole='" + txtIdEcole.Text + "' ";
                 MySqlCommand cmde = new MySqlCommand(cmd, con);
@@ -1553,7 +1553,7 @@ namespace NaomiSite
                 con.Close();
 
                 //Prélever le total payé en USD
-                MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 conN.Open();
                 MySqlCommand cmdN = new MySqlCommand("select sum(montant_payer) as Total from t_payement_frais WHERE matricule='" + txtMatricule.Text + "' AND t_payement_frais.unite='USD' AND t_payement_frais.anneescolaire='" + txtIdAnnee.Text + "'AND t_payement_frais.idEcole='" + txtIdEcole.Text + "'", conN);
                 MySqlDataReader drN = cmdN.ExecuteReader();
@@ -1568,7 +1568,7 @@ namespace NaomiSite
                 conN.Close();
 
                 //Prélever le total payé en CDF
-                MySqlConnection conNN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection conNN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 conNN.Open();
                 MySqlCommand cmdNN = new MySqlCommand("select sum(montant_payer) as Total from t_payement_frais WHERE matricule='" + txtMatricule.Text + "' AND t_payement_frais.unite='CDF' AND t_payement_frais.anneescolaire='" + txtIdAnnee.Text + "'AND t_payement_frais.idEcole='" + txtIdEcole.Text + "'", conNN);
                 MySqlDataReader drNN = cmdNN.ExecuteReader();

@@ -16,7 +16,7 @@ namespace NaomiSite
 {
     public partial class AdminFinPayerSalaire : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         string id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -557,7 +557,7 @@ namespace NaomiSite
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
             double b, sort, Disp;
-            MySqlConnection conx1 = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+            MySqlConnection conx1 = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
             conx1.Open();
             //Actualisation de la caisse
             b = Convert.ToDouble(txtNetRecu.Text.Replace(',', '.'), CultureInfo.InvariantCulture);

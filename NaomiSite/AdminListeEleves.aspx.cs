@@ -17,7 +17,7 @@ namespace NaomiSite
 {
     public partial class AdminListeEleves : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         int id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -304,7 +304,7 @@ namespace NaomiSite
                     table.AddCell(cell1);
 
 
-                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                     con.Open();
                     string cmd = "SELECT change_classe.idClasse as idClasse,change_classe.matricule as matricule,change_classe.nomEleve as nom,change_classe.prenom as prenom,change_classe.sexe as sexe,t_classe.classe as classe,section.nomSection as option,ecole.nomEcole as idEcole FROM change_classe,t_classe,section,ecole WHERE change_classe.classe=t_classe.id and change_classe.optionEtude=section.idSection AND change_classe.idEcole=ecole.idEcole AND change_classe.idEcole='" + txtIdEcole.Text + "' AND change_classe.optionEtude='" + txtIdOption.Text + "' AND change_classe.classe='" + txtIdClasse.Text + "' AND change_classe.anneeScolaire='" + txtIdAnnee.Text + "' AND etat='Actif' ORDER BY nom ASC";
                     MySqlCommand cmde = new MySqlCommand(cmd, con);

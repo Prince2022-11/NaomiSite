@@ -16,7 +16,7 @@ namespace NaomiSite
 {
     public partial class AdminFinRechPayement : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         int id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -312,7 +312,7 @@ namespace NaomiSite
                     table.AddCell(cell3a);
                     table.AddCell(cell3a1);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     con.Open();
                     MySqlCommand cmd = new MySqlCommand("select t_agent.nom,t_agent.prenom,t_salaire.id_salaire,t_salaire.mois_payer,t_agent.matricule,t_salaire.salBase,((t_salaire.salBase)/(t_salaire.nombreHeure/4)) as SalHoraire,t_salaire.salbase, t_salaire.nombreHeure/4 as NbrHeure,t_salaire.avance,t_salaire.rembourser,t_salaire.avance-t_salaire.rembourser as Reste_Emp,t_salaire.net_payer,t_salaire.mois_payer, t_salaire.datepaye,utilisateur.login FROM t_agent,t_salaire,utilisateur WHERE t_salaire.idOperateur=utilisateur.id AND t_salaire.matricule=t_agent.matricule AND t_salaire.annee='" + txtIdAnnee.Text + "' AND t_salaire.idEcole='" + txtIdEcole.Text + "' ORDER BY id_salaire DESC ", con);
                     MySqlDataReader dr = cmd.ExecuteReader();
@@ -371,7 +371,7 @@ namespace NaomiSite
                         table.AddCell(cell9a1);
 
                     }
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("select sum(net_payer) as Total FROM t_agent,t_salaire,utilisateur WHERE t_salaire.idOperateur=utilisateur.id AND t_salaire.matricule=t_agent.matricule AND t_salaire.annee='" + txtIdAnnee.Text + "' AND t_salaire.idEcole='" + txtIdEcole.Text + "' ORDER BY id_salaire DESC ", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -481,7 +481,7 @@ namespace NaomiSite
                     table.AddCell(cell3a);
                     table.AddCell(cell3a1);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     con.Open();
                     MySqlCommand cmd = new MySqlCommand("select t_agent.nom,t_agent.prenom,t_salaire.id_salaire,t_salaire.mois_payer,t_agent.matricule,t_salaire.salBase,((t_salaire.salBase)/(t_salaire.nombreHeure/4)) as SalHoraire,t_salaire.salbase, t_salaire.nombreHeure/4 as NbrHeure,t_salaire.avance,t_salaire.rembourser,t_salaire.avance-t_salaire.rembourser as Reste_Emp,t_salaire.net_payer,t_salaire.mois_payer, t_salaire.datepaye,utilisateur.login FROM t_agent,t_salaire,utilisateur WHERE t_salaire.idOperateur=utilisateur.id AND t_salaire.matricule=t_agent.matricule AND t_salaire.annee='" + txtIdAnnee.Text + "' AND t_salaire.idEcole='" + txtIdEcole.Text + "' AND t_salaire.datepaye BETWEEN '" + date1 + "' AND '" + date2 + "' ORDER BY id_salaire DESC ", con);
                     MySqlDataReader dr = cmd.ExecuteReader();
@@ -540,7 +540,7 @@ namespace NaomiSite
                         table.AddCell(cell9a1);
 
                     }
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("select sum(t_salaire.net_payer) as Total FROM t_agent,t_salaire,utilisateur WHERE t_salaire.idOperateur=utilisateur.id AND t_salaire.matricule=t_agent.matricule AND t_salaire.annee='" + txtIdAnnee.Text + "' AND t_salaire.idEcole='" + txtIdEcole.Text + "' AND t_salaire.datepaye BETWEEN '" + date1 + "' AND '" + date2 + "' ORDER BY id_salaire DESC ", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();
@@ -647,7 +647,7 @@ namespace NaomiSite
                     table.AddCell(cell3a);
                     table.AddCell(cell3a1);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     con.Open();
                     MySqlCommand cmd = new MySqlCommand("select t_agent.nom,t_agent.prenom,t_salaire.id_salaire,t_salaire.mois_payer,t_agent.matricule,t_salaire.salBase,((t_salaire.salBase)/(t_salaire.nombreHeure/4)) as SalHoraire,t_salaire.salbase, t_salaire.nombreHeure/4 as NbrHeure,t_salaire.avance,t_salaire.rembourser,t_salaire.avance-t_salaire.rembourser as Reste_Emp,t_salaire.net_payer,t_salaire.mois_payer, t_salaire.datepaye,utilisateur.login FROM t_agent,t_salaire,utilisateur WHERE t_salaire.idOperateur=utilisateur.id AND t_salaire.matricule=t_agent.matricule AND t_salaire.annee='" + txtIdAnnee.Text + "' AND t_salaire.idEcole='" + txtIdEcole.Text + "' AND CONCAT(t_salaire.matricule,t_agent.nom,t_agent.prenom,t_salaire.mois_payer,t_salaire.datepaye,utilisateur.login) LIKE '%" + recherche + "%' ORDER BY id_salaire DESC ", con);
                     MySqlDataReader dr = cmd.ExecuteReader();
@@ -706,7 +706,7 @@ namespace NaomiSite
                         table.AddCell(cell9a1);
 
                     }
-                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection conN = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     conN.Open();
                     MySqlCommand cmdN = new MySqlCommand("select sum(t_salaire.net_payer) as Total FROM t_agent,t_salaire,utilisateur WHERE t_salaire.idOperateur=utilisateur.id AND t_salaire.matricule=t_agent.matricule AND t_salaire.annee='" + txtIdAnnee.Text + "' AND t_salaire.idEcole='" + txtIdEcole.Text + "' AND CONCAT(t_salaire.matricule,t_agent.nom,t_agent.prenom,t_salaire.mois_payer,t_salaire.datepaye,utilisateur.login) LIKE '%" + recherche + "%' ORDER BY id_salaire DESC ", conN);
                     MySqlDataReader drN = cmdN.ExecuteReader();

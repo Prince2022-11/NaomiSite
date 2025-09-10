@@ -16,7 +16,7 @@ namespace NaomiSite
 {
     public partial class AdminChangeClasse : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         protected void Page_Load(object sender, EventArgs e)
         {
             //Vérification de la connexion de la varibale session
@@ -110,6 +110,7 @@ namespace NaomiSite
                             TrouverIdClasseMontante();
                             AfficherInscription();
                             txtMatricule.Text = "Aucun...";
+                            btnChangerClasse.Visible = false;
                         }
                     }
                       
@@ -132,8 +133,8 @@ namespace NaomiSite
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter(cmdB1);
             da.Fill(dt);
-            DataGrid.DataSource = dt;
-            DataGrid.DataBind();
+            Data1.DataSource = dt;
+            Data1.DataBind();
             con.Close();
             con.Close();
         }
@@ -415,6 +416,7 @@ namespace NaomiSite
                 CreerCompteEleve();
                 txtMatricule.Text = "Succès... Sélectionnez un autre";
                 AfficherInscription();
+                btnChangerClasse.Visible = false;
             }
             else
             {
@@ -424,6 +426,25 @@ namespace NaomiSite
         protected void btnExportExcel_Click(object sender, EventArgs e)
         {
             Response.Redirect("AdminListeEleves.aspx");
+        }
+
+        protected void btnSelection_Click(object sender, EventArgs e)
+        {
+            txtMatricule.Text = "";
+            txtNom.Text = "";
+            txtPrenom.Text ="";
+            Button btn = (Button)sender;
+            string[] args = btn.CommandArgument.Split(',');//Séparer les valeurs venues dans la commande
+            string matricule = args[0];//Recupérer le matricule
+            string nom = args[1];//Recupérer le nom
+            string prenom = args[2];//Recupérer le prénom
+            string sexe = args[3];//Recupérer le sexe
+            txtMatricule.Text = matricule.ToString();
+            txtNom.Text = nom.ToString();
+            txtPrenom.Text = prenom.ToString();
+            txtSexe.Text = sexe.ToString();
+            btnChangerClasse.Visible = true;
+
         }
     }
 }

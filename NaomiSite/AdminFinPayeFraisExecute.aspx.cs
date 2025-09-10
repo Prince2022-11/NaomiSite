@@ -16,7 +16,7 @@ namespace NaomiSite
 {
     public partial class AdminFinPayeFraisExecute : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         int id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -359,7 +359,7 @@ namespace NaomiSite
                             txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
 
                             //L'élève fini à payer la 3e Tranche
-                            MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                            MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                             con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
                             MySqlCommand commande = new MySqlCommand(cmd, con);
                             commande.ExecuteNonQuery();
@@ -370,7 +370,7 @@ namespace NaomiSite
                             ResT3 = diff2;
                             txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
 
-                            MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                            MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                             con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
                             MySqlCommand commande = new MySqlCommand(cmd, con);
                             commande.ExecuteNonQuery();
@@ -382,7 +382,7 @@ namespace NaomiSite
                         ResT2 = diff;
                         txtT22.Text = ResT2.ToString(CultureInfo.InvariantCulture);
 
-                        MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                        MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                         con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
                         MySqlCommand commande = new MySqlCommand(cmd, con);
                         commande.ExecuteNonQuery();
@@ -398,7 +398,7 @@ namespace NaomiSite
                     txtT22.Text = ResT2.ToString(CultureInfo.InvariantCulture);
                     txtT33.Text = ResT3.ToString(CultureInfo.InvariantCulture);
 
-                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                    MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                     con.Open(); string cmd = "insert into situation_paye values(default,'" + txtIdFrais.Text + "','" + ResT1.ToString(CultureInfo.InvariantCulture) + "','" + ResT2.ToString(CultureInfo.InvariantCulture) + "','" + ResT3.ToString(CultureInfo.InvariantCulture) + "','" + txtMatricule.Text + "','" + txtIdAnnee.Text + "','" + txtIdEcole.Text + "')";
                     MySqlCommand commande = new MySqlCommand(cmd, con);
                     commande.ExecuteNonQuery();
@@ -516,7 +516,7 @@ namespace NaomiSite
         {
             try
             {
-                MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection con = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 con.Open();
 
                 //Mettre à jour le compte eleve, ce code permettra au préfet d'avoir une idée sur l'évolution des payements des élève dune maniere mensuelle
@@ -781,7 +781,7 @@ namespace NaomiSite
             //Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
             double b, sort, Disp, Entr;
-            MySqlConnection conx1 = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+            MySqlConnection conx1 = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
             conx1.Open();
             if (txtMontantVenuAvec.Text == "0")
             {
@@ -822,7 +822,7 @@ namespace NaomiSite
         {
             try
             {
-                MySqlConnection conx = new MySqlConnection("server=localhost;uid=root;database=gespersonnel;password=");
+                MySqlConnection conx = new MySqlConnection("server=localhost;uid=root;database=gestion_naomi;password=");
                 conx.Open();
                 string TakeDate = DateTime.Today.ToShortDateString();
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;

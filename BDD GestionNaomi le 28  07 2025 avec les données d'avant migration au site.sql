@@ -19,10 +19,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
-DROP DATABASE IF EXISTS gespersonnel;
-CREATE DATABASE IF NOT EXISTS gespersonnel;
-CREATE DATABASE IF NOT EXISTS gespersonnel;
-USE gespersonnel;
+DROP DATABASE IF EXISTS gestion_naomi;
+CREATE DATABASE IF NOT EXISTS gestion_naomi;
+USE gestion_naomi;
 
 -- Base de données :  `gespersonnel`
 --

@@ -16,7 +16,7 @@ namespace NaomiSite
 {
     public partial class AdminAgentPresence : System.Web.UI.Page
     {
-        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gespersonnel");
+        MySqlConnection con = new MySqlConnection("server=localhost; uid=root; password=; database=gestion_naomi");
         int id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -474,7 +474,7 @@ namespace NaomiSite
                 table.AddCell(cell3b);
                 table.AddCell(cell3c);
 
-                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gespersonnel; password=");
+                MySqlConnection con = new MySqlConnection("server=localhost; uid=root; database= gestion_naomi; password=");
                 con.Open();
                 string cmd = "SELECT * FROM t_agent,t_presence WHERE t_presence.matricule=t_agent.matricule AND t_presence.annee='" + txtIdAnnee.Text + "' ORDER BY t_presence.id_presence ASC";
                 MySqlCommand cmde = new MySqlCommand(cmd, con);
